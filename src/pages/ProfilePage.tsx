@@ -1,22 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
-import { apiRequest } from "../api/apiClient";
 import { useAuth } from "../auth/useAuth";
-import type { User } from "../types/api";
 import styles from "./JsonPage.module.scss";
 
 export default function ProfilePage() {
-    const { token } = useAuth();
-
-    const userQuery = useQuery<User, Error>({
-        queryKey: ["user", token],
-
-        queryFn: () =>
-            apiRequest<User>("/api/user", {
-                token,
-            }),
-
-        enabled: token !== null,
-    });
+    const { user, isLoadingUser } = useAuth();
 
     return (
         <section className={styles.card}>
@@ -24,21 +10,21 @@ export default function ProfilePage() {
                 Profile
             </h1>
 
-            {userQuery.isPending && (
+            {isLoadingUser && (
                 <span className={styles.loader} aria-label="Loading" />
             )}
 
-            {userQuery.data && <pre className={styles.json}>
+            {user && <pre className={styles.json}>
                 {JSON.stringify(
-                    userQuery.data,
+                    user,
                     null,
                     2,
                 )}
             </pre>}
 
-            {userQuery.isError && (
+            {!user && (
                 <p className={styles.error}>
-                    {userQuery.error.message}
+                    Something went wrong while fetching the user data. Please try again later.
                 </p>
             )}
         </section>
