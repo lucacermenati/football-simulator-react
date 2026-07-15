@@ -1,0 +1,39 @@
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem;
+    border-bottom: 1px solid #ddd;
+    background: white;
+}
+
+.navigation {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.link {
+    color: inherit;
+    text-decoration: none;
+}
+
+.activeLink {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.button {
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #222;
+    border-radius: 4px;
+    background: #222;
+    color: white;
+    cursor: pointer;
+}
+
+.content {
+    width: min(100% - 2rem, 800px);
+    margin: 2rem auto;
+}

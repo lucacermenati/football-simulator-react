@@ -1,0 +1,59 @@
+.page {
+    display: grid;
+    min-height: 100vh;
+    padding: 1rem;
+    place-items: center;
+}
+
+.card {
+    width: 100%;
+    max-width: 400px;
+    padding: 1.5rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background: white;
+}
+
+.form {
+    display: grid;
+    gap: 1rem;
+}
+
+.field {
+    display: grid;
+    gap: 0.4rem;
+}
+
+.input {
+    width: 100%;
+    padding: 0.6rem;
+    border: 1px solid #bbb;
+    border-radius: 4px;
+}
+
+.button {
+    padding: 0.6rem 1rem;
+    border: 1px solid #222;
+    border-radius: 4px;
+    background: #222;
+    color: white;
+    cursor: pointer;
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+}
+
+.error {
+    padding: 0.75rem;
+    border: 1px solid #d88;
+    background: #fee;
+    color: #900;
+}
+
+.fieldError {
+    margin: 0;
+    color: #900;
+    font-size: 0.875rem;
+}
