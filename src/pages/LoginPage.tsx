@@ -1,7 +1,5 @@
 import {
     Navigate,
-    useLocation,
-    useNavigate,
 } from "react-router";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
@@ -25,8 +23,6 @@ async function loginRequest(
 export default function LoginPage() {
     const { isAuthenticated, login } = useAuth();
 
-    const navigate = useNavigate();
-
     const {
         register,
         handleSubmit,
@@ -49,8 +45,7 @@ export default function LoginPage() {
         mutationFn: loginRequest,
 
         onSuccess: (data) => {
-            const receivedToken =
-                data.token ?? data.access_token;
+            const receivedToken = data.access_token;
 
             if (!receivedToken) {
                 throw new Error(

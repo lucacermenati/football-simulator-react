@@ -3,23 +3,40 @@ import {
     Outlet,
     useNavigate,
 } from "react-router";
-import { useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAuth } from "../auth/useAuth";
+import { apiRequest } from "../api/apiClient";
+import type { NoContentResponse } from "../types/api";
 import styles from "./AuthenticatedLayout.module.scss";
 
 export default function AuthenticatedLayout() {
-    const { logout } = useAuth();
+    const { token, logout } = useAuth();
 
     const navigate = useNavigate();
     const queryClient = useQueryClient();
 
-    function handleLogout(): void {
-        queryClient.clear();
-        logout();
-
-        navigate("/login", {
-            replace: true,
+    async function logoutRequest(): Promise<NoContentResponse> {
+        return apiRequest<NoContentResponse>("/api/logout", {
+            method: "DELETE",
+            token: token
         });
+    }
+
+    const logoutMutation = useMutation({
+        mutationFn: logoutRequest,
+
+        onSuccess: () => {
+            queryClient.clear();
+            logout();
+
+            navigate("/login", {
+                replace: true,
+            });
+        },
+    });
+
+    async function handleLogout(): Promise<void> {
+        await logoutMutation.mutateAsync();
     }
 
     return (
@@ -53,7 +70,8 @@ export default function AuthenticatedLayout() {
                     <button
                         type="button"
                         className={styles.button}
-                        onClick={handleLogout}
+                        onClick={() => handleLogout()}
+                        disabled={logoutMutation.isPending}
                     >
                         Logout
                     </button>
