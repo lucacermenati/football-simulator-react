@@ -1,39 +1,50 @@
-.header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    padding: 1rem;
-    border-bottom: 1px solid #ddd;
-    background: white;
+.container {
+	min-height: 100vh;
 }
 
-.navigation {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
+.verticalMenu {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 1000;
+	min-height: 100vh;
+	max-height: 100vh;
+	background-color: #222;
+	color: white;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	gap: 2rem;
+	padding: 1rem;
+	padding-top: 2rem;
+	padding-bottom: 2rem;
+	border-top-right-radius: 1rem;
+	border-bottom-right-radius: 1rem;
+}
+
+.linksContainer {
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
 }
 
 .link {
-    color: inherit;
-    text-decoration: none;
+	color: white;
+	cursor: pointer;
+	&:hover {
+		color: grey;
+	}
 }
 
 .activeLink {
-    font-weight: bold;
-    text-decoration: underline;
+	color: grey;
 }
 
 .button {
-    padding: 0.5rem 0.75rem;
-    border: 1px solid #222;
-    border-radius: 4px;
-    background: #222;
-    color: white;
-    cursor: pointer;
+	cursor: pointer;
 }
 
 .content {
-    width: min(100% - 2rem, 800px);
-    margin: 2rem auto;
+	width: min(100% - 2rem, 800px);
+	margin: 2rem auto;
 }
