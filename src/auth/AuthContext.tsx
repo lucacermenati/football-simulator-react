@@ -1,102 +1,195 @@
 import {
-    createContext,
-    useCallback,
-    useEffect,
-    useMemo,
-    useState,
-    type ReactNode,
-} from "react";
-import type { User } from "../types/api";
-import { useQuery } from "@tanstack/react-query";
-import { apiRequest } from "../api/apiClient";
+	createContext,
+	useCallback,
+	useMemo,
+	useState,
+	type ReactNode,
+} from 'react';
+import type {
+	LoginCredentials,
+	BearerTokenResource,
+	User,
+	RegistrationRequest,
+	NoContentResponse,
+} from '../types/api';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { apiRequest } from '../api/apiClient';
 
-const TOKEN_STORAGE_KEY = "football-app-simulator-token";
+const TOKEN_STORAGE_KEY = 'football-app-simulator-token';
 
 export type AuthContextValue = {
-    token: string | null;
-    user?: User;
-    isAuthenticated: boolean;
-    isLoadingUser: boolean;
-    login: (token: string) => void;
-    logout: () => void;
+	token: string | null;
+	user?: User;
+	isAuthenticated: boolean;
+	isLoadingUser: boolean;
+
+	handleRegistration: (registrationData: RegistrationRequest) => void;
+	isRegistrationPending: boolean;
+	isRegistrationFailed: boolean;
+
+	handleLogin: (credentials: LoginCredentials) => void;
+	isLoginPending: boolean;
+	isLoginFailed: boolean;
+
+	handleLogout: () => void;
+	isLogoutPending: boolean;
 };
 
-type AuthProviderProps = {
-    children: ReactNode;
-};
+export const AuthContext = createContext<AuthContextValue | null>(null);
 
-export const AuthContext =
-    createContext<AuthContextValue | null>(null);
+export function AuthProvider({ children }: { children: ReactNode }) {
+	const [token, setToken] = useState<string | null>(() => {
+		return localStorage.getItem(TOKEN_STORAGE_KEY);
+	});
 
-export function AuthProvider({
-    children,
-}: AuthProviderProps) {
-    const [token, setToken] = useState<string | null>(() => {
-        return localStorage.getItem(TOKEN_STORAGE_KEY);
-    });
+	const {
+		mutateAsync: registerAsync,
+		isPending: isRegistrationPending,
+		isError: isRegistrationFailed,
+	} = useMutation<BearerTokenResource, Error, RegistrationRequest>({
+		mutationFn: (registrationData: RegistrationRequest) =>
+			apiRequest<BearerTokenResource>('/api/register', {
+				method: 'POST',
+				body: registrationData,
+			}),
 
-    const userQuery = useQuery<User, Error>({
-        queryKey: ["user", token],
+		onSuccess: (data) => {
+			const receivedToken = data.access_token;
 
-        queryFn: () =>
-            apiRequest<User>("/api/user", {
-                token,
-            }),
+			if (!receivedToken) {
+				throw new Error('The backend did not return a token.');
+			}
 
-        enabled: token !== null,
-    });
+			localStorage.setItem(TOKEN_STORAGE_KEY, receivedToken);
 
-    const login = useCallback((newToken: string) => {
-        localStorage.setItem(
-            TOKEN_STORAGE_KEY,
-            newToken,
-        );
+			setToken(receivedToken);
+		},
 
-        setToken(newToken);
-    }, []);
+		onError: (error) => {
+			console.log(error);
+			localStorage.removeItem(TOKEN_STORAGE_KEY);
+			setToken(null);
+		},
+	});
 
-    const logout = useCallback(() => {
-        localStorage.removeItem(TOKEN_STORAGE_KEY);
+	const handleRegistration = useCallback(
+		async (registrationData: RegistrationRequest) => {
+			await registerAsync(registrationData);
+		},
+		[registerAsync],
+	);
 
-        setToken(null);
-    }, []);
+	const {
+		mutateAsync: loginAsync,
+		isPending: isLoginPending,
+		isError: isLoginFailed,
+	} = useMutation<BearerTokenResource, Error, LoginCredentials>({
+		mutationFn: (credentials: LoginCredentials) =>
+			apiRequest<BearerTokenResource>('/api/login', {
+				method: 'POST',
+				body: credentials,
+			}),
 
-    useEffect(() => {
-        window.addEventListener(
-            "auth:unauthorized",
-            logout,
-        );
+		onSuccess: (data) => {
+			const receivedToken = data.access_token;
 
-        return () => {
-            window.removeEventListener(
-                "auth:unauthorized",
-                logout,
-            );
-        };
-    }, [logout]);
+			if (!receivedToken) {
+				throw new Error('The backend did not return a token.');
+			}
 
-    const value = useMemo<AuthContextValue>(
-        () => ({
-            token,
-            user: userQuery.data,
-            isAuthenticated: token !== null,
-            isLoadingUser: userQuery.isPending,
-            login,
-            logout,
-        }),
-        [
-            token,
+			localStorage.setItem(TOKEN_STORAGE_KEY, receivedToken);
 
-            userQuery.data,
-            userQuery.isPending,
-            login,
-            logout,
-        ],
-    );
+			setToken(receivedToken);
+		},
 
-    return (
-        <AuthContext.Provider value={value}>
-            {children}
-        </AuthContext.Provider>
-    );
+		onError: (error) => {
+			console.log(error);
+			localStorage.removeItem(TOKEN_STORAGE_KEY);
+			setToken(null);
+		},
+	});
+
+	const handleLogin = useCallback(
+		async (credentials: LoginCredentials) => {
+			await loginAsync(credentials);
+		},
+		[loginAsync],
+	);
+
+	const { mutateAsync: logoutAsync, isPending: isLogoutPending } = useMutation<
+		NoContentResponse,
+		Error,
+		void
+	>({
+		mutationFn: () =>
+			apiRequest<NoContentResponse>('/api/logout', {
+				method: 'DELETE',
+			}),
+
+		onSuccess: () => {
+			localStorage.setItem(TOKEN_STORAGE_KEY, '');
+			setToken(null);
+		},
+
+		onError: (error) => {
+			console.log(error);
+			localStorage.removeItem(TOKEN_STORAGE_KEY);
+			setToken(null);
+		},
+	});
+
+	const handleLogout = useCallback(async () => {
+		await logoutAsync();
+	}, [logoutAsync]);
+
+	const userQuery = useQuery<User, Error>({
+		queryKey: ['user', token],
+
+		queryFn: () =>
+			apiRequest<User>('/api/user', {
+				token,
+			}),
+
+		enabled: token !== null,
+	});
+
+	// useEffect(() => {
+	// 	window.addEventListener('auth:unauthorized', logoutAsync);
+
+	// 	return () => {
+	// 		window.removeEventListener('auth:unauthorized', logoutAsync);
+	// 	};
+	// }, [logoutAsync]);
+
+	const value = useMemo<AuthContextValue>(
+		() => ({
+			token,
+			user: userQuery.data,
+			isAuthenticated: token !== null,
+			isLoadingUser: userQuery.isPending,
+			handleRegistration,
+			isRegistrationPending,
+			isRegistrationFailed,
+			handleLogin,
+			isLoginPending,
+			isLoginFailed,
+			handleLogout,
+			isLogoutPending,
+		}),
+		[
+			token,
+			userQuery.data,
+			userQuery.isPending,
+			handleLogin,
+			isLoginPending,
+			isLoginFailed,
+			handleRegistration,
+			isRegistrationPending,
+			isRegistrationFailed,
+			handleLogout,
+			isLogoutPending,
+		],
+	);
+
+	return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
