@@ -19,9 +19,11 @@ const TOKEN_STORAGE_KEY = 'football-app-simulator-token';
 
 export type AuthContextValue = {
 	token: string | null;
-	user?: User;
 	isAuthenticated: boolean;
-	isLoadingUser: boolean;
+
+	user?: User;
+	isUserPending: boolean;
+	isUserFailed: boolean;
 
 	handleRegistration: (registrationData: RegistrationRequest) => void;
 	isRegistrationPending: boolean;
@@ -166,7 +168,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 			token,
 			user: userQuery.data,
 			isAuthenticated: token !== null,
-			isLoadingUser: userQuery.isPending,
+			isUserPending: userQuery.isPending,
+			isUserFailed: userQuery.isError,
 			handleRegistration,
 			isRegistrationPending,
 			isRegistrationFailed,
@@ -180,6 +183,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 			token,
 			userQuery.data,
 			userQuery.isPending,
+			userQuery.isError,
 			handleLogin,
 			isLoginPending,
 			isLoginFailed,

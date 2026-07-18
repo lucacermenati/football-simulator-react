@@ -1,32 +1,23 @@
-import { useAuth } from "../auth/useAuth";
-import styles from "./JsonPage.module.scss";
+import { useAuth } from '../auth/useAuth';
+import styles from './JsonPage.module.scss';
 
 export default function ProfilePage() {
-    const { user, isLoadingUser } = useAuth();
+	const { user, isUserPending, isUserFailed } = useAuth();
 
-    return (
-        <section className={styles.card}>
-            <h1 className={styles.heading}>
-                Profile
-            </h1>
+	const content = isUserPending ? (
+		<span className={styles.loader} aria-label='Loading' />
+	) : isUserFailed ? (
+		<p className={styles.error}>
+			Something went wrong while fetching the user data. Please try again later.
+		</p>
+	) : user ? (
+		<pre className={styles.json}>{JSON.stringify(user, null, 2)}</pre>
+	) : null;
 
-            {isLoadingUser && (
-                <span className={styles.loader} aria-label="Loading" />
-            )}
-
-            {user && <pre className={styles.json}>
-                {JSON.stringify(
-                    user,
-                    null,
-                    2,
-                )}
-            </pre>}
-
-            {!user && (
-                <p className={styles.error}>
-                    Something went wrong while fetching the user data. Please try again later.
-                </p>
-            )}
-        </section>
-    );
+	return (
+		<section className={styles.card}>
+			<h1 className={styles.heading}>Profile</h1>
+			{content}
+		</section>
+	);
 }
