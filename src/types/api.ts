@@ -38,4 +38,28 @@ export type Competition = {
 	logo: string;
 };
 
-export type Settings = Record<string, unknown>;
+export type Link = {
+	url: string | null;
+	label: string;
+	active: boolean;
+};
+
+export type PaginatedData<T> = {
+	data: T[];
+	links: {
+		first: string;
+		last: string;
+		prev: string | null;
+		next: string | null;
+	};
+	meta: {
+		current_page: number;
+		from: number;
+		last_page: number;
+		per_page: number;
+		to: number;
+		total: number;
+		path: string;
+		links: Link[];
+	};
+};
