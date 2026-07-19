@@ -87,7 +87,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 		isError: isLoginFailed,
 	} = useMutation<BearerTokenResource, Error, LoginCredentials>({
 		mutationFn: (credentials: LoginCredentials) =>
-			apiRequest<BearerTokenResource>('/api/login', {
+			apiRequest<BearerTokenResource>('/api/token', {
 				method: 'POST',
 				body: credentials,
 			}),
@@ -124,7 +124,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 		void
 	>({
 		mutationFn: () =>
-			apiRequest<NoContentResponse>('/api/logout', {
+			apiRequest<NoContentResponse>('/api/token', {
 				method: 'DELETE',
 			}),
 
@@ -147,10 +147,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 	const userQuery = useQuery<User, Error>({
 		queryKey: ['user', token],
 
-		queryFn: () =>
-			apiRequest<User>('/api/user', {
-				token,
-			}),
+		queryFn: () => apiRequest<User>('user', { token }),
 
 		enabled: token !== null,
 	});

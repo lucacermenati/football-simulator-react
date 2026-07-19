@@ -31,4 +31,11 @@ export type User = {
 	email: string;
 };
 
+export type Competition = {
+	id: string;
+	name: string;
+	description: string;
+	logo: string;
+};
+
 export type Settings = Record<string, unknown>;

@@ -1,50 +1,53 @@
-.container {
+.layout {
+	display: grid;
+	grid-template-columns: auto minmax(0, 1fr);
 	min-height: 100vh;
+	background-color: #f4f4f4;
 }
 
-.verticalMenu {
-	position: fixed;
+.sidebar {
+	position: sticky;
 	top: 0;
-	left: 0;
-	z-index: 1000;
-	min-height: 100vh;
-	max-height: 100vh;
+
+	height: 100vh;
+	overflow-y: auto;
+
 	background-color: #222;
-	color: white;
+
+	border-top-right-radius: 6px;
+	border-bottom-right-radius: 6px;
+
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	gap: 2rem;
-	padding: 1rem;
+	align-items: center;
+
 	padding-top: 2rem;
 	padding-bottom: 2rem;
-	border-top-right-radius: 1rem;
-	border-bottom-right-radius: 1rem;
+	padding-left: 1rem;
+	padding-right: 1rem;
 }
 
-.linksContainer {
+.main {
+	min-width: 0;
+	padding-top: 1.5rem;
+	padding-bottom: 1.5rem;
+	padding-left: 2rem;
+	padding-right: 2rem;
+}
+
+.icon {
+	color: white;
+	cursor: pointer;
+}
+
+.activeIcon {
+	color: grey;
+	cursor: pointer;
+}
+
+.iconsContainer {
 	display: flex;
 	flex-direction: column;
 	gap: 1.5rem;
-}
-
-.link {
-	color: white;
-	cursor: pointer;
-	&:hover {
-		color: grey;
-	}
-}
-
-.activeLink {
-	color: grey;
-}
-
-.button {
-	cursor: pointer;
-}
-
-.content {
-	width: min(100% - 2rem, 800px);
-	margin: 2rem auto;
 }

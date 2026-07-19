@@ -8,8 +8,6 @@ export default function AuthenticatedLayout() {
 	const navigate = useNavigate();
 	const location = useLocation();
 
-	console.log(location);
-
 	const logout = () => {
 		if (isLogoutPending) return;
 
@@ -17,52 +15,47 @@ export default function AuthenticatedLayout() {
 	};
 
 	return (
-		<section className={styles.container}>
-			<div className={styles.verticalMenu}>
-				<div>
-					<div className={styles.linksContainer}>
-						<Trophy
-							className={
-								location.pathname === '/competitions'
-									? styles.activeLink
-									: styles.link
-							}
-							onClick={() => navigate('/competitions')}
-						/>
-						<ShieldHalf
-							className={
-								location.pathname === '/teams' ? styles.activeLink : styles.link
-							}
-							onClick={() => navigate('/teams')}
-						/>
-						<Users
-							className={
-								location.pathname === '/players'
-									? styles.activeLink
-									: styles.link
-							}
-							onClick={() => navigate('/players')}
-						/>
-					</div>
+		<section className={styles.layout}>
+			<aside className={styles.sidebar}>
+				<div className={styles.iconsContainer}>
+					<Trophy
+						className={
+							location.pathname === '/competitions'
+								? styles.activeIcon
+								: styles.icon
+						}
+						onClick={() => navigate('/competitions')}
+					/>
+					<ShieldHalf
+						className={
+							location.pathname === '/teams' ? styles.activeIcon : styles.icon
+						}
+						onClick={() => navigate('/teams')}
+					/>
+					<Users
+						className={
+							location.pathname === '/players' ? styles.activeIcon : styles.icon
+						}
+						onClick={() => navigate('/players')}
+					/>
 				</div>
-
-				<div className={styles.linksContainer}>
+				<div className={styles.iconsContainer}>
 					<UserCircle
 						className={
-							location.pathname === '/profile' ? styles.activeLink : styles.link
+							location.pathname === '/profile' ? styles.activeIcon : styles.icon
 						}
 						onClick={() => navigate('/profile')}
 					/>
 					<LogOut
 						className={
-							location.pathname === '/logout' ? styles.activeLink : styles.link
+							location.pathname === '/logout' ? styles.activeIcon : styles.icon
 						}
 						onClick={() => logout()}
 					/>
 				</div>
-			</div>
+			</aside>
 
-			<main className={styles.content}>
+			<main className={styles.main}>
 				<Outlet />
 			</main>
 		</section>
