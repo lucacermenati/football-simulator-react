@@ -39,7 +39,9 @@ export default function Competitions() {
 		<section className={styles.container}>
 			{competitions?.map((c) => (
 				<div key={c.id} className={styles.competitionCard}>
-					<img className={styles.competitionLogo} src={c.logo} />
+					<div className={styles.logoContainer}>
+						<img className={styles.competitionLogo} src={c.logo} />
+					</div>
 					<div>{c.name}</div>
 				</div>
 			))}

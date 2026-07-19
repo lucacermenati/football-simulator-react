@@ -10,3 +10,9 @@ body {
 	background: var(--background-light-gray);
 	color: #222;
 }
+
+// Do not grow more than the parent div
+img {
+	max-width: 100%;
+	height: auto;
+}
