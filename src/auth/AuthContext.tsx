@@ -3,6 +3,7 @@ import {
 	useCallback,
 	useMemo,
 	useState,
+	useEffect,
 	type ReactNode,
 } from 'react';
 import type {
@@ -69,8 +70,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
 		onError: (error) => {
 			console.log(error);
-			localStorage.removeItem(TOKEN_STORAGE_KEY);
-			setToken(null);
+			clearToken();
 		},
 	});
 
@@ -106,8 +106,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
 		onError: (error) => {
 			console.log(error);
-			localStorage.removeItem(TOKEN_STORAGE_KEY);
-			setToken(null);
+			clearToken();
 		},
 	});
 
@@ -129,14 +128,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 			}),
 
 		onSuccess: () => {
-			localStorage.setItem(TOKEN_STORAGE_KEY, '');
-			setToken(null);
+			clearToken();
 		},
 
 		onError: (error) => {
 			console.log(error);
-			localStorage.removeItem(TOKEN_STORAGE_KEY);
-			setToken(null);
+			clearToken();
 		},
 	});
 
@@ -152,13 +149,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 		enabled: token !== null,
 	});
 
-	// useEffect(() => {
-	// 	window.addEventListener('auth:unauthorized', logoutAsync);
+	const clearToken = useCallback(() => {
+		localStorage.removeItem(TOKEN_STORAGE_KEY);
+		setToken(null);
+	}, []);
 
-	// 	return () => {
-	// 		window.removeEventListener('auth:unauthorized', logoutAsync);
-	// 	};
-	// }, [logoutAsync]);
+	useEffect(() => {
+		window.addEventListener('auth:unauthorized', clearToken);
+
+		return () => {
+			window.removeEventListener('auth:unauthorized', clearToken);
+		};
+	}, [clearToken]);
 
 	const value = useMemo<AuthContextValue>(
 		() => ({
