@@ -1,3 +1,5 @@
+@use './color.scss';
+
 * {
 	box-sizing: border-box;
 }
@@ -5,11 +7,6 @@
 body {
 	margin: 0;
 	font-family: Arial, Helvetica, sans-serif;
-	background: #f5f5f5;
+	background: var(--background-light-gray);
 	color: #222;
 }
-
-// button,
-// input {
-//     font: inherit;
-// }

@@ -2,7 +2,7 @@
 	display: grid;
 	grid-template-columns: auto minmax(0, 1fr);
 	min-height: 100vh;
-	background-color: #f4f4f4;
+	background-color: var(--background-light-gray);
 }
 
 .sidebar {
@@ -12,7 +12,7 @@
 	height: 100vh;
 	overflow-y: auto;
 
-	background-color: #222;
+	background-color: var(--primary-black);
 
 	border-top-right-radius: 6px;
 	border-bottom-right-radius: 6px;
@@ -37,12 +37,15 @@
 }
 
 .icon {
-	color: white;
+	color: var(--primary-white);
 	cursor: pointer;
+	&:hover {
+		color: var(--primary-gray);
+	}
 }
 
 .activeIcon {
-	color: grey;
+	color: var(--highlight-yellow);
 	cursor: pointer;
 }
 
