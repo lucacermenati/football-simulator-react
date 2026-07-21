@@ -1,16 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
-import { useAuth } from '../auth/useAuth';
-import { apiRequest } from '../api/apiClient';
-import type { Competition, PaginatedData } from '../types/api';
+import { useAuth } from '../../auth/useAuth';
+import { apiRequest } from '../../api/apiClient';
+import type { Competition, PaginatedData } from '../../types/api';
 import styles from './Competitions.module.scss';
 import { useState } from 'react';
-import {
-	ChevronLeft,
-	ChevronRight,
-	CirclePlus,
-	PlusCircle,
-	PlusCircleIcon,
-} from 'lucide-react';
+import { ChevronLeft, ChevronRight, CirclePlus } from 'lucide-react';
 
 export default function Competitions() {
 	const { token } = useAuth();
@@ -44,7 +38,7 @@ export default function Competitions() {
 	return (
 		<div className={styles.page}>
 			<div className={styles.content}>
-				<ChevronLeft />
+				<ChevronLeft className={styles.addCompetitionIcon} />
 				<div className={styles.competitionContainer}>
 					{competitions?.map((c) => (
 						<div key={c.id} className={styles.competitionCard}>
@@ -63,7 +57,7 @@ export default function Competitions() {
 						<CirclePlus className={styles.addCompetitionIcon} />
 					</div>
 				</div>
-				<ChevronRight />
+				<ChevronRight className={styles.addCompetitionIcon} />
 			</div>
 			<div className={styles.paginationContainer}>
 				<div className={styles.paginationElement}>HERE GOES PAGINATION</div>

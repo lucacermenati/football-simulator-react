@@ -1,6 +1,6 @@
 import { Outlet, useLocation, useNavigate } from 'react-router';
-import { useAuth } from '../auth/useAuth';
-import styles from './AuthenticatedLayout.module.scss';
+import { useAuth } from '../../auth/useAuth';
+import styles from './authenticated-layout.module.scss';
 import { LogOut, ShieldHalf, Trophy, UserCircle, Users } from 'lucide-react';
 
 export default function AuthenticatedLayout() {

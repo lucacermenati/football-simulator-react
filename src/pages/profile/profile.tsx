@@ -1,7 +1,7 @@
-import { useAuth } from '../auth/useAuth';
-import styles from './JsonPage.module.scss';
+import { useAuth } from '../../auth/useAuth';
+import styles from './profile.module.scss';
 
-export default function ProfilePage() {
+export default function Profile() {
 	const { user, isUserPending, isUserFailed } = useAuth();
 
 	const content = isUserPending ? (

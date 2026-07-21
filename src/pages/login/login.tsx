@@ -1,10 +1,10 @@
 import { Navigate } from 'react-router';
 import { useForm } from 'react-hook-form';
-import { useAuth } from '../auth/useAuth';
-import type { LoginCredentials } from '../types/api';
-import styles from './LoginPage.module.scss';
+import { useAuth } from '../../auth/useAuth';
+import type { LoginCredentials } from '../../types/api';
+import styles from './login.module.scss';
 
-export default function LoginPage() {
+export default function Login() {
 	const { isAuthenticated, handleLogin, isLoginPending, isLoginFailed } =
 		useAuth();
 

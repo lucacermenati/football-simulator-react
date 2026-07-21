@@ -1,7 +1,7 @@
 import { Link } from 'react-router';
-import styles from './NotFoundPage.module.scss';
+import styles from './not-found.module.scss';
 
-export default function NotFoundPage() {
+export default function NotFound() {
 	return (
 		<main className={styles.page}>
 			<section className={styles.content}>
