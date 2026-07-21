@@ -4,7 +4,13 @@ import { apiRequest } from '../api/apiClient';
 import type { Competition, PaginatedData } from '../types/api';
 import styles from './Competitions.module.scss';
 import { useState } from 'react';
-import { PlusCircle } from 'lucide-react';
+import {
+	ChevronLeft,
+	ChevronRight,
+	CirclePlus,
+	PlusCircle,
+	PlusCircleIcon,
+} from 'lucide-react';
 
 export default function Competitions() {
 	const { token } = useAuth();
@@ -36,18 +42,32 @@ export default function Competitions() {
 	const meta = paginatedCompetitions.data?.meta;
 
 	return (
-		<section className={styles.container}>
-			{competitions?.map((c) => (
-				<div key={c.id} className={styles.competitionCard}>
-					<div className={styles.logoContainer}>
-						<img className={styles.competitionLogo} src={c.logo} />
+		<div className={styles.page}>
+			<div className={styles.content}>
+				<ChevronLeft />
+				<div className={styles.competitionContainer}>
+					{competitions?.map((c) => (
+						<div key={c.id} className={styles.competitionCard}>
+							<div className={styles.logoContainer}>
+								<img
+									className={styles.competitionLogo}
+									src={c.logo}
+									alt={`${c.name} logo`}
+								/>
+							</div>
+
+							<div className={styles.competitionName}>{c.name}</div>
+						</div>
+					))}
+					<div className={`${styles.competitionCard} ${styles.addCompetition}`}>
+						<CirclePlus className={styles.addCompetitionIcon} />
 					</div>
-					<div>{c.name}</div>
 				</div>
-			))}
-			<div className={styles.competitionCard}>
-				<PlusCircle />
+				<ChevronRight />
 			</div>
-		</section>
+			<div className={styles.paginationContainer}>
+				<div className={styles.paginationElement}>HERE GOES PAGINATION</div>
+			</div>
+		</div>
 	);
 }
