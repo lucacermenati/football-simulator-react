@@ -2,9 +2,11 @@ import { useQuery } from '@tanstack/react-query';
 import { useAuth } from '../../auth/useAuth';
 import { apiRequest } from '../../api/apiClient';
 import type { Competition, PaginatedData } from '../../types/api';
-import styles from './Competitions.module.scss';
+import styles from './competitions.module.scss';
 import { useState } from 'react';
 import { ChevronLeft, ChevronRight, CirclePlus } from 'lucide-react';
+import clsx from 'clsx';
+import CompetitionCard from './components/competition-card';
 
 export default function Competitions() {
 	const { token } = useAuth();
@@ -38,29 +40,37 @@ export default function Competitions() {
 	return (
 		<div className={styles.page}>
 			<div className={styles.content}>
-				<ChevronLeft className={styles.addCompetitionIcon} />
+				<ChevronLeft
+					className={clsx(
+						styles.icon,
+						paginatedCompetitions.isPending || links.prev === null
+							? styles.iconDisabled
+							: '',
+					)}
+					onClick={() => setPage(Math.max(page - 1, 1))}
+				/>
 				<div className={styles.competitionContainer}>
 					{competitions?.map((c) => (
-						<div key={c.id} className={styles.competitionCard}>
-							<div className={styles.logoContainer}>
-								<img
-									className={styles.competitionLogo}
-									src={c.logo}
-									alt={`${c.name} logo`}
-								/>
-							</div>
-
-							<div className={styles.competitionName}>{c.name}</div>
-						</div>
+						<CompetitionCard key={c.id} competition={c} />
 					))}
-					<div className={`${styles.competitionCard} ${styles.addCompetition}`}>
-						<CirclePlus className={styles.addCompetitionIcon} />
+					<div className={clsx(styles.competitionCard, styles.addCompetition)}>
+						<CirclePlus className={styles.icon} />
 					</div>
 				</div>
-				<ChevronRight className={styles.addCompetitionIcon} />
+				<ChevronRight
+					className={clsx(
+						styles.icon,
+						paginatedCompetitions.isPending || links.next === null
+							? styles.iconDisabled
+							: '',
+					)}
+					onClick={() => setPage(Math.min(page + 1, meta?.last_page || 1))}
+				/>
 			</div>
 			<div className={styles.paginationContainer}>
-				<div className={styles.paginationElement}>HERE GOES PAGINATION</div>
+				<div className={styles.paginationElement}>
+					HERE GOES PAGINATION BALLETJES
+				</div>
 			</div>
 		</div>
 	);
