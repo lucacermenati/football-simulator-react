@@ -16,8 +16,6 @@ export default function Pagination({
 	const chevronLeft = links?.shift();
 	const chevronRight = links?.pop();
 
-	console.log({ chevronLeft, links, chevronRight });
-
 	return (
 		<div
 			className={clsx(style.pagination, disableChevrons && style.noChevrons)}
@@ -34,6 +32,7 @@ export default function Pagination({
 			)}
 			{links?.map((link) => (
 				<span
+					key={link.url}
 					onClick={() => onLinkClicked(link)}
 					className={clsx(style.page, link.active && style.activePage)}
 				>

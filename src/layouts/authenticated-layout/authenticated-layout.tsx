@@ -2,6 +2,7 @@ import { Outlet, useLocation, useNavigate } from 'react-router';
 import { useAuth } from '../../auth/useAuth';
 import styles from './authenticated-layout.module.scss';
 import { LogOut, ShieldHalf, Trophy, UserCircle, Users } from 'lucide-react';
+import MenuItem from '../../components/menu-item/menu-item';
 
 export default function AuthenticatedLayout() {
 	const { handleLogout, isLogoutPending } = useAuth();
@@ -18,40 +19,35 @@ export default function AuthenticatedLayout() {
 		<section className={styles.layout}>
 			<aside className={styles.sidebar}>
 				<div className={styles.iconsContainer}>
-					<Trophy
-						className={
-							location.pathname === '/competitions'
-								? styles.activeIcon
-								: styles.icon
-						}
+					<MenuItem
+						isActive={location.pathname === '/competitions'}
 						onClick={() => navigate('/competitions')}
-					/>
-					<ShieldHalf
-						className={
-							location.pathname === '/teams' ? styles.activeIcon : styles.icon
-						}
+					>
+						<Trophy />
+					</MenuItem>
+					<MenuItem
+						isActive={location.pathname === '/teams'}
 						onClick={() => navigate('/teams')}
-					/>
-					<Users
-						className={
-							location.pathname === '/players' ? styles.activeIcon : styles.icon
-						}
+					>
+						<ShieldHalf />
+					</MenuItem>
+					<MenuItem
+						isActive={location.pathname === '/players'}
 						onClick={() => navigate('/players')}
-					/>
+					>
+						<Users />
+					</MenuItem>
 				</div>
 				<div className={styles.iconsContainer}>
-					<UserCircle
-						className={
-							location.pathname === '/profile' ? styles.activeIcon : styles.icon
-						}
+					<MenuItem
+						isActive={location.pathname === '/profile'}
 						onClick={() => navigate('/profile')}
-					/>
-					<LogOut
-						className={
-							location.pathname === '/logout' ? styles.activeIcon : styles.icon
-						}
-						onClick={() => logout()}
-					/>
+					>
+						<UserCircle />
+					</MenuItem>
+					<MenuItem isActive={false} onClick={logout}>
+						<LogOut />
+					</MenuItem>
 				</div>
 			</aside>
 

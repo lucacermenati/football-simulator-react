@@ -1,0 +1,20 @@
+.item {
+	color: var(--primary-white);
+	width: 100%;
+	padding-left: 1rem;
+	padding-right: 1rem;
+	cursor: pointer;
+
+	&:hover {
+		color: var(--hover-yellow);
+	}
+}
+
+.activeItem {
+	border-right: 3px solid var(--active-yellow);
+	color: var(--active-yellow);
+
+	&:hover {
+		color: var(--active-yellow);
+	}
+}

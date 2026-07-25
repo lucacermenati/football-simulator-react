@@ -34,13 +34,13 @@
 }
 
 .activePage {
-	color: var(--highlight-yellow);
-	border-color: var(--highlight-yellow);
+	color: var(--active-yellow);
+	border-color: var(--active-yellow);
 	cursor: auto;
 
 	&:hover {
-		color: var(--highlight-yellow);
-		border-color: var(--highlight-yellow);
+		color: var(--active-yellow);
+		border-color: var(--active-yellow);
 	}
 }
 

@@ -13,9 +13,10 @@
 	overflow-y: auto;
 
 	background-color: var(--primary-black);
+	border: 1px solid var(--primary-black);
 
-	border-top-right-radius: 6px;
-	border-bottom-right-radius: 6px;
+	border-top-right-radius: var(--border-radius);
+	border-bottom-right-radius: var(--border-radius);
 
 	display: flex;
 	flex-direction: column;
@@ -24,8 +25,8 @@
 
 	padding-top: 2rem;
 	padding-bottom: 2rem;
-	padding-left: 1rem;
-	padding-right: 1rem;
+	// padding-left: 1rem;
+	// padding-right: 1rem;
 }
 
 .main {
@@ -34,19 +35,6 @@
 	padding-bottom: 1.5rem;
 	padding-left: 2rem;
 	padding-right: 2rem;
-}
-
-.icon {
-	color: var(--primary-white);
-	cursor: pointer;
-	&:hover {
-		color: var(--primary-gray);
-	}
-}
-
-.activeIcon {
-	color: var(--highlight-yellow);
-	cursor: pointer;
 }
 
 .iconsContainer {
