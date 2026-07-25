@@ -13,6 +13,8 @@
 .content {
 	display: flex;
 	align-items: center;
+	padding-left: 2rem;
+	padding-right: 2rem;
 
 	min-width: 0;
 	min-height: 0;
@@ -49,6 +51,12 @@
 	background: var(--primary-white);
 
 	overflow: hidden;
+
+	cursor: pointer;
+
+	&:hover {
+		color: var(--primary-gray);
+	}
 }
 
 .icon {
@@ -58,9 +66,31 @@
 	cursor: pointer;
 }
 
-.iconDisabled {
-	color: var(--primary-gray);
+.chevron {
+	flex-shrink: 0;
+	background-color: var(--primary-black);
+	color: var(--primary-white);
+
+	border: 1px solid var(--primary-black);
+	border-radius: var(--border-radius-full);
+
+	width: 3rem;
+	height: 3rem;
+
+	cursor: pointer;
+
+	&:hover {
+		color: var(--primary-gray);
+	}
+}
+
+.chevronDisabled {
+	background-color: var(--primary-gray);
+	border: 1px solid var(--primary-gray);
 	cursor: auto;
+	&:hover {
+		color: var(--primary-white);
+	}
 }
 
 .paginationContainer {

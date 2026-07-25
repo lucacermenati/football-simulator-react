@@ -1,8 +1,21 @@
 :root {
+	/* Base */
 	--primary-black: #171717;
 	--primary-white: #ffffff;
+
+	/* Background */
+	--background-light-gray: #f5f5f5;
+
+	/* Interactive states */
+	--hover-gray: #333333;
+	--active-gray: #4a4a4a;
+	--disabled-gray: #a3a3a3;
+
+	/* UI */
+	--border-gray: #d4d4d4;
+	--text-gray: #737373;
+
+	/* Legacy colors - to be removed */
 	--primary-gray: #888888;
 	--highlight-yellow: #f5c518;
-
-	--background-light-gray: #f5f5f5;
 }

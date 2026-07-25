@@ -87,7 +87,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 		isError: isLoginFailed,
 	} = useMutation<BearerTokenResource, Error, LoginCredentials>({
 		mutationFn: (credentials: LoginCredentials) =>
-			apiRequest<BearerTokenResource>('/api/token', {
+			apiRequest<BearerTokenResource>('token', {
 				method: 'POST',
 				body: credentials,
 			}),

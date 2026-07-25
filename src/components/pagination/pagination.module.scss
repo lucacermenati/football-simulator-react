@@ -1,0 +1,60 @@
+.pagination {
+	display: flex;
+	// align-items: center;
+	justify-content: center;
+	gap: 0.75rem;
+
+	border: 1px solid var(--primary-black);
+	background-color: var(--primary-black);
+	border-radius: var(--border-radius);
+	padding: 0.25rem;
+}
+
+.page {
+	color: var(--primary-white);
+	cursor: pointer;
+	border: 1px solid var(--primary-white);
+	width: 1.5rem;
+	height: 1.5rem;
+	border-radius: var(--border-radius-full);
+
+	//Align text in the center of the ball
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	&:hover {
+		color: var(--primary-gray);
+		border-color: var(--primary-gray);
+	}
+}
+
+.noChevrons {
+	padding-inline: 0.75rem;
+}
+
+.activePage {
+	color: var(--highlight-yellow);
+	border-color: var(--highlight-yellow);
+	cursor: auto;
+
+	&:hover {
+		color: var(--highlight-yellow);
+		border-color: var(--highlight-yellow);
+	}
+}
+
+.chevron {
+	color: var(--primary-white);
+	cursor: pointer;
+}
+
+.activeChevron {
+	color: var(--primary-white);
+	cursor: pointer;
+}
+
+.disabledChevron {
+	color: var(--primary-gray);
+	cursor: auto;
+}

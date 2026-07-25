@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { ChevronLeft, ChevronRight, CirclePlus } from 'lucide-react';
 import clsx from 'clsx';
 import CompetitionCard from './components/competition-card';
+import Pagination from '../../components/pagination/pagination';
 
 export default function Competitions() {
 	const { token } = useAuth();
@@ -42,9 +43,9 @@ export default function Competitions() {
 			<div className={styles.content}>
 				<ChevronLeft
 					className={clsx(
-						styles.icon,
+						styles.chevron,
 						paginatedCompetitions.isPending || links.prev === null
-							? styles.iconDisabled
+							? styles.chevronDisabled
 							: '',
 					)}
 					onClick={() => setPage(Math.max(page - 1, 1))}
@@ -59,9 +60,9 @@ export default function Competitions() {
 				</div>
 				<ChevronRight
 					className={clsx(
-						styles.icon,
+						styles.chevron,
 						paginatedCompetitions.isPending || links.next === null
-							? styles.iconDisabled
+							? styles.chevronDisabled
 							: '',
 					)}
 					onClick={() => setPage(Math.min(page + 1, meta?.last_page || 1))}
@@ -69,7 +70,17 @@ export default function Competitions() {
 			</div>
 			<div className={styles.paginationContainer}>
 				<div className={styles.paginationElement}>
-					HERE GOES PAGINATION BALLETJES
+					<Pagination
+						meta={meta}
+						onLinkClicked={(link) => {
+							const url = new URL(link.url);
+							const page = url.searchParams.get('page');
+							if (page) {
+								setPage(parseInt(page));
+							}
+						}}
+						disableChevrons={true}
+					/>
 				</div>
 			</div>
 		</div>

@@ -44,22 +44,26 @@ export type Link = {
 	active: boolean;
 };
 
+export type PaginationLinks = {
+	first: string;
+	last: string;
+	prev: string | null;
+	next: string | null;
+};
+
+export type PaginationMeta = {
+	current_page: number;
+	from: number;
+	last_page: number;
+	per_page: number;
+	to: number;
+	total: number;
+	path: string;
+	links: Link[];
+};
+
 export type PaginatedData<T> = {
 	data: T[];
-	links: {
-		first: string;
-		last: string;
-		prev: string | null;
-		next: string | null;
-	};
-	meta: {
-		current_page: number;
-		from: number;
-		last_page: number;
-		per_page: number;
-		to: number;
-		total: number;
-		path: string;
-		links: Link[];
-	};
+	links: PaginationLinks;
+	meta: PaginationMeta;
 };
