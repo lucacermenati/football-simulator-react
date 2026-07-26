@@ -55,7 +55,7 @@ export default function Competitions() {
 						<CompetitionCard key={c.id} competition={c} />
 					))}
 					<div className={clsx(styles.competitionCard, styles.addCompetition)}>
-						<CirclePlus className={styles.icon} />
+						<CirclePlus className={styles.plus} />
 					</div>
 				</div>
 				<ChevronRight

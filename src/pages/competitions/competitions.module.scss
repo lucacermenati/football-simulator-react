@@ -46,16 +46,21 @@
 	justify-content: center;
 	box-sizing: border-box;
 
-	border: 1px solid var(--primary-gray);
-	border-radius: 6px;
-	background: var(--primary-white);
+	background: var(--primary-black);
+	border: 1px solid var(--primary-black);
+	border-radius: var(--border-radius);
 
 	overflow: hidden;
 
 	cursor: pointer;
 
 	&:hover {
-		color: var(--primary-gray);
+		color: var(--hover-yellow);
+		background-color: var(--hover-gray);
+
+		.plus {
+			color: var(--hover-yellow);
+		}
 	}
 }
 
@@ -64,6 +69,12 @@
 	height: 2rem;
 	color: var(--primary-black);
 	cursor: pointer;
+}
+
+.plus {
+	width: 10rem;
+	height: 2rem;
+	color: var(--primary-white);
 }
 
 .chevron {
