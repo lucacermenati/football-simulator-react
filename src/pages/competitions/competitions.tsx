@@ -8,9 +8,12 @@ import { ChevronLeft, ChevronRight, CirclePlus } from 'lucide-react';
 import clsx from 'clsx';
 import CompetitionCard from './components/competition-card';
 import Pagination from '../../components/pagination/pagination';
+import Modal from '../../components/modal/modal';
 
 export default function Competitions() {
 	const { token } = useAuth();
+
+	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	const [page, setPage] = useState<number>(1);
 	const [perPage, setPerPage] = useState<number>(11);
@@ -54,7 +57,10 @@ export default function Competitions() {
 					{competitions?.map((c) => (
 						<CompetitionCard key={c.id} competition={c} />
 					))}
-					<div className={clsx(styles.competitionCard, styles.addCompetition)}>
+					<div
+						onClick={() => setIsModalOpen(true)}
+						className={clsx(styles.competitionCard, styles.addCompetition)}
+					>
 						<CirclePlus className={styles.plus} />
 					</div>
 				</div>
@@ -83,6 +89,17 @@ export default function Competitions() {
 					/>
 				</div>
 			</div>
+			{isModalOpen && (
+				<Modal
+					title='Create a Competition'
+					description='Fill in the details to create a new competition.'
+					onCancel={() => setIsModalOpen(false)}
+					onSubmit={() => {}}
+					isSubmitting={false}
+				>
+					<p>Here I will place the form to create a new competition.</p>
+				</Modal>
+			)}
 		</div>
 	);
 }

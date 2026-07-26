@@ -13,11 +13,10 @@ export default function App() {
 
 			<Route element={<ProtectedRoute />}>
 				<Route element={<AuthenticatedLayout />}>
-					<Route path='/profile' element={<Profile />} />
-
 					<Route path='/competitions' element={<Competitions />} />
 					<Route path='/teams' element={<NotFound />} />
 					<Route path='/players' element={<NotFound />} />
+					<Route path='/profile' element={<Profile />} />
 				</Route>
 			</Route>
 
