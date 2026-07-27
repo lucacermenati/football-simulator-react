@@ -11,6 +11,11 @@ export type LoginCredentials = {
 	password: string;
 };
 
+export type CreateCompetitionRequest = {
+	name: string;
+	description: string;
+};
+
 // Responses
 export type NoContentResponse = object;
 

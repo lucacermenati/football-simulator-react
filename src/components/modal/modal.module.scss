@@ -10,11 +10,11 @@
 
 	padding: 1rem;
 
-	background-color: rgb(0 0 0 / 60%);
+	background-color: rgb(0 0 0 / 75%);
 }
 
 .modal {
-	width: 85vw;
+	max-width: 85vw;
 	max-height: 85vh;
 
 	display: grid;

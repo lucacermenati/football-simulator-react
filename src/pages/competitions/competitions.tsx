@@ -8,7 +8,7 @@ import { ChevronLeft, ChevronRight, CirclePlus } from 'lucide-react';
 import clsx from 'clsx';
 import CompetitionCard from './components/competition-card';
 import Pagination from '../../components/pagination/pagination';
-import Modal from '../../components/modal/modal';
+import CreateCompetition from './components/create-competition/create-competition';
 
 export default function Competitions() {
 	const { token } = useAuth();
@@ -76,30 +76,22 @@ export default function Competitions() {
 			</div>
 			<div className={styles.paginationContainer}>
 				<div className={styles.paginationElement}>
-					<Pagination
-						meta={meta}
-						onLinkClicked={(link) => {
-							const url = new URL(link.url);
-							const page = url.searchParams.get('page');
-							if (page) {
-								setPage(parseInt(page));
-							}
-						}}
-						disableChevrons={true}
-					/>
+					{meta?.last_page > 1 && (
+						<Pagination
+							meta={meta}
+							onLinkClicked={(link) => {
+								const url = new URL(link.url);
+								const page = url.searchParams.get('page');
+								if (page) {
+									setPage(parseInt(page));
+								}
+							}}
+							disableChevrons={true}
+						/>
+					)}
 				</div>
 			</div>
-			{isModalOpen && (
-				<Modal
-					title='Create a Competition'
-					description='Fill in the details to create a new competition.'
-					onCancel={() => setIsModalOpen(false)}
-					onSubmit={() => {}}
-					isSubmitting={false}
-				>
-					<p>Here I will place the form to create a new competition.</p>
-				</Modal>
-			)}
+			{isModalOpen && <CreateCompetition setIsModalOpen={setIsModalOpen} />}
 		</div>
 	);
 }
