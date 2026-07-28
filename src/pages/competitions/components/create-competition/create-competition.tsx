@@ -1,13 +1,11 @@
-import { useForm } from 'react-hook-form';
+import { useForm, type SubmitHandler } from 'react-hook-form';
 import Modal from '../../../../components/modal/modal';
 import {
 	type Competition,
 	type CreateCompetitionRequest,
-	type NoContentResponse,
 } from '../../../../types/api';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { apiRequest } from '../../../../api/apiClient';
-import { useCallback } from 'react';
+import { ApiError, apiRequest } from '../../../../api/apiClient';
 import { useAuth } from '../../../../auth/useAuth';
 
 export default function CreateCompetition({
@@ -21,6 +19,7 @@ export default function CreateCompetition({
 	const {
 		register,
 		handleSubmit,
+		setError,
 		formState: { errors, isSubmitting },
 	} = useForm<CreateCompetitionRequest>({
 		defaultValues: {
@@ -29,11 +28,11 @@ export default function CreateCompetition({
 		},
 	});
 
-	const {
-		mutateAsync: createCompetitionAsync,
-		isPending,
-		isError,
-	} = useMutation<Competition, Error, CreateCompetitionRequest>({
+	const { mutateAsync: createCompetitionAsync } = useMutation<
+		Competition,
+		ApiError,
+		CreateCompetitionRequest
+	>({
 		mutationFn: (data) =>
 			apiRequest<Competition>('competitions', {
 				method: 'POST',
@@ -41,8 +40,8 @@ export default function CreateCompetition({
 				token: token,
 			}),
 
-		onSuccess: () => {
-			queryClient.invalidateQueries({
+		onSuccess: async () => {
+			await queryClient.invalidateQueries({
 				queryKey: ['competitions'],
 			});
 
@@ -50,16 +49,31 @@ export default function CreateCompetition({
 		},
 
 		onError: (error) => {
-			console.log(error);
+			const validationErrors = error.data?.errors;
+
+			if (!validationErrors) {
+				setError('root.server', {
+					type: 'server',
+					message: error.message,
+				});
+
+				return;
+			}
+
+			Object.entries(validationErrors).forEach(([field, messages]) => {
+				setError(field as keyof CreateCompetitionRequest, {
+					type: 'server',
+					message: messages[0],
+				});
+			});
 		},
 	});
 
-	const createCompetition = useCallback(
-		async (competition: CreateCompetitionRequest) => {
-			await createCompetitionAsync(competition);
-		},
-		[createCompetitionAsync],
-	);
+	const createCompetition: SubmitHandler<CreateCompetitionRequest> = async (
+		data,
+	) => {
+		await createCompetitionAsync(data);
+	};
 
 	return (
 		<Modal
@@ -67,7 +81,7 @@ export default function CreateCompetition({
 			description='Fill in the details to create a new competition.'
 			onCancel={() => setIsModalOpen(false)}
 			onSubmit={handleSubmit(createCompetition)}
-			isSubmitting={false}
+			isSubmitting={isSubmitting}
 		>
 			<form>
 				<div>
@@ -77,7 +91,7 @@ export default function CreateCompetition({
 				</div>
 				<div>
 					<label>Description</label>
-					<input type='text' {...register('description')} />
+					<textarea {...register('description')} />
 					{errors.description && <p>{errors.description.message}</p>}
 				</div>
 			</form>

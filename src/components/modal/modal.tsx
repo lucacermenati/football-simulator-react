@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 export default function Modal({
 	children,
 	title,
-	description = null,
+	description = '',
 	onCancel,
 	onSubmit,
 	isSubmitting = false,
