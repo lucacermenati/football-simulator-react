@@ -1,6 +1,7 @@
 import { createPortal } from 'react-dom';
 import styles from './modal.module.scss';
 import { useEffect } from 'react';
+import { Button } from '../form';
 
 export default function Modal({
 	children,
@@ -60,23 +61,20 @@ export default function Modal({
 				<div className={styles.content}>{children}</div>
 
 				<footer className={styles.footer}>
-					<button
-						type='button'
-						className={styles.cancelButton}
+					<Button
+						variant='secondary'
+						isDisabled={isSubmitting}
 						onClick={onCancel}
-						disabled={isSubmitting}
 					>
 						{cancelText}
-					</button>
-
-					<button
-						type='button'
-						className={styles.submitButton}
+					</Button>
+					<Button
+						variant='primary'
+						isDisabled={isSubmitting}
 						onClick={onSubmit}
-						disabled={isSubmitting}
 					>
 						{submitText}
-					</button>
+					</Button>
 				</footer>
 			</div>
 		</div>,

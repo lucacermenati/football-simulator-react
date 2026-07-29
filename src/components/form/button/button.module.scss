@@ -1,0 +1,29 @@
+.button {
+	min-width: 6rem;
+
+	padding: 0.75rem 1rem;
+
+	border: none;
+	border-radius: 0.5rem;
+
+	text-transform: uppercase;
+
+	font-size: 0.75rem;
+	font-weight: 600;
+
+	cursor: pointer;
+
+	&:disabled {
+		cursor: not-allowed;
+	}
+}
+
+.primary {
+	background-color: var(--primary-black);
+	color: var(--primary-white);
+}
+
+.secondary {
+	background-color: var(--disabled-gray);
+	color: var(--primary-black);
+}

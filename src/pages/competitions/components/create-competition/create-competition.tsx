@@ -6,7 +6,8 @@ import {
 } from '../../../../types/api';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ApiError, apiRequest } from '../../../../api/apiClient';
-import { Form } from '../../../../components/form';
+import { Field, Form } from '../../../../components/form';
+import { fieldErrorToMessage } from '../../../../utils/fieldErrorToMessage';
 
 export default function CreateCompetition({
 	setIsModalOpen,
@@ -49,6 +50,8 @@ export default function CreateCompetition({
 		onError: (error) => {
 			const validationErrors = error.data?.errors;
 
+			console.log(validationErrors);
+
 			if (!validationErrors) {
 				setError('root.server', {
 					type: 'server',
@@ -62,6 +65,9 @@ export default function CreateCompetition({
 				setError(field as keyof CreateCompetitionRequest, {
 					type: 'server',
 					message: messages[0],
+					types: {
+						server: messages,
+					},
 				});
 			});
 		},
@@ -81,17 +87,17 @@ export default function CreateCompetition({
 			onSubmit={handleSubmit(createCompetition)}
 			isSubmitting={isSubmitting}
 		>
-			<Form>
-				<div>
-					<label>Name</label>
+			<Form disabled={isSubmitting}>
+				<Field id='name' label='Name' error={fieldErrorToMessage(errors.name)}>
 					<input type='text' {...register('name')} />
-					{errors.name && <p>{errors.name.message}</p>}
-				</div>
-				<div>
-					<label>Description</label>
+				</Field>
+				<Field
+					id='description'
+					label='Description'
+					error={errors.description?.message}
+				>
 					<textarea {...register('description')} />
-					{errors.description && <p>{errors.description.message}</p>}
-				</div>
+				</Field>
 			</Form>
 		</Modal>
 	);

@@ -1,0 +1,15 @@
+.errorField {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.errorItem {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.errorText {
+	color: var(--error-color);
+}
