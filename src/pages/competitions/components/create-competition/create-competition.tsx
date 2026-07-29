@@ -6,6 +6,7 @@ import {
 } from '../../../../types/api';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ApiError, apiRequest } from '../../../../api/apiClient';
+import { Form } from '../../../../components/form';
 
 export default function CreateCompetition({
 	setIsModalOpen,
@@ -80,7 +81,7 @@ export default function CreateCompetition({
 			onSubmit={handleSubmit(createCompetition)}
 			isSubmitting={isSubmitting}
 		>
-			<form>
+			<Form>
 				<div>
 					<label>Name</label>
 					<input type='text' {...register('name')} />
@@ -91,7 +92,7 @@ export default function CreateCompetition({
 					<textarea {...register('description')} />
 					{errors.description && <p>{errors.description.message}</p>}
 				</div>
-			</form>
+			</Form>
 		</Modal>
 	);
 }
