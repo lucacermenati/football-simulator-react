@@ -13,7 +13,7 @@ export default function ErrorText({
 		<div className={clsx(style.errorField, className)}>
 			{Array.of(children).map((error, index) => (
 				<div className={style.errorItem} key={index}>
-					<CircleAlert className={style.errorText} />
+					<CircleAlert className={style.errorIcon} />
 					<div className={style.errorText}>{error}</div>
 				</div>
 			))}
