@@ -1,0 +1,13 @@
+.textarea {
+	min-height: 15rem;
+	min-width: 30rem;
+
+	&::placeholder {
+		color: var(--text-gray);
+	}
+
+	&:focus {
+		outline: none;
+		border-color: var(--active-gray);
+	}
+}

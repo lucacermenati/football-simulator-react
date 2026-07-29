@@ -14,6 +14,7 @@ export type LoginCredentials = {
 export type CreateCompetitionRequest = {
 	name: string;
 	description: string;
+	logo: FileList | null;
 };
 
 // Responses

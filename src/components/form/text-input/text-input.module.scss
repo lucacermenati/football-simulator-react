@@ -1,0 +1,22 @@
+.input {
+	min-height: 2rem;
+
+	border: 1px solid var(--primary-black);
+
+	&::placeholder {
+		color: var(--text-gray);
+	}
+
+	&:focus {
+		outline: none;
+		border-color: var(--active-gray);
+	}
+
+	&.error {
+		border-color: var(--error-color);
+	}
+
+	&.error:focus {
+		border-color: var(--error-color);
+	}
+}

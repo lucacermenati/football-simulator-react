@@ -33,12 +33,14 @@ export async function apiRequest<T>(
 	const { method = 'GET', body, headers = {} } = options;
 	const token = tokenStore.get();
 
+	const isFormData = body instanceof FormData;
+
 	const response = await fetch(`${API_URL}${path}`, {
 		method,
 		headers: {
 			Accept: 'application/json',
 
-			...(body !== undefined
+			...(!isFormData && body !== undefined
 				? {
 						'Content-Type': 'application/json',
 					}
@@ -53,11 +55,11 @@ export async function apiRequest<T>(
 			...headers,
 		},
 
-		body: body !== undefined ? JSON.stringify(body) : undefined,
+		body:
+			body === undefined ? undefined : isFormData ? body : JSON.stringify(body),
 	});
 
 	const contentType = response.headers.get('content-type');
-
 	const hasJsonResponse = contentType?.includes('application/json');
 
 	const data: unknown = hasJsonResponse ? await response.json() : null;

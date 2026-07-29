@@ -13,7 +13,7 @@ import CreateCompetition from './components/create-competition/create-competitio
 export default function Competitions() {
 	const { isAuthenticated } = useAuth();
 
-	const [isModalOpen, setIsModalOpen] = useState(true);
+	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	const [page, setPage] = useState<number>(1);
 	const [perPage, setPerPage] = useState<number>(11);
