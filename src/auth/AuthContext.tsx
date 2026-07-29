@@ -15,8 +15,7 @@ import type {
 } from '../types/api';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { apiRequest } from '../api/apiClient';
-
-const TOKEN_STORAGE_KEY = 'football-app-simulator-token';
+import { tokenStore } from '../api/tokenStore';
 
 export type AuthContextValue = {
 	token: string | null;
@@ -42,7 +41,7 @@ export const AuthContext = createContext<AuthContextValue | null>(null);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
 	const [token, setToken] = useState<string | null>(() => {
-		return localStorage.getItem(TOKEN_STORAGE_KEY);
+		return tokenStore.get();
 	});
 
 	const {
@@ -51,7 +50,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 		isError: isRegistrationFailed,
 	} = useMutation<BearerTokenResource, Error, RegistrationRequest>({
 		mutationFn: (registrationData: RegistrationRequest) =>
-			apiRequest<BearerTokenResource>('/api/register', {
+			apiRequest<BearerTokenResource>('register', {
 				method: 'POST',
 				body: registrationData,
 			}),
@@ -63,7 +62,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 				throw new Error('The backend did not return a token.');
 			}
 
-			localStorage.setItem(TOKEN_STORAGE_KEY, receivedToken);
+			tokenStore.set(receivedToken);
 
 			setToken(receivedToken);
 		},
@@ -99,7 +98,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 				throw new Error('The backend did not return a token.');
 			}
 
-			localStorage.setItem(TOKEN_STORAGE_KEY, receivedToken);
+			tokenStore.set(receivedToken);
 
 			setToken(receivedToken);
 		},
@@ -123,7 +122,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 		void
 	>({
 		mutationFn: () =>
-			apiRequest<NoContentResponse>('/api/token', {
+			apiRequest<NoContentResponse>('token', {
 				method: 'DELETE',
 			}),
 
@@ -144,13 +143,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 	const userQuery = useQuery<User, Error>({
 		queryKey: ['user', token],
 
-		queryFn: () => apiRequest<User>('user', { token }),
+		queryFn: () => apiRequest<User>('user'),
 
-		enabled: token !== null,
+		enabled: !!token,
 	});
 
 	const clearToken = useCallback(() => {
-		localStorage.removeItem(TOKEN_STORAGE_KEY);
+		tokenStore.clear();
 		setToken(null);
 	}, []);
 
@@ -166,7 +165,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 		() => ({
 			token,
 			user: userQuery.data,
-			isAuthenticated: token !== null,
+			isAuthenticated: !!token,
 			isUserPending: userQuery.isPending,
 			isUserFailed: userQuery.isError,
 			handleRegistration,

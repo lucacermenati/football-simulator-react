@@ -6,14 +6,12 @@ import {
 } from '../../../../types/api';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ApiError, apiRequest } from '../../../../api/apiClient';
-import { useAuth } from '../../../../auth/useAuth';
 
 export default function CreateCompetition({
 	setIsModalOpen,
 }: {
 	setIsModalOpen: (state: boolean) => void;
 }) {
-	const { token } = useAuth();
 	const queryClient = useQueryClient();
 
 	const {
@@ -37,7 +35,6 @@ export default function CreateCompetition({
 			apiRequest<Competition>('competitions', {
 				method: 'POST',
 				body: data,
-				token: token,
 			}),
 
 		onSuccess: async () => {

@@ -11,7 +11,7 @@ import Pagination from '../../components/pagination/pagination';
 import CreateCompetition from './components/create-competition/create-competition';
 
 export default function Competitions() {
-	const { token } = useAuth();
+	const { isAuthenticated } = useAuth();
 
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -29,12 +29,9 @@ export default function Competitions() {
 		queryFn: () =>
 			apiRequest<PaginatedData<Competition>>(
 				`competitions?${params.toString()}`,
-				{
-					token,
-				},
 			),
 
-		enabled: !!token,
+		enabled: isAuthenticated,
 	});
 
 	const competitions = paginatedCompetitions.data?.data;

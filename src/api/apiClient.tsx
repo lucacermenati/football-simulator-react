@@ -1,11 +1,11 @@
 import type { ApiErrorResponse } from '../types/api';
+import { tokenStore } from './tokenStore';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
 type ApiRequestOptions = {
 	method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 	body?: unknown;
-	token?: string | null;
 	headers?: Record<string, string>;
 };
 
@@ -30,7 +30,8 @@ export async function apiRequest<T>(
 	path: string,
 	options: ApiRequestOptions = {},
 ): Promise<T> {
-	const { method = 'GET', body, token, headers = {} } = options;
+	const { method = 'GET', body, headers = {} } = options;
+	const token = tokenStore.get();
 
 	const response = await fetch(`${API_URL}${path}`, {
 		method,
