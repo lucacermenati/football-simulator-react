@@ -55,9 +55,6 @@
 	cursor: pointer;
 
 	&:hover {
-		color: var(--hover-yellow);
-		background-color: var(--hover-gray);
-
 		.plus {
 			color: var(--hover-yellow);
 		}
@@ -82,7 +79,6 @@
 	background-color: var(--primary-black);
 	color: var(--primary-white);
 
-	border: 1px solid var(--primary-black);
 	border-radius: var(--border-radius-full);
 
 	width: 3rem;
@@ -91,14 +87,14 @@
 	cursor: pointer;
 
 	&:hover {
-		color: var(--primary-gray);
+		color: var(--hover-yellow);
 	}
 }
 
 .chevronDisabled {
-	background-color: var(--primary-gray);
-	border: 1px solid var(--primary-gray);
 	cursor: auto;
+	background-color: var(--disabled-white);
+
 	&:hover {
 		color: var(--primary-white);
 	}

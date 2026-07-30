@@ -2,6 +2,9 @@
 	min-height: 2rem;
 
 	border: 1px solid var(--primary-black);
+	border-radius: var(--border-radius);
+
+	padding: 0.5rem;
 
 	&::placeholder {
 		color: var(--text-gray);

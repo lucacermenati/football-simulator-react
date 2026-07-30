@@ -6,7 +6,7 @@ import styles from './competitions.module.scss';
 import { useState } from 'react';
 import { ChevronLeft, ChevronRight, CirclePlus } from 'lucide-react';
 import clsx from 'clsx';
-import CompetitionCard from './components/competition-card';
+import CompetitionCard from './components/competition-card/competition-card';
 import Pagination from '../../components/pagination/pagination';
 import CreateCompetition from './components/create-competition/create-competition';
 

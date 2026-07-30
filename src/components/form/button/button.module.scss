@@ -3,7 +3,7 @@
 
 	padding: 0.75rem 1rem;
 
-	border: none;
+	border: 1px solid var(--primary-black);
 	border-radius: 0.5rem;
 
 	text-transform: uppercase;
@@ -21,10 +21,25 @@
 .primary {
 	background-color: var(--primary-black);
 	color: var(--primary-white);
+
+	&:hover {
+		background-color: var(--hover-gray);
+	}
+
+	&:disabled {
+		background-color: var(--disabled-gray);
+	}
 }
 
 .secondary {
 	background-color: var(--primary-white);
-	border: 1px solid var(--primary-black);
 	color: var(--primary-black);
+
+	&:hover {
+		background-color: var(--hover-white);
+	}
+
+	&:disabled {
+		background-color: var(--disabled-white);
+	}
 }
