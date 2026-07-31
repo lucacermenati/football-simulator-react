@@ -109,6 +109,7 @@ export default function CreateCompetition({
 					label='Logo'
 					error={fieldErrorToMessage(errors.logo)}
 					disabled={isSubmitting}
+					accept='image/png,image/jpeg,image/webp'
 					{...register('logo')}
 				/>
 				<TextInput
