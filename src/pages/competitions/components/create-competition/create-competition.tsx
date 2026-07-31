@@ -104,6 +104,13 @@ export default function CreateCompetition({
 			isSubmitting={isSubmitting}
 		>
 			<Form disabled={isSubmitting}>
+				<FileUpload
+					id='logo'
+					label='Logo'
+					error={fieldErrorToMessage(errors.logo)}
+					disabled={isSubmitting}
+					{...register('logo')}
+				/>
 				<TextInput
 					id='name'
 					label='Name'
@@ -117,12 +124,6 @@ export default function CreateCompetition({
 					placeholder='Competition history...'
 					error={fieldErrorToMessage(errors.description)}
 					{...register('description')}
-				/>
-				<FileUpload
-					id='logo'
-					label='Logo'
-					error={fieldErrorToMessage(errors.logo)}
-					{...register('logo')}
 				/>
 			</Form>
 		</Modal>
