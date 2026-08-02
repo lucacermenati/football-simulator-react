@@ -1,0 +1,47 @@
+.page {
+	display: flex;
+	flex-direction: column;
+	gap: 2rem;
+	min-height: 100vh;
+	padding: 1rem;
+	align-items: center;
+	justify-content: center;
+}
+
+.ballIcon {
+	width: 4rem;
+	height: 4rem;
+}
+
+.header {
+	background-color: var(--primary-black);
+	color: var(--active-yellow);
+	font-size: 1.5rem;
+	line-height: 1.2;
+	padding: 1rem;
+}
+
+.form {
+	padding: 1rem;
+}
+
+.card {
+	width: 100%;
+	max-width: 400px;
+	border: 1px solid var(--primary-black);
+	border-radius: var(--border-radius);
+	background: var(--primary-white);
+}
+
+.registerLink {
+	margin-top: 1rem;
+
+	a {
+		color: var(--text-gray);
+		text-decoration: none;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+}

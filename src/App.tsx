@@ -5,11 +5,13 @@ import Login from './pages/login/login';
 import Profile from './pages/profile/profile';
 import Competitions from './pages/competitions/competitions';
 import NotFound from './pages/not-found/not-found';
+import Register from './pages/register/register';
 
 export default function App() {
 	return (
 		<Routes>
 			<Route path='/login' element={<Login />} />
+			<Route path='/register' element={<Register />} />
 
 			<Route element={<ProtectedRoute />}>
 				<Route element={<AuthenticatedLayout />}>
