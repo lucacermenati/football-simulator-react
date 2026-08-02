@@ -15,7 +15,10 @@ export default function App() {
 
 			<Route element={<ProtectedRoute />}>
 				<Route element={<AuthenticatedLayout />}>
-					<Route path='/competitions' element={<Competitions />} />
+					<Route path='/competitions'>
+						<Route index element={<Competitions />} />
+						<Route path=':id' element={<Profile />} />
+					</Route>
 					<Route path='/teams' element={<NotFound />} />
 					<Route path='/players' element={<NotFound />} />
 					<Route path='/profile' element={<Profile />} />
