@@ -3,6 +3,10 @@ import { useForm } from 'react-hook-form';
 import { useAuth } from '../../auth/useAuth';
 import type { LoginCredentials } from '../../types/api';
 import styles from './login.module.scss';
+import { Button, Form, TextInput } from '../../components/form';
+import ErrorText from '../../components/form/error-text/error-text';
+import Loader from '../../components/loader/loader';
+import { Volleyball } from 'lucide-react';
 
 export default function Login() {
 	const { isAuthenticated, handleLogin, isLoginPending, isLoginFailed } =
@@ -25,69 +29,51 @@ export default function Login() {
 
 	return (
 		<main className={styles.page}>
+			<Volleyball className={styles.ballIcon} />
 			<section className={styles.card}>
-				<h1>Login</h1>
+				<div className={styles.header}>Login</div>
+				<Form onSubmit={handleSubmit(handleLogin)} className={styles.form}>
+					<TextInput
+						id={'email'}
+						label='Email'
+						type='email'
+						error={errors.email?.message}
+						autoComplete='email'
+						{...register('email', {
+							required: 'Email is required.',
 
-				<form className={styles.form} onSubmit={handleSubmit(handleLogin)}>
-					<label className={styles.field}>
-						Email
-						<input
-							type='email'
-							className={styles.input}
-							autoComplete='email'
-							{...register('email', {
-								required: 'Email is required.',
+							pattern: {
+								value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+								message: 'Enter a valid email address.',
+							},
+						})}
+					/>
 
-								pattern: {
-									value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-									message: 'Enter a valid email address.',
-								},
-							})}
-						/>
-						{errors.email && (
-							<p className={styles.fieldError}>{errors.email.message}</p>
-						)}
-					</label>
+					<TextInput
+						id={'password'}
+						label='Password'
+						type='password'
+						error={errors.password?.message}
+						autoComplete='current-password'
+						{...register('password', {
+							required: 'Password is required.',
+						})}
+					/>
 
-					<label className={styles.field}>
-						Password
-						<input
-							type='password'
-							className={styles.input}
-							autoComplete='current-password'
-							{...register('password', {
-								required: 'Password is required.',
+					{isLoginFailed && <ErrorText>Invalid email or password.</ErrorText>}
 
-								minLength: {
-									value: 6,
-									message: 'Password must contain at least 6 characters.',
-								},
-							})}
-						/>
-						{errors.password && (
-							<p className={styles.fieldError}>{errors.password.message}</p>
-						)}
-					</label>
-
-					{isLoginFailed && (
-						<div className={styles.error} role='alert'>
-							Invalid email or password.
-						</div>
-					)}
-
-					<button
+					<Button
 						type='submit'
-						className={styles.button}
-						disabled={isSubmitting || isLoginPending}
+						variant='primary'
+						isDisabled={isSubmitting || isLoginPending}
 					>
-						{isLoginPending ? (
-							<span className={styles.loader} aria-label='Loading' />
-						) : (
-							'Login'
-						)}
-					</button>
-				</form>
+						{isLoginPending ? <Loader /> : 'Login'}
+					</Button>
+				</Form>
 			</section>
+			<div className={styles.registerLink}>
+				<a href='/register'>Create an account</a>
+			</div>
 		</main>
 	);
 }
