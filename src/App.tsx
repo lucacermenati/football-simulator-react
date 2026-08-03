@@ -6,6 +6,7 @@ import Profile from './pages/profile/profile';
 import Competitions from './pages/competitions/competitions';
 import NotFound from './pages/not-found/not-found';
 import Register from './pages/register/register';
+import CompetitionHome from './pages/competition-home/competition-home';
 
 export default function App() {
 	return (
@@ -17,7 +18,7 @@ export default function App() {
 				<Route element={<AuthenticatedLayout />}>
 					<Route path='/competitions'>
 						<Route index element={<Competitions />} />
-						<Route path=':id' element={<Profile />} />
+						<Route path=':competitionId' element={<CompetitionHome />} />
 					</Route>
 					<Route path='/teams' element={<NotFound />} />
 					<Route path='/players' element={<NotFound />} />

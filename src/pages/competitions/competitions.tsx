@@ -9,9 +9,11 @@ import clsx from 'clsx';
 import CompetitionCard from './components/competition-card/competition-card';
 import Pagination from '../../components/pagination/pagination';
 import CreateCompetition from './components/create-competition/create-competition';
+import { useNavigate } from 'react-router';
 
 export default function Competitions() {
 	const { isAuthenticated } = useAuth();
+	const navigate = useNavigate();
 
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -52,7 +54,11 @@ export default function Competitions() {
 				/>
 				<div className={styles.competitionContainer}>
 					{competitions?.map((c) => (
-						<CompetitionCard key={c.id} competition={c} />
+						<CompetitionCard
+							key={c.id}
+							competition={c}
+							onClick={() => navigate(`/competitions/${c.id}`)}
+						/>
 					))}
 					<div
 						onClick={() => setIsModalOpen(true)}

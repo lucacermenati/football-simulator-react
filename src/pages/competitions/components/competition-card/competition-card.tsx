@@ -3,11 +3,13 @@ import styles from './competition-card.module.scss';
 
 export default function CompetitionCard({
 	competition,
+	onClick,
 }: {
 	competition: Competition;
+	onClick?: () => void;
 }) {
 	return (
-		<div className={styles.competitionCard}>
+		<div className={styles.competitionCard} onClick={onClick}>
 			<div className={styles.logoContainer}>
 				<img
 					className={styles.competitionLogo}

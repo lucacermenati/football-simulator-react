@@ -20,7 +20,7 @@ export default function AuthenticatedLayout() {
 			<aside className={styles.sidebar}>
 				<div className={styles.iconsContainer}>
 					<MenuItem
-						isActive={location.pathname === '/competitions'}
+						isActive={location.pathname.startsWith('/competitions')}
 						onClick={() => navigate('/competitions')}
 					>
 						<Trophy />
