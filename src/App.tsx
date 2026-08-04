@@ -7,6 +7,8 @@ import Competitions from './pages/competitions/competitions';
 import NotFound from './pages/not-found/not-found';
 import Register from './pages/register/register';
 import CompetitionHome from './pages/competition-home/competition-home';
+import CompetitionLayout from './layouts/competition-layout/competition-layout';
+import NotAvailable from './pages/not-available/not-available';
 
 export default function App() {
 	return (
@@ -18,10 +20,16 @@ export default function App() {
 				<Route element={<AuthenticatedLayout />}>
 					<Route path='/competitions'>
 						<Route index element={<Competitions />} />
-						<Route path=':competitionId' element={<CompetitionHome />} />
+						<Route path=':competitionId' element={<CompetitionLayout />}>
+							<Route index element={<CompetitionHome />} />
+							<Route path='standings' element={<NotAvailable />} />
+							<Route path='statistics' element={<NotAvailable />} />
+							<Route path='matches' element={<NotAvailable />} />
+							<Route path='teams' element={<NotAvailable />} />
+						</Route>
 					</Route>
-					<Route path='/teams' element={<NotFound />} />
-					<Route path='/players' element={<NotFound />} />
+					<Route path='/teams' element={<NotAvailable />} />
+					<Route path='/players' element={<NotAvailable />} />
 					<Route path='/profile' element={<Profile />} />
 				</Route>
 			</Route>
