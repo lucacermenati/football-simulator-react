@@ -1,0 +1,10 @@
+.content {
+	padding: 1.5rem;
+	box-sizing: border-box;
+
+	border: 1px solid var(--primary-black);
+	border-radius: var(--border-radius);
+	background: var(--primary-white);
+
+	overflow: hidden;
+}

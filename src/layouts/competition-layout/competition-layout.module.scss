@@ -91,3 +91,21 @@
 	display: flex;
 	gap: 1rem;
 }
+
+.actionIcon {
+	cursor: pointer;
+	color: var(--text-gray);
+
+	&:hover {
+		color: var(--hover-gray);
+	}
+}
+
+.destructiveActionIcon {
+	cursor: pointer;
+	color: var(--text-gray);
+
+	&:hover {
+		color: var(--error-color);
+	}
+}

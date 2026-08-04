@@ -1,23 +1,20 @@
-import { useForm, type SubmitHandler } from 'react-hook-form';
-import Modal from '../../../../components/modal/modal';
-import {
-	type Competition,
-	type CreateCompetitionRequest,
-} from '../../../../types/api';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { ApiError, apiRequest } from '../../../../api/apiClient';
-import {
-	TextInput,
-	TextArea,
-	Form,
-	FileUpload,
-} from '../../../../components/form';
+import { apiRequest, type ApiError } from '../../../../api/apiClient';
+import Modal from '../../../../components/modal/modal';
+import type {
+	Competition,
+	UpdateCompetitionRequest,
+} from '../../../../types/api';
+import { Form, TextArea, TextInput } from '../../../../components/form';
 import { fieldErrorToMessage } from '../../../../utils/fieldErrorToMessage';
+import { useForm, type SubmitHandler } from 'react-hook-form';
 
-export default function CreateCompetition({
-	setIsModalOpen,
+export default function CompetitionEdit({
+	competition,
+	onCancel,
 }: {
-	setIsModalOpen: (state: boolean) => void;
+	competition: Competition;
+	onCancel: () => void;
 }) {
 	const queryClient = useQueryClient();
 
@@ -26,31 +23,30 @@ export default function CreateCompetition({
 		handleSubmit,
 		setError,
 		formState: { errors, isSubmitting },
-	} = useForm<CreateCompetitionRequest>({
+	} = useForm<UpdateCompetitionRequest>({
 		defaultValues: {
-			name: '',
-			description: '',
-			logo: null,
+			name: competition.name,
+			description: competition.description || '',
 		},
 	});
 
-	const { mutateAsync: createCompetitionAsync } = useMutation<
+	const { mutateAsync: updateCompetitionAsync } = useMutation<
 		Competition,
 		ApiError,
-		FormData
+		{ id: string; data: FormData }
 	>({
-		mutationFn: (data) =>
-			apiRequest<Competition>('competitions', {
-				method: 'POST',
+		mutationFn: ({ id, data }) =>
+			apiRequest<Competition>(`competitions/${id}`, {
+				method: 'PUT',
 				body: data,
 			}),
 
 		onSuccess: async () => {
 			await queryClient.invalidateQueries({
-				queryKey: ['competitions'],
+				queryKey: ['competitions', competition.id],
 			});
 
-			setIsModalOpen(false);
+			onCancel();
 		},
 
 		onError: (error) => {
@@ -66,7 +62,7 @@ export default function CreateCompetition({
 			}
 
 			Object.entries(validationErrors).forEach(([field, messages]) => {
-				setError(field as keyof CreateCompetitionRequest, {
+				setError(field as keyof UpdateCompetitionRequest, {
 					type: 'server',
 					message: messages[0],
 					types: {
@@ -77,39 +73,28 @@ export default function CreateCompetition({
 		},
 	});
 
-	const createCompetition: SubmitHandler<CreateCompetitionRequest> = async (
+	const updateCompetition: SubmitHandler<UpdateCompetitionRequest> = async (
 		data,
 	) => {
 		const formData = new FormData();
 		formData.append('name', data.name);
 		formData.append('description', data.description);
 
-		const logo = data.logo?.[0];
-
-		if (logo) {
-			formData.append('logo', logo);
-		}
-
-		await createCompetitionAsync(formData);
+		await updateCompetitionAsync({ id: competition.id, data: formData });
 	};
 
 	return (
 		<Modal
-			title='Create a Competition'
-			description='Fill in the details to create a new competition.'
-			onCancel={() => setIsModalOpen(false)}
-			onSubmit={handleSubmit(createCompetition)}
+			title='Edit competition'
+			description='Fill in all mandatory fields to update your competition.'
+			submitText='Update'
+			onCancel={() => {
+				onCancel();
+			}}
 			isSubmitting={isSubmitting}
+			onSubmit={handleSubmit(updateCompetition)}
 		>
 			<Form disabled={isSubmitting}>
-				<FileUpload
-					id='logo'
-					label='Logo'
-					error={fieldErrorToMessage(errors.logo)}
-					disabled={isSubmitting}
-					accept='image/png,image/jpeg,image/webp'
-					{...register('logo')}
-				/>
 				<TextInput
 					id='name'
 					label='Name'

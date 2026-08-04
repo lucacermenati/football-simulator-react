@@ -17,6 +17,15 @@ export type CreateCompetitionRequest = {
 	logo: FileList | null;
 };
 
+export type UpdateCompetitionRequest = {
+	name: string;
+	description?: string;
+};
+
+export type UpdateCompetitionLogoRequest = {
+	logo: FileList;
+};
+
 // Responses
 export type NoContentResponse = object;
 

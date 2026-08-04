@@ -6,13 +6,19 @@ import { NavLink, Outlet, useParams } from 'react-router';
 import styles from './competition-layout.module.scss';
 import clsx from 'clsx';
 import { Edit, Trash } from 'lucide-react';
+import { useState } from 'react';
+import CompetitionDelete from './components/competition-delete/competition-delete';
+import CompetitionEdit from './components/competition-edit/competition-edit';
 
 export default function CompetitionLayout() {
 	const { competitionId } = useParams();
 	const { isAuthenticated } = useAuth();
 
+	const [isEditOpen, setIsEditOpen] = useState<boolean>(false);
+	const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false);
+
 	const competitionQuery = useQuery({
-		queryKey: ['competition', competitionId],
+		queryKey: ['competitions', competitionId],
 		queryFn: () => apiRequest<Competition>(`competitions/${competitionId}`),
 		enabled: isAuthenticated && !!competitionId,
 	});
@@ -43,6 +49,7 @@ export default function CompetitionLayout() {
 						<div className={styles.menu}>
 							<NavLink
 								to={`/competitions/${competitionId}`}
+								end
 								className={({ isActive }) =>
 									clsx(styles.menuItem, isActive && styles.activeMenuItem)
 								}
@@ -85,13 +92,31 @@ export default function CompetitionLayout() {
 					</div>
 				</div>
 				<div className={styles.rightHeader}>
-					<Edit />
-					<Trash />
+					<Edit
+						className={styles.actionIcon}
+						onClick={() => setIsEditOpen(true)}
+					/>
+					<Trash
+						className={styles.destructiveActionIcon}
+						onClick={() => setIsDeleteOpen(true)}
+					/>
 				</div>
 			</div>
 			<main className={styles.content}>
 				<Outlet context={{ competition }} />
 			</main>
+			{isEditOpen && (
+				<CompetitionEdit
+					competition={competition}
+					onCancel={() => setIsEditOpen(false)}
+				/>
+			)}
+			{isDeleteOpen && (
+				<CompetitionDelete
+					competition={competition}
+					onCancel={() => setIsDeleteOpen(false)}
+				/>
+			)}
 		</section>
 	);
 }
