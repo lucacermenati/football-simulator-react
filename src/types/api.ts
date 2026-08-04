@@ -53,6 +53,24 @@ export type Competition = {
 	logo: string;
 };
 
+export type Standings = Array<StandingTeam>;
+
+export type StandingTeam = {
+	id: string;
+	name: string;
+	logo?: string;
+	first_color: string;
+	second_color: string;
+	points: number;
+	matches_played: number;
+	win: number;
+	draw: number;
+	loss: number;
+	goals: number;
+	goals_against: number;
+	goal_difference: number;
+};
+
 export type Link = {
 	url: string | null;
 	label: string;

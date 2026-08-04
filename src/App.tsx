@@ -9,6 +9,7 @@ import Register from './pages/register/register';
 import CompetitionHome from './pages/competition-home/competition-home';
 import CompetitionLayout from './layouts/competition-layout/competition-layout';
 import NotAvailable from './pages/not-available/not-available';
+import CompetitionStandings from './pages/competition-standings/competition-standings';
 
 export default function App() {
 	return (
@@ -22,7 +23,7 @@ export default function App() {
 						<Route index element={<Competitions />} />
 						<Route path=':competitionId' element={<CompetitionLayout />}>
 							<Route index element={<CompetitionHome />} />
-							<Route path='standings' element={<NotAvailable />} />
+							<Route path='standings' element={<CompetitionStandings />} />
 							<Route path='statistics' element={<NotAvailable />} />
 							<Route path='matches' element={<NotAvailable />} />
 							<Route path='teams' element={<NotAvailable />} />
