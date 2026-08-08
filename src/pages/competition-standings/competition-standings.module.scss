@@ -1,2 +1,93 @@
 .content {
+	padding: 1rem;
+	box-sizing: border-box;
+
+	border: 1px solid var(--primary-black);
+	border-radius: var(--border-radius);
+	background: var(--primary-white);
+
+	overflow: hidden;
+}
+
+.standings {
+	display: grid;
+	align-items: center;
+	grid-template-columns: 1fr repeat(8, auto);
+	// gap: 2rem;
+	color: var(--text-gray);
+}
+
+.pointsColumn {
+	color: var(--primary-black);
+	font-weight: 600;
+}
+
+.headerRow {
+	display: grid;
+	grid-template-columns: subgrid;
+	grid-column: span 9;
+	margin-bottom: 1rem;
+	gap: 1.5rem;
+}
+
+.teamRow {
+	display: grid;
+	grid-template-columns: subgrid;
+	grid-column: span 9;
+	align-items: center;
+	justify-content: center;
+	gap: 2rem;
+	border-bottom: 1px solid var(--border-gray);
+
+	&:last-child {
+		border-bottom: 0px;
+	}
+}
+
+.teamColumn {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+	padding-left: 1rem;
+	padding-top: 0.75rem;
+	padding-bottom: 0.75rem;
+}
+
+.boxLogo {
+	position: relative;
+	width: 2rem;
+	height: 2rem;
+	overflow: hidden;
+}
+
+.logo {
+	position: absolute;
+	inset: 0;
+
+	display: block;
+
+	width: 100%;
+	height: 100%;
+
+	object-fit: contain;
+}
+
+.championsLeague {
+	border-left: 2px solid #3b83f6;
+}
+
+.europaLeague {
+	border-left: 2px solid #eab308;
+}
+
+.conferenceLeague {
+	border-left: 2px solid #22c55e;
+}
+
+.playout {
+	border-left: 2px solid #f97316;
+}
+
+.relegation {
+	border-left: 2px solid #ef4444;
 }

@@ -53,6 +53,31 @@ export type Competition = {
 	logo: string;
 };
 
+export type Team = {
+	id: string;
+	name: string;
+	history: string;
+	logo: string;
+	first_color: string;
+	second_color: string;
+	year_of_foundation: number;
+	stadium: string;
+	rating: number;
+};
+
+export type Player = {
+	id: string;
+	first_name: string;
+	last_name: string;
+	full_name: string;
+	birth_date: string;
+	position: string;
+	position_on_field: number;
+	number: number;
+	rating: number;
+	team?: Team;
+};
+
 export type Standings = Array<StandingTeam>;
 
 export type StandingTeam = {
@@ -62,13 +87,26 @@ export type StandingTeam = {
 	first_color: string;
 	second_color: string;
 	points: number;
-	matches_played: number;
+	matches: number;
 	win: number;
 	draw: number;
 	loss: number;
 	goals: number;
 	goals_against: number;
 	goal_difference: number;
+};
+
+export type Statistics = Array<PlayerStatistic>;
+
+export type PlayerStatistic = {
+	id: string;
+	first_name: string;
+	last_name: string;
+	full_name: string;
+	position: string;
+	number: number;
+	goals: number;
+	team?: Team;
 };
 
 export type Link = {
