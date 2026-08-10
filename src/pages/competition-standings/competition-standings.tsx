@@ -5,6 +5,7 @@ import { apiRequest } from '../../api/apiClient';
 import type { Standings } from '../../types/api';
 import { useAuth } from '../../auth/useAuth';
 import clsx from 'clsx';
+import ImageBox from '../../components/image-box/image-box';
 
 export default function CompetitionStandings() {
 	const { competition } = useCompetition();
@@ -53,9 +54,7 @@ export default function CompetitionStandings() {
 								)}
 							>
 								<div>{position + 1}</div>
-								<div className={style.boxLogo}>
-									<img className={style.logo} src={team.logo} alt={team.name} />
-								</div>
+								<ImageBox src={team.logo} alt={team.name} className={style.imageBoxSize}/>
 								<span>{team.name}</span>
 							</div>
 							<div>{team.matches}</div>

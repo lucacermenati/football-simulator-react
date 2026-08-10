@@ -9,6 +9,7 @@ import { Edit, Trash } from 'lucide-react';
 import { useState } from 'react';
 import CompetitionDelete from './components/competition-delete/competition-delete';
 import CompetitionEdit from './components/competition-edit/competition-edit';
+import ImageBox from '../../components/image-box/image-box';
 
 export default function CompetitionLayout() {
 	const { competitionId } = useParams();
@@ -37,13 +38,11 @@ export default function CompetitionLayout() {
 		<section className={styles.competitionHome}>
 			<div className={styles.header}>
 				<div className={styles.leftHeader}>
-					<div className={styles.logoContainer}>
-						<img
-							src={competition.logo}
-							alt={competition.name}
-							className={styles.competitionLogo}
-						/>
-					</div>
+					<ImageBox
+						src={competition.logo}
+						alt={competition.name}
+						className={styles.boxLogoSize}
+					/>
 					<div className={styles.menuContainer}>
 						<div className={styles.competitionName}>{competition.name}</div>
 						<div className={styles.menu}>

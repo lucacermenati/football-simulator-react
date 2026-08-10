@@ -16,33 +16,9 @@
 	flex-direction: row;
 }
 
-.logoContainer {
-	position: relative;
-
-	width: 100%;
-	height: 100%;
-	min-width: 0;
-	min-height: 0;
-
-	overflow: hidden;
-
+.boxLogoSize {
 	width: 8rem;
 	height: 8rem;
-
-	border-radius: var(--border-radius);
-	background-color: var(--primary-white);
-}
-
-.competitionLogo {
-	position: absolute;
-	inset: 0;
-
-	display: block;
-
-	width: 100%;
-	height: 100%;
-
-	object-fit: contain;
 }
 
 .menuContainer {
