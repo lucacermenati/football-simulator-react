@@ -1,11 +1,12 @@
 import { useAuth } from '../../auth/useAuth';
+import Loader from '../../components/loader/loader';
 import styles from './profile.module.scss';
 
 export default function Profile() {
 	const { user, isUserPending, isUserFailed } = useAuth();
 
 	const content = isUserPending ? (
-		<span className={styles.loader} aria-label='Loading' />
+		<Loader />
 	) : isUserFailed ? (
 		<p className={styles.error}>
 			Something went wrong while fetching the user data. Please try again later.

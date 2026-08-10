@@ -44,6 +44,17 @@
 	}
 }
 
+.loadingRow {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 2rem;
+}
+
+.errorRow {
+	margin-top: 2rem;
+}
+
 .teamColumn {
 	display: flex;
 	align-items: center;

@@ -66,8 +66,9 @@ export default function Login() {
 						type='submit'
 						variant='primary'
 						isDisabled={isSubmitting || isLoginPending}
+						isPending={isLoginPending}
 					>
-						{isLoginPending ? <Loader /> : 'Login'}
+						Login
 					</Button>
 				</Form>
 			</section>

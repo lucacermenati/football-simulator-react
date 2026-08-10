@@ -10,6 +10,8 @@ import { useState } from 'react';
 import CompetitionDelete from './components/competition-delete/competition-delete';
 import CompetitionEdit from './components/competition-edit/competition-edit';
 import ImageBox from '../../components/image-box/image-box';
+import Loader from '../../components/loader/loader';
+import ErrorText from '../../components/form/error-text/error-text';
 
 export default function CompetitionLayout() {
 	const { competitionId } = useParams();
@@ -18,20 +20,27 @@ export default function CompetitionLayout() {
 	const [isEditOpen, setIsEditOpen] = useState<boolean>(false);
 	const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false);
 
-	const competitionQuery = useQuery({
+	const {
+		data: competition,
+		isPending,
+		isError,
+		error,
+	} = useQuery({
 		queryKey: ['competitions', competitionId],
 		queryFn: () => apiRequest<Competition>(`competitions/${competitionId}`),
 		enabled: isAuthenticated && !!competitionId,
 	});
 
-	const competition = competitionQuery.data;
-
-	if (competitionQuery.isPending) {
-		return <div>Loading...</div>;
+	if (isPending) {
+		return <Loader />;
 	}
 
-	if (!competitionQuery.isPending && !competition) {
-		return <div>Competition not found</div>;
+	if (isError) {
+		return (
+			<ErrorText>
+				{error?.message || 'Something went wrong. Please try again.'}
+			</ErrorText>
+		);
 	}
 
 	return (

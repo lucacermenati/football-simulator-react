@@ -100,8 +100,9 @@ export default function Register() {
 						type='submit'
 						variant='primary'
 						isDisabled={isSubmitting || isRegistrationPending}
+						isPending={isRegistrationPending}
 					>
-						{isRegistrationPending ? <Loader /> : 'Register'}
+						Register
 					</Button>
 				</Form>
 			</section>
