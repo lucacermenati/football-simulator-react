@@ -1,0 +1,29 @@
+.positionBadge {
+    display: flex;
+    align-items: center;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    border-radius: var(--border-radius-small);
+}
+
+.goalkeeper {
+    background-color: #fde047;
+    color: #854d0e;
+}
+
+.defender {
+    background-color: #93c5fd;
+    color: #1e40af;
+}
+
+.midfielder {
+    background-color: #86efac;
+    color: #166534;
+}
+
+.forward {
+    background-color: #fca5a5;
+    color: #991b1b;
+}

@@ -4,6 +4,8 @@ import { useCompetition } from '../../hooks/useCompetition';
 import { useAuth } from '../../auth/useAuth';
 import { apiRequest } from '../../api/apiClient';
 import type { PlayerStatistic, Statistics } from '../../types/api';
+import ImageBox from '../../components/image-box/image-box';
+import PositionBadge from '../../components/position-badge/position-badge';
 export default function CompetitionStatistics() {
     const { competition } = useCompetition();
     const { isAuthenticated } = useAuth();
@@ -24,8 +26,14 @@ export default function CompetitionStatistics() {
                 </div>
                 {statistics?.map((player: PlayerStatistic) => (
                     <div key={player.id} className={style.statisticRow}>
-                        <div>{player.full_name}</div>
-                        <div>{player.team.name}</div>
+                        <div className={style.playerNameColumn}>
+                            <PositionBadge position={player.position} className={style.positionBadgeSize} />
+                            <div>{player.full_name}</div>
+                        </div>
+                        <div className={style.teamNameColumn}>
+                            <ImageBox className={style.imageBoxSize} src={player.team.logo} alt={player.team.name} />
+                            <div>{player.team.name}</div>
+                        </div>
                         <div className={style.goalColumn}>{player.goals}</div>
                     </div>
                 ))}

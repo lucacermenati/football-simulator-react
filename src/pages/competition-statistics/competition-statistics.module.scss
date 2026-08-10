@@ -32,6 +32,8 @@
 	justify-content: center;
     gap: 2rem;
     border-bottom: 1px solid var(--border-gray);
+    padding-bottom: 1rem;
+    padding-top: 1rem;
 
     &:last-child {
         border-bottom: 0px;
@@ -41,4 +43,27 @@
 .goalColumn {
 	color: var(--primary-black);
 	font-weight: 600;
+}
+
+.teamNameColumn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem
+}
+
+.playerNameColumn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem
+}
+
+.imageBoxSize {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.positionBadgeSize {
+    width: auto;
+    height: 1.5rem;
+    font-size: 0.75rem;
 }
