@@ -1,0 +1,95 @@
+.content {
+	padding: 1rem;
+	box-sizing: border-box;
+
+	border: 1px solid var(--primary-black);
+	border-radius: var(--border-radius);
+	background: var(--primary-white);
+
+	overflow: hidden;
+}
+
+.mainActions {
+    display: flex;
+    align-items: end;
+    justify-content: end;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    padding-right: 1rem;
+}
+
+.icon {
+    color: var(--text-gray);
+    cursor: pointer;
+
+    &:hover {
+        color: var(--hover-gray);
+    }
+}
+
+.destroyIcon {
+    &:hover {
+        color: var(--error-color);
+    }
+}
+
+.teamsTable {
+    display: grid;
+    grid-template-columns: auto auto;
+    align-items: center;
+    color: var(--text-gray);
+}
+
+.teamsHeaderRow {
+    display: grid;
+    grid-template-columns: subgrid;
+    grid-column: span 2;
+    margin-bottom: 1rem;
+    gap: 1.5rem;
+}
+
+.teamsRow {
+    display: grid;
+    grid-template-columns: subgrid;
+    grid-column: span 2;
+    align-items: center;
+	justify-content: center;
+    gap: 2rem;
+    border-bottom: 1px solid var(--border-gray);
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+
+    &:last-child {
+        border-bottom: 0px;
+    }
+}
+
+.teamNameColumn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem
+}
+
+.teamActionsColumn {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.imageBoxSize {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.genericRow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    grid-column: span 2;
+}
+
+.noTeamsFoundBox {
+    padding-top: 2rem;
+    padding-bottom: 4rem;
+}
+
