@@ -22,7 +22,7 @@ export type UpdateCompetitionRequest = {
 	description?: string;
 };
 
-export type UpdateCompetitionLogoRequest = {
+export type UpdateLogoRequest = {
 	logo: FileList;
 };
 

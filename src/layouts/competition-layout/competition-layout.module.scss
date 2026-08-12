@@ -19,6 +19,101 @@
 .boxLogoSize {
 	width: 8rem;
 	height: 8rem;
+	background-color: var(--primary-white);
+	border-radius: var(--border-radius);
+	cursor: pointer;
+}
+
+.logoContainer {
+	position: relative;
+	cursor: pointer;
+
+	&:hover {
+		.boxLogoSize {
+			opacity: 0.5;
+		}
+
+		.logoActions {
+			opacity: 1;
+			pointer-events: auto;
+		}
+	}
+}
+
+.logoActions {
+	position: absolute;
+	inset: 0;
+
+	opacity: 0;
+	pointer-events: none;
+
+	transition: opacity 150ms ease;
+}
+
+.logoActionTop,
+.logoActionBottom {
+	position: absolute;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	width: 2rem;
+	height: 2rem;
+	padding: 0;
+
+	border: none;
+	border-radius: 50%;
+
+	background-color: var(--primary-black);
+	color: var(--primary-white);
+
+	font: inherit;
+
+	cursor: pointer;
+
+	svg {
+		width: 1rem;
+		height: 1rem;
+	}
+
+	&:hover {
+		background-color: var(--hover-gray);
+	}
+
+	&:disabled {
+		background-color: var(--disabled-gray);
+		cursor: not-allowed;
+
+		svg {
+			color: var(--primary-white);
+		}
+	}
+}
+
+.logoActionTop {
+	top: 0.5rem;
+	right: 2rem;
+}
+
+.logoActionBottom {
+	top: 2rem;
+	right: 0.5rem;
+
+	&:hover {
+		svg {
+			color: var(--error-color);
+		}
+	}
+
+	&:disabled {
+		background-color: var(--disabled-gray);
+		cursor: not-allowed;
+
+		svg {
+			color: var(--primary-white);
+		}
+	}
 }
 
 .menuContainer {
