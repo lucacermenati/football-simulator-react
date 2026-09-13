@@ -26,6 +26,10 @@ export type UpdateLogoRequest = {
 	logo: FileList;
 };
 
+export type ManageCompetitionTeamsRequest = {
+	teams: string[];
+};
+
 // Responses
 export type NoContentResponse = object;
 

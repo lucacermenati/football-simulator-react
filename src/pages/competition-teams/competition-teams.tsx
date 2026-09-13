@@ -5,18 +5,28 @@ import { apiRequest } from '../../api/apiClient';
 import type { Team } from '../../types/api';
 import { useAuth } from '../../auth/useAuth';
 import ImageBox from '../../components/image-box/image-box';
-import { Eye, MinusCircle, PlusCircle, Settings } from 'lucide-react';
+import {
+	Eye,
+	MinusCircle,
+	PlusCircle,
+	Settings,
+	ShieldPlus,
+} from 'lucide-react';
 import clsx from 'clsx';
 import Loader from '../../components/loader/loader';
 import ErrorText from '../../components/form/error-text/error-text';
-import BulkAddCompetitionTeams from './components/manage-competition-teams/bulk-add-competition-teams';
+import BulkAddCompetitionTeams from './components/bulk-add-competition-teams/bulk-add-competition-teams';
 import { useState } from 'react';
+import RemoveCompetitionTeam from './components/remove-competition-team/remove-competition-team';
 
 export default function CompetitionTeams() {
 	const { competition } = useCompetition();
 	const { isAuthenticated } = useAuth();
 
 	const [isBulkAddModalOpen, setIsBulkAddModalOpen] = useState(false);
+	const [isRemoveTeamModalOpen, setIsRemoveTeamModalOpen] = useState(false);
+	const [selectedTeamForRemoval, setSelectedTeamForRemoval] =
+		useState<Team | null>(null);
 
 	const {
 		data: teams,
@@ -75,7 +85,13 @@ export default function CompetitionTeams() {
 					</div>
 					<div className={style.teamActionsColumn}>
 						<Eye className={style.icon} />
-						<MinusCircle className={clsx(style.icon, style.destroyIcon)} />
+						<MinusCircle
+							className={clsx(style.icon, style.destroyIcon)}
+							onClick={() => {
+								setSelectedTeamForRemoval(team);
+								setIsRemoveTeamModalOpen(true);
+							}}
+						/>
 					</div>
 				</div>
 			);
@@ -85,7 +101,10 @@ export default function CompetitionTeams() {
 	return (
 		<section>
 			<div className={style.mainActions}>
-				<Settings className={style.icon} />
+				<ShieldPlus
+					className={style.icon}
+					onClick={() => setIsBulkAddModalOpen(true)}
+				/>
 			</div>
 			<div className={style.content}>
 				<div className={style.teamsTable}>
@@ -97,6 +116,12 @@ export default function CompetitionTeams() {
 			</div>
 			{isBulkAddModalOpen && (
 				<BulkAddCompetitionTeams setIsModalOpen={setIsBulkAddModalOpen} />
+			)}
+			{isRemoveTeamModalOpen && (
+				<RemoveCompetitionTeam
+					team={selectedTeamForRemoval}
+					setIsModalOpen={setIsRemoveTeamModalOpen}
+				/>
 			)}
 		</section>
 	);

@@ -1,14 +1,21 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import Modal from '../../../../components/modal/modal';
 import { useCompetition } from '../../../../hooks/useCompetition';
-import { apiRequest } from '../../../../api/apiClient';
-import type { PaginatedData, Team } from '../../../../types/api';
+import { ApiError, apiRequest } from '../../../../api/apiClient';
+import type {
+	ManageCompetitionTeamsRequest,
+	NoContentResponse,
+	PaginatedData,
+	Team,
+} from '../../../../types/api';
 import { useAuth } from '../../../../auth/useAuth';
 import { useState } from 'react';
 import style from './bulk-add-competition-teams.module.scss';
 import ImageBox from '../../../../components/image-box/image-box';
 import { TextInput } from '../../../../components/form';
-import { Cross, CrossIcon, X } from 'lucide-react';
+import { X } from 'lucide-react';
+import Loader from '../../../../components/loader/loader';
+import ErrorText from '../../../../components/form/error-text/error-text';
 
 export default function BulkAddCompetitionTeams({
 	setIsModalOpen,
@@ -43,18 +50,17 @@ export default function BulkAddCompetitionTeams({
 		enabled: isAuthenticated && !!competition?.id,
 	});
 
-	const availableTeams = paginatedAvailableTeams?.data;
+	const selectableTeams = paginatedAvailableTeams?.data;
 
-	const selectableTeams = availableTeams?.filter(
-		(team) =>
-			!selectedTeams.some((selectedTeam) => selectedTeam.id === team.id),
-	);
-
-	const { mutateAsync: addSelectedTeams } = useMutation({
-		mutationFn: () =>
+	const { mutateAsync: addSelectedTeams } = useMutation<
+		NoContentResponse,
+		ApiError,
+		ManageCompetitionTeamsRequest
+	>({
+		mutationFn: (data: ManageCompetitionTeamsRequest) =>
 			apiRequest(`competitions/${competition?.id}/teams`, {
 				method: 'POST',
-				body: selectedTeams.map((team) => team.id),
+				body: data,
 			}),
 
 		onSuccess: async () => {
@@ -73,10 +79,14 @@ export default function BulkAddCompetitionTeams({
 	return (
 		<Modal
 			title='Add multiple teams'
-			description='Search for teams and add them to your competition.'
+			description={`Search for teams and add them to ${competition?.name}`}
 			submitText='Add selected'
 			onCancel={() => setIsModalOpen(false)}
-			onSubmit={addSelectedTeams}
+			onSubmit={() => {
+				addSelectedTeams({
+					teams: selectedTeams.map((team) => team.id),
+				});
+			}}
 		>
 			<div>
 				<TextInput
@@ -87,7 +97,11 @@ export default function BulkAddCompetitionTeams({
 					onChange={(e) => setSearchTerm(e.target.value)}
 				/>
 				<div className={style.selectableTeamsList}>
-					{selectableTeams &&
+					{isPending && <Loader />}
+					{isError && <ErrorText>{error?.message}</ErrorText>}
+					{!isError &&
+						!isPending &&
+						selectableTeams &&
 						selectableTeams.map((team) => (
 							<div
 								key={team.id}
