@@ -1,0 +1,11 @@
+.actionContainer {
+	display: flex;
+	gap: 0.5rem;
+}
+
+.matchesGrid {
+	margin-top: 1rem;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	gap: 0.75rem;
+}

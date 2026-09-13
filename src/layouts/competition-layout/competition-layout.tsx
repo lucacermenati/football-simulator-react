@@ -35,18 +35,16 @@ export default function CompetitionLayout() {
 		enabled: isAuthenticated && !!competitionId,
 	});
 
-	const { 
-		mutate: removeLogoMutation, 
-		isPending: isRemovingLogo, 
-   	} = useMutation<NoContentResponse>({
-		mutationFn: () => apiRequest<NoContentResponse>(`competitions/${competitionId}/logo`, {
-			method: 'DELETE',
-		}),
-		onSuccess: async () => {
-			await queryClient.invalidateQueries(['competitions', competitionId]);
-		},
-	});
-
+	const { mutate: removeLogoMutation, isPending: isRemovingLogo } =
+		useMutation<NoContentResponse>({
+			mutationFn: () =>
+				apiRequest<NoContentResponse>(`competitions/${competitionId}/logo`, {
+					method: 'DELETE',
+				}),
+			onSuccess: async () => {
+				await queryClient.invalidateQueries(['competitions', competitionId]);
+			},
+		});
 
 	if (isPending) {
 		return <Loader />;
@@ -71,20 +69,22 @@ export default function CompetitionLayout() {
 							className={styles.boxLogoSize}
 						/>
 						<div className={styles.logoActions}>
-						<button className={styles.logoActionTop} 
-							disabled={isRemovingLogo || isUploadOpen}
-							onClick={() => setIsUploadOpen(true)}>
-							<UploadCloud />
-						</button>
-						<button 
-							className={styles.logoActionBottom} 
-							disabled={isRemovingLogo || isUploadOpen || !competition.logo}  
-							onClick={() => removeLogoMutation()}
-						>
-							<Trash />
-						</button>
+							<button
+								className={styles.logoActionTop}
+								disabled={isRemovingLogo || isUploadOpen}
+								onClick={() => setIsUploadOpen(true)}
+							>
+								<UploadCloud />
+							</button>
+							<button
+								className={styles.logoActionBottom}
+								disabled={isRemovingLogo || isUploadOpen || !competition.logo}
+								onClick={() => removeLogoMutation()}
+							>
+								<Trash />
+							</button>
+						</div>
 					</div>
-				</div>
 					<div className={styles.menuContainer}>
 						<div className={styles.competitionName}>{competition.name}</div>
 						<div className={styles.menu}>

@@ -82,6 +82,23 @@ export type Player = {
 	team?: Team;
 };
 
+export type Match = {
+	id: string;
+	date: string;
+	goal_home: number;
+	goal_away: number;
+	played: boolean;
+	competition: null | Competition;
+	home_team: null | Team;
+	away_team: null | Team;
+	scorers: null | MatchEvent[];
+};
+
+export type MatchEvent = {
+	minute: number;
+	player: Player;
+};
+
 export type Standings = Array<StandingTeam>;
 
 export type StandingTeam = {
