@@ -1,11 +1,38 @@
 import { Eye, Lock, Play } from 'lucide-react';
-import type { Match } from '../../../types/api';
+import type { Match, NoContentResponse } from '../../../types/api';
 import style from './match-card.module.scss';
 import ImageBox from '../../../components/image-box/image-box';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { apiRequest, type ApiError } from '../../../api/apiClient';
+import { useCompetition } from '../../../hooks/useCompetition';
 
 export default function MatchCard({ match }: { match: Match }) {
 	const date = new Date(match.date);
 	const today = new Date();
+
+	const {competition} = useCompetition();
+	const queryClient = useQueryClient();
+
+	const { mutateAsync: playMatchAsync } = useMutation<
+		NoContentResponse,
+		ApiError,
+		string
+	>({
+		mutationFn: (matchId) =>
+			apiRequest<NoContentResponse>(`competitions/${competition.id}/play?matchId=${matchId}`, {
+				method: 'POST',
+			}),
+
+			onSuccess: async () => {
+				await queryClient.invalidateQueries({
+					queryKey: ['competitions', competition.id, 'matches'],
+				});
+			},
+
+			onError: (error) => {
+				console.error('Error playing match:', error);
+			}
+	});
 
 	return (
 		<div className={style.matchCard}>
@@ -31,7 +58,12 @@ export default function MatchCard({ match }: { match: Match }) {
 			</div>
 			<div className={style.verticalSeparator} />
 			<div className={style.actionBox}>
-				{match.played ? <Eye className={style.icon}/> : (date <= today ? <Play className={style.icon} /> : <div className={style.lockBox}><Lock className={style.lockIcon} /><span className={style.lockText}>{date.toLocaleDateString()}</span></div>)}
+				{match.played 
+					? <Eye className={style.icon}/> 
+					: (date <= today 
+						? <Play className={style.icon} onClick={() => playMatchAsync(match.id)}/> 
+						: <div className={style.lockBox}><Lock className={style.lockIcon} /><span className={style.lockText}>{date.toLocaleDateString()}</span></div>
+		)}
 			</div>
 		</div>
 	);

@@ -89,7 +89,6 @@ export default function CompetitionMatches() {
 	});
 
 	const generateMatches: SubmitHandler<GenerateCompetitionMatchesRequest> = async (data) => {
-		console.log('Generating matches with data:', data);
 		await generateMatchesAsync(data);
 	};
 
