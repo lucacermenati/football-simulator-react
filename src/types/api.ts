@@ -30,6 +30,10 @@ export type ManageCompetitionTeamsRequest = {
 	teams: string[];
 };
 
+export type GenerateCompetitionMatchesRequest = {
+	start_date: string;
+};
+
 // Responses
 export type NoContentResponse = object;
 
