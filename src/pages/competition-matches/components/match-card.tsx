@@ -1,4 +1,4 @@
-import { Eye, Play } from 'lucide-react';
+import { Eye, Lock, Play } from 'lucide-react';
 import type { Match } from '../../../types/api';
 import style from './match-card.module.scss';
 import ImageBox from '../../../components/image-box/image-box';
@@ -16,7 +16,7 @@ export default function MatchCard({ match }: { match: Match }) {
 						alt={match.home_team.name}
 						className={style.imageBox}
 					/>
-					<div>{match.home_team.name}</div>
+					<div className={style.teamName}>{match.home_team.name}</div>
 				</div>
 				<div className={style.resultBox}>{match.goal_home}</div>
 				<div className={style.teamBox}>
@@ -25,13 +25,13 @@ export default function MatchCard({ match }: { match: Match }) {
 						alt={match.away_team.name}
 						className={style.imageBox}
 					/>
-					<div>{match.away_team.name}</div>
+					<div className={style.teamName}>{match.away_team.name}</div>
 				</div>
 				<div className={style.resultBox}>{match.goal_away}</div>
 			</div>
 			<div className={style.verticalSeparator} />
 			<div className={style.actionBox}>
-				{match.played ? <Eye className={style.icon}/> : (date <= today ? <Play className={style.icon} /> : date.toLocaleDateString())}
+				{match.played ? <Eye className={style.icon}/> : (date <= today ? <Play className={style.icon} /> : <div className={style.lockBox}><Lock className={style.lockIcon} /><span className={style.lockText}>{date.toLocaleDateString()}</span></div>)}
 			</div>
 		</div>
 	);

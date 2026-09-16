@@ -3,7 +3,6 @@
 	background-color: var(--primary-white);
 	border: 1px solid var(--primary-black);
 	border-radius: var(--border-radius);
-	cursor: pointer;
 
 	display: grid;
 	grid-template-columns: 1fr auto 1fr;
@@ -12,9 +11,7 @@
 	overflow: hidden;
 	align-items: center;
 
-	&:hover {
-		background: var(--hover-white);
-	}
+	color: var(--text-gray);
 }
 
 .teamsAndResultBox {
@@ -24,21 +21,33 @@
 	padding: 0.5rem;
 	padding-right: 1rem;
 	gap: 1rem;
+
+	cursor: pointer;
 }
 
 .teamBox {
 	display: flex;
 	align-items: center;
 	gap: 1rem;
+
+	min-width: 0;
+}
+
+.teamName {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .resultBox {
 	font-weight: 600;
+	color: var(--primary-black);
 }
 
 .imageBox {
 	width: 2rem;
 	height: 2rem;
+	flex-shrink: 0;
 }
 
 .verticalSeparator {
@@ -47,5 +56,28 @@
 }
 
 .actionBox {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.lockBox {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+}
+
+.lockText {
+	font-size: 1rem;
+	color: var(--primary-black);
+}
+
+.icon {
+	color: var(--text-gray);
 	cursor: pointer;
+
+	&:hover {
+		color: var(--hover-gray);
+	}
 }
