@@ -18,6 +18,8 @@ import { fieldErrorToMessage } from '../../utils/fieldErrorToMessage';
 export default function CompetitionMatches() {
 	const [isGenerateModalOpen, setIsGenerateModalOpen] = useState(false);
 
+	const [day, setDay] = useState<number>(1);
+
 	const { competition } = useCompetition();
 	const { isAuthenticated } = useAuth();
 
@@ -92,11 +94,41 @@ export default function CompetitionMatches() {
 		await generateMatchesAsync(data);
 	};
 
+	const { mutateAsync: playDayMatchesAsync } = useMutation<NoContentResponse, ApiError, number>({
+		mutationFn: (day) =>
+			apiRequest<NoContentResponse>(`competitions/${competition.id}/play?day=${day}`, {
+				method: 'POST',
+			}),
+		onSuccess: async () => {
+			await queryClient.invalidateQueries({
+				queryKey: ['competitions', competition.id, 'matches'],
+			});
+		},
+		onError: (error) => {
+			console.error('Error playing day matches:', error);
+		}
+	});
+
+	const { mutateAsync: playAllMatchesAsync } = useMutation<NoContentResponse, ApiError>({
+		mutationFn: () =>
+			apiRequest<NoContentResponse>(`competitions/${competition.id}/play`, {
+				method: 'POST',
+			}),
+		onSuccess: async () => {
+			await queryClient.invalidateQueries({
+				queryKey: ['competitions', competition.id, 'matches'],
+			});
+		},
+		onError: (error) => {
+			console.error('Error playing day matches:', error);
+		}
+	});
+
 	return (
 		<section>
 			<div className={style.actionContainer}>
-				<SkipForward className={style.icon} />
-				<FastForward className={style.icon} />
+				<SkipForward className={style.icon} onClick={() => playDayMatchesAsync(day)}/>
+				<FastForward className={style.icon} onClick={() => playAllMatchesAsync()}/>
 			</div>
 			<div className={style.matchesGrid}>
 				{paginatedMatches?.data && paginatedMatches?.data.length && paginatedMatches?.data.map((match) => (
