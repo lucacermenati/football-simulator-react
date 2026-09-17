@@ -5,20 +5,20 @@ import { useAuth } from '../../auth/useAuth';
 import type { GenerateCompetitionMatchesRequest, Match, NoContentResponse, PaginatedData } from '../../types/api';
 import style from './competition-matches.module.scss';
 import MatchCard from './components/match-card';
-import { FastForward, SkipForward } from 'lucide-react';
+import { ChevronLeft, ChevronRight, FastForward, SkipForward } from 'lucide-react';
 import Loader from '../../components/loader/loader';
 import ErrorText from '../../components/form/error-text/error-text';
 import { Button, Form, TextInput } from '../../components/form';
-import { useNavigate } from 'react-router';
-import { useState } from 'react';
+import { useNavigate, useSearchParams } from 'react-router';
+import { useEffect, useState } from 'react';
 import Modal from '../../components/modal/modal';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { fieldErrorToMessage } from '../../utils/fieldErrorToMessage';
+import clsx from 'clsx';
 
 export default function CompetitionMatches() {
 	const [isGenerateModalOpen, setIsGenerateModalOpen] = useState(false);
-
-	const [day, setDay] = useState<number>(1);
+	const [searchParams, setSearchParams] = useSearchParams();
 
 	const { competition } = useCompetition();
 	const { isAuthenticated } = useAuth();
@@ -26,19 +26,67 @@ export default function CompetitionMatches() {
 	const navigate = useNavigate();
 	const queryClient = useQueryClient();
 
+	const dayParam = searchParams.get('day');
+	const matchDay = dayParam ? parseInt(dayParam) : undefined;
+
 	const {
 		data: paginatedMatches,
 		isPending,
 		isError,
 		error,
 	} = useQuery({
-		queryKey: ['competitions', competition.id, 'matches'],
-		queryFn: () =>
-			apiRequest<PaginatedData<Match>>(
-				`competitions/${competition.id}/matches`,
-			),
+		queryKey: ['competitions', competition.id, 'matches', matchDay],
+		queryFn: () => {
+			const baseApiUrl = `competitions/${competition.id}/matches`;
+			const apiUrl = matchDay ? `${baseApiUrl}?day=${matchDay}` : baseApiUrl;
+
+			return apiRequest<PaginatedData<Match>>(apiUrl);
+		},
 		enabled: isAuthenticated && !!competition.id,
 	});
+
+	const currentMatchDay = paginatedMatches?.meta.current_page ?? 1;
+
+	useEffect(() => {
+		if (!paginatedMatches) {
+			return;
+		}
+
+		const actualDay = paginatedMatches.meta.current_page;
+
+		if (matchDay !== actualDay) {
+			setSearchParams(
+				{ day: actualDay.toString() },
+				{ replace: true },
+			);
+		}
+	}, [
+		paginatedMatches,
+		matchDay,
+		setSearchParams,
+	]);
+
+	const previousMatchDay = () => {
+		if (currentMatchDay <= 1) {
+			return;
+		}
+
+		const previousMatchDay = currentMatchDay - 1;
+		setSearchParams({
+			day: previousMatchDay.toString(),
+		});
+	};
+
+	const nextMatchDay = () => {
+		if (currentMatchDay >= paginatedMatches?.meta.last_page) {
+			return;
+		}
+
+		const nextMatchDay = currentMatchDay + 1;
+		setSearchParams({
+			day: nextMatchDay.toString(),
+		});
+	};
 
 	const {
 			register,
@@ -126,9 +174,17 @@ export default function CompetitionMatches() {
 
 	return (
 		<section>
-			<div className={style.actionContainer}>
-				<SkipForward className={style.icon} onClick={() => playDayMatchesAsync(day)}/>
-				<FastForward className={style.icon} onClick={() => playAllMatchesAsync()}/>
+			<div className={style.topBar}>
+				<div className={style.matchDayNavigationContainer}>
+					<ChevronLeft className={clsx(style.icon, { [style.iconDisabled]: currentMatchDay <= 1 })} onClick={previousMatchDay}/>
+					<span className={style.matchDayText}>Match Day {currentMatchDay}</span>
+					<ChevronRight className={clsx(style.icon, { [style.iconDisabled]: currentMatchDay >= paginatedMatches?.meta.last_page })} onClick={nextMatchDay}/>
+
+				</div>
+				<div className={style.actionContainer}>
+					<SkipForward className={style.icon} onClick={() => playDayMatchesAsync(currentMatchDay)}/>
+					<FastForward className={style.icon} onClick={() => playAllMatchesAsync()}/>
+				</div>
 			</div>
 			<div className={style.matchesGrid}>
 				{paginatedMatches?.data && paginatedMatches?.data.length && paginatedMatches?.data.map((match) => (

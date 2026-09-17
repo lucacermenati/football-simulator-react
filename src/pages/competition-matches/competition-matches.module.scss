@@ -1,8 +1,23 @@
+.topBar {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding-left: 1rem;
+	padding-right: 1rem;
+}
+
 .actionContainer {
 	display: flex;
 	justify-content: end;
 	gap: 1rem;
-	padding-right: 1rem;
+}
+
+.matchDayNavigationContainer {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+	margin-top: 1rem;
 }
 
 .matchesGrid {
@@ -18,6 +33,15 @@
 
 	&:hover {
 		color: var(--hover-gray);
+	}
+}
+
+.iconDisabled {
+	color: var(--disabled-gray);
+	cursor: not-allowed;
+
+	&:hover {
+		color: var(--disabled-gray);
 	}
 }
 
