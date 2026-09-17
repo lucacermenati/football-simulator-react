@@ -61,6 +61,13 @@ export type Competition = {
 	logo: string;
 };
 
+export type ReadyCompetition = {
+	id: string;
+	name: string;
+	logo: string;
+	next_match_date: string;
+};
+
 export type Team = {
 	id: string;
 	name: string;
