@@ -4,23 +4,42 @@ import style from './teams.module.scss';
 import { useQuery } from '@tanstack/react-query';
 import type { PaginatedData, Team } from '../../types/api';
 import { apiRequest } from '../../api/apiClient';
-import { useState } from 'react';
 import { useAuth } from '../../auth/useAuth';
+import { useSearchParams } from 'react-router';
 
 export default function Teams() {
+    const [searchParams, setSearchParams] = useSearchParams();
+
     const { isAuthenticated } = useAuth();
 
-    const [page, setPage] = useState<number>(null);
+    const pageParam = searchParams.get('day');
+    const page = pageParam ? parseInt(pageParam): undefined;
 
-    const params = new URLSearchParams({
-		page: page.toString(),
-	});
+    const search = searchParams.get('search');
 
     const { data: paginatedTeams} = useQuery<PaginatedData<Team>>({
-        queryKey ['teams', page],
+        queryKey: ['teams', page, search],
 
-        queryFn: () => apiRequest<PaginatedData<Team>>(`competitions?${params.toString()}`),
-        
+        queryFn: () => {
+            const baseApiUrl = 'teams';
+            const params = new URLSearchParams();
+            
+            params.set('per_page', '20');
+
+            if (page) params.set('page', page.toString());
+
+            if (search) params.set('search', search);
+            
+            const queryString = params.toString();
+
+            const url = queryString
+                ? `${baseApiUrl}?${queryString}`
+                : baseApiUrl;
+
+            return apiRequest<PaginatedData<Team>>(url);
+
+        },
+
         enabled: isAuthenticated,
     })
 
@@ -30,7 +49,9 @@ export default function Teams() {
             <ShieldPlus className={style.actionIcon} size={28}/>
         </div>
         <div className={style.tableCard}>
-
+            {paginatedTeams?.data && paginatedTeams?.data.map((team) => 
+                <div key={team.id}>{team.name}</div>
+            )}
         </div>
         <div className={style.paginationContainer}></div>
     </div>
