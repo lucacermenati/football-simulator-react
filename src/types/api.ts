@@ -34,6 +34,11 @@ export type GenerateCompetitionMatchesRequest = {
 	start_date: string;
 };
 
+export type UpdateProfileRequest = {
+	name: string;
+	email: string;
+}
+
 // Responses
 export type NoContentResponse = object;
 
