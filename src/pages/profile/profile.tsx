@@ -1,4 +1,4 @@
-import { Edit } from 'lucide-react';
+import { ArrowRight, Edit } from 'lucide-react';
 import { useAuth } from '../../auth/useAuth';
 import ErrorText from '../../components/form/error-text/error-text';
 import Loader from '../../components/loader/loader';
@@ -6,20 +6,21 @@ import styles from './profile.module.scss';
 import { useQuery } from '@tanstack/react-query';
 import { apiRequest } from '../../api/apiClient';
 import type { PaginatedData, ReadyCompetition } from '../../types/api';
+import ImageBox from '../../components/image-box/image-box';
+import { useNavigate } from 'react-router';
 
 export default function Profile() {
 	const { user, isUserPending, isUserFailed } = useAuth();
+	const navigate = useNavigate();
 
 	const { 
-		data: upcomingMatchesPaginated, 
-		isPending: isUpcomingMatchesPending, 
-		isError: isUpcomingMatchesFailed, 
-		error: upcomingMatchesError
+		data: readyCompetitionsPaginated, 
+		isPending: isReadyCompetitionsPending, 
+		isError: isReadyCompetitionsFailed, 
+		error: readyCompetitionsError
 	} = useQuery({
 		queryKey: ['upcomingMatches'],
-		queryFn: async () => apiRequest<PaginatedData<ReadyCompetition>>('user/next-to-play', {
-			
-		})
+		queryFn: async () => apiRequest<PaginatedData<ReadyCompetition>>('user/next-to-play')
 	});
 
 	const content = isUserPending ? (
@@ -40,19 +41,26 @@ export default function Profile() {
 			</p>
 			<div className={styles.upcomingMatchesContainer}>
 				<div>Next to play</div>
-				{isUpcomingMatchesPending ? (
+				{isReadyCompetitionsPending ? (
 					<Loader />
-				) : isUpcomingMatchesFailed ? (
+				) : isReadyCompetitionsFailed ? (
 					<ErrorText>
-						{upcomingMatchesError?.message ?? 'Something went wrong. Please try again.'}
+						{readyCompetitionsError?.message ?? 'Something went wrong. Please try again.'}
 					</ErrorText>
-				) : upcomingMatchesPaginated?.data.length === 0 ? (
+				) : readyCompetitionsPaginated?.data.length === 0 ? (
 					<ErrorText>No upcoming matches found.</ErrorText>
 				) : (
 					<ul>
-						{upcomingMatchesPaginated?.data.map((match) => (
-							<li key={match.id}>
-								{match.name} - {match.next_match_date}
+						{readyCompetitionsPaginated?.data.map((competition) => (
+							<li key={competition.id} className={styles.readyToPlayItem}>
+								<ImageBox
+									src={competition.logo}
+									alt={competition.name}
+									className={styles.boxLogoSize}
+								/>
+								<div>{competition.name}</div>
+								<div>{new Date(competition.next_match_date).toLocaleDateString()}</div>
+								<ArrowRight className={styles.icon} onClick={() => (navigate(`/competitions/${competition.id}/matches`))}/>
 							</li>
 						))}
 					</ul>
