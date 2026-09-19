@@ -19,7 +19,7 @@ export default function MatchCard({ match }: { match: Match }) {
 		string
 	>({
 		mutationFn: (matchId) =>
-			apiRequest<NoContentResponse>(`competitions/${competition.id}/play?matchId=${matchId}`, {
+			apiRequest<NoContentResponse>(`competitions/${competition.id}/play?match_id=${matchId}`, {
 				method: 'POST',
 			}),
 
