@@ -14,6 +14,7 @@ import CompetitionStatistics from './pages/competition-statistics/competition-st
 import CompetitionTeams from './pages/competition-teams/competition-teams';
 import CompetitionMatches from './pages/competition-matches/competition-matches';
 import Teams from './pages/teams/teams';
+import Match from './pages/match/match';
 
 export default function App() {
 	return (
@@ -29,7 +30,10 @@ export default function App() {
 							<Route index element={<CompetitionHome />} />
 							<Route path='standings' element={<CompetitionStandings />} />
 							<Route path='statistics' element={<CompetitionStatistics />} />
-							<Route path='matches' element={<CompetitionMatches />} />
+							<Route path='matches'>
+								<Route index element={<CompetitionMatches />} />
+								<Route path=':matchId' element={<Match />} />
+							</Route>
 							<Route path='teams' element={<CompetitionTeams />} />
 						</Route>
 					</Route>

@@ -95,12 +95,14 @@ export type Player = {
 	position_on_field: number;
 	number: number;
 	rating: number;
+	team_id: string;
 	team?: Team;
 };
 
 export type Match = {
 	id: string;
 	date: string;
+	day: number;
 	goal_home: number;
 	goal_away: number;
 	played: boolean;

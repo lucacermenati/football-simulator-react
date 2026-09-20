@@ -1,0 +1,103 @@
+.content {
+	padding: 1.5rem;
+	box-sizing: border-box;
+
+	border: 1px solid var(--primary-black);
+	border-radius: var(--border-radius);
+	background: var(--primary-white);
+
+	overflow: hidden;
+}
+
+.actionBox {
+	display: flex;
+	align-items: center;
+	justify-content: start;
+	gap: 0.75rem;
+	margin-bottom: 1rem;
+}
+
+.icon {
+	color: var(--text-gray);
+	cursor: pointer;
+
+	&:hover {
+		color: var(--hover-gray);
+	}
+}
+
+.matchHeader {
+	display: grid;
+	grid-template-columns: 1fr auto 1fr;
+	align-items: center;
+}
+
+.teamNameBox {
+	display: flex;
+	align-items: center;
+	gap: 2rem;
+}
+
+.homeBox {
+	justify-self: start;
+}
+
+.awayBox {
+	justify-self: end;
+}
+
+.imageBoxSize {
+	width: 4rem;
+	height: 4rem;
+}
+
+.scoreBox {
+	display: flex;
+	justify-self: center;
+	align-items: center;
+	gap: 2rem;
+
+	font-weight: 600;
+	font-size: 1.5rem;
+}
+
+.matchInfo {
+	color: var(--text-gray);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.75rem;
+}
+
+.verticalDivider {
+	border-top: 1px solid var(--border-gray);
+	margin-top: 1.5rem;
+	padding-top: 1rem;
+}
+
+.matchEvents {
+	display: grid;
+	grid-template-columns: 1fr auto 1fr;
+	justify-items: center;
+	align-items: center;
+	gap: 0.75rem;
+}
+
+.event {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+}
+
+.eventHome {
+	justify-self: start;
+}
+
+.eventAway {
+	justify-self: end;
+}
+
+.displayMinute {
+	font-weight: 600;
+	white-space: 'no-wrap';
+}

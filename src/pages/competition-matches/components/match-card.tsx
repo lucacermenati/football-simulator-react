@@ -5,6 +5,7 @@ import ImageBox from '../../../components/image-box/image-box';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { apiRequest, type ApiError } from '../../../api/apiClient';
 import { useCompetition } from '../../../hooks/useCompetition';
+import { useNavigate } from 'react-router';
 
 export default function MatchCard({ match }: { match: Match }) {
 	const date = new Date(match.date);
@@ -12,6 +13,7 @@ export default function MatchCard({ match }: { match: Match }) {
 
 	const {competition} = useCompetition();
 	const queryClient = useQueryClient();
+	const navigate = useNavigate();
 
 	const { mutateAsync: playMatchAsync } = useMutation<
 		NoContentResponse,
@@ -19,7 +21,7 @@ export default function MatchCard({ match }: { match: Match }) {
 		string
 	>({
 		mutationFn: (matchId) =>
-			apiRequest<NoContentResponse>(`competitions/${competition.id}/play?match_id=${matchId}`, {
+			apiRequest<NoContentResponse>(`competitions/${competition.id}/matches/play?match_id=${matchId}`, {
 				method: 'POST',
 			}),
 
@@ -36,7 +38,7 @@ export default function MatchCard({ match }: { match: Match }) {
 
 	return (
 		<div className={style.matchCard}>
-			<div className={style.teamsAndResultBox}>
+			<div className={style.teamsAndResultBox} onClick={() => navigate(`${match.id}`)}>
 				<div className={style.teamBox}>
 					<ImageBox
 						src={match.home_team.logo}
@@ -59,7 +61,7 @@ export default function MatchCard({ match }: { match: Match }) {
 			<div className={style.verticalSeparator} />
 			<div className={style.actionBox}>
 				{match.played 
-					? <Eye className={style.icon}/> 
+					? <Eye className={style.icon} onClick={() => navigate(`${match.id}`)} /> 
 					: (date <= today 
 						? <Play className={style.icon} onClick={() => playMatchAsync(match.id)}/> 
 						: <div className={style.lockBox}><Lock className={style.lockIcon} /><span className={style.lockText}>{date.toLocaleDateString()}</span></div>

@@ -144,7 +144,7 @@ export default function CompetitionMatches() {
 
 	const { mutateAsync: playDayMatchesAsync } = useMutation<NoContentResponse, ApiError, number>({
 		mutationFn: (day) =>
-			apiRequest<NoContentResponse>(`competitions/${competition.id}/play?day=${day}`, {
+			apiRequest<NoContentResponse>(`competitions/${competition.id}/matches/play?day=${day}`, {
 				method: 'POST',
 			}),
 		onSuccess: async () => {
@@ -159,7 +159,7 @@ export default function CompetitionMatches() {
 
 	const { mutateAsync: playAllMatchesAsync } = useMutation<NoContentResponse, ApiError>({
 		mutationFn: () =>
-			apiRequest<NoContentResponse>(`competitions/${competition.id}/play`, {
+			apiRequest<NoContentResponse>(`competitions/${competition.id}/matches/play`, {
 				method: 'POST',
 			}),
 		onSuccess: async () => {
