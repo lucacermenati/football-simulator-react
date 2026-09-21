@@ -42,3 +42,62 @@
 
 	overflow: hidden;
 }
+
+.teamsTable {
+	display: grid;
+	align-items: center;
+	grid-template-columns: 1fr auto;
+	gap: 1.5rem;
+	color: var(--text-gray);
+}
+
+.teamColumn {
+	display: flex;
+	align-items: center;
+	justify-content: start;
+	gap: 1rem;
+}
+
+.actionColumn {
+	display: flex;
+	align-items: center;
+	justify-content: start;
+	gap: 1rem;
+}
+
+.teamRow {
+	display: grid;
+	grid-template-columns: subgrid;
+	grid-column: span 9;
+	align-items: center;
+	justify-content: center;
+	gap: 2rem;
+	border-bottom: 1px solid var(--border-gray);
+
+	&:last-child {
+		border-bottom: 0px;
+	}
+}
+
+.imageBoxSize {
+	width: 2rem;
+	height: 2rem;
+}
+
+.icon {
+	color: var(--text-gray);
+	cursor: pointer;
+
+	&:hover {
+		color: var(--hover-gray);
+	}
+}
+
+.destructiveIcon {
+	cursor: pointer;
+	color: var(--text-gray);
+
+	&:hover {
+		color: var(--error-color);
+	}
+}

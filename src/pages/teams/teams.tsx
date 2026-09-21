@@ -1,4 +1,4 @@
-import { ShieldPlus } from 'lucide-react';
+import { Edit, Eye, PlusCircle, ShieldPlus, Trash } from 'lucide-react';
 import { TextInput } from '../../components/form';
 import style from './teams.module.scss';
 import { useQuery } from '@tanstack/react-query';
@@ -6,6 +6,8 @@ import type { PaginatedData, Team } from '../../types/api';
 import { apiRequest } from '../../api/apiClient';
 import { useAuth } from '../../auth/useAuth';
 import { useSearchParams } from 'react-router';
+import clsx from 'clsx';
+import ImageBox from '../../components/image-box/image-box';
 
 export default function Teams() {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -37,7 +39,6 @@ export default function Teams() {
                 : baseApiUrl;
 
             return apiRequest<PaginatedData<Team>>(url);
-
         },
 
         enabled: isAuthenticated,
@@ -48,9 +49,20 @@ export default function Teams() {
             <TextInput id="search" placeholder='Search team' className={style.searchbar}/>
             <ShieldPlus className={style.actionIcon} size={28}/>
         </div>
-        <div className={style.tableCard}>
+        <div className={clsx(style.tableCard, style.teamsTable)}>
             {paginatedTeams?.data && paginatedTeams?.data.map((team) => 
-                <div key={team.id}>{team.name}</div>
+                <div className={style.teamRow} key={team.id}>
+                    <div className={style.teamColumn}>
+                        <ImageBox className={style.imageBoxSize} src={team.logo} alt={team.name} />
+                        <div>{team.name}</div>
+                    </div>
+                    <div className={style.actionColumn}>
+                        <Eye className={style.icon} onClick={() => console.log("GO TO TEAM PAGE")} />
+                        <Edit className={style.icon} onClick={() => console.log("OPEN EDIT TEAM")} />
+                        <PlusCircle className={style.icon} onClick={() => console.log("OPEN ADD TEAM")} />
+                        <Trash className={style.destructiveIcon} onClick={() => console.log("OPEN DELETE TEAM CONFIRMATION")} />
+                    </div>
+                </div>
             )}
         </div>
         <div className={style.paginationContainer}></div>
