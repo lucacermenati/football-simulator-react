@@ -101,3 +101,17 @@
 	font-weight: 600;
 	white-space: 'no-wrap';
 }
+
+.notPlayed {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+}
+
+.lockBox {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 1rem;
+}
