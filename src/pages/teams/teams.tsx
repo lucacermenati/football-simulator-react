@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import type { PaginatedData, Team } from '../../types/api';
 import { apiRequest } from '../../api/apiClient';
 import { useAuth } from '../../auth/useAuth';
-import { useSearchParams } from 'react-router';
+import { useNavigate, useSearchParams } from 'react-router';
 import clsx from 'clsx';
 import ImageBox from '../../components/image-box/image-box';
 import { useDebounce } from 'use-debounce';
@@ -22,6 +22,8 @@ export default function Teams() {
     const search = searchParams.get('search');
     const [searchInput, setSearchInput] = useState(search);
     const [debouncedSearch] = useDebounce(searchInput, 500);
+
+    const navigate = useNavigate();
 
     const { data: paginatedTeams} = useQuery<PaginatedData<Team>>({
         queryKey: ['teams', page, search],
@@ -78,10 +80,14 @@ export default function Teams() {
                 <div className={style.teamRow} key={team.id}>
                     <div className={style.teamColumn}>
                         <ImageBox className={style.imageBoxSize} src={team.logo} alt={team.name} />
-                        <div>{team.name}</div>
+                        <div 
+                            className={style.teamName} 
+                            onClick={() => navigate(`/teams/${team.id}`)}>
+                                {team.name}
+                        </div>
                     </div>
                     <div className={style.actionColumn}>
-                        <Eye className={style.icon} onClick={() => console.log("GO TO TEAM PAGE")} />
+                        <Eye className={style.icon} onClick={() => navigate(`/teams/${team.id}`)} />
                         <Edit className={style.icon} onClick={() => console.log("OPEN EDIT TEAM")} />
                         <PlusCircle className={style.icon} onClick={() => console.log("OPEN ADD TEAM")} />
                         <Trash className={style.destructiveIcon} onClick={() => console.log("OPEN DELETE TEAM CONFIRMATION")} />

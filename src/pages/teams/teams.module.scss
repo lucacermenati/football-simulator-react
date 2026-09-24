@@ -105,3 +105,12 @@
 		color: var(--error-color);
 	}
 }
+
+.teamName {
+	cursor: pointer;
+
+	&:hover {
+		color: var(--hover-gray);
+		text-decoration: underline;
+	}
+}

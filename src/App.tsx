@@ -15,6 +15,7 @@ import CompetitionTeams from './pages/competition-teams/competition-teams';
 import CompetitionMatches from './pages/competition-matches/competition-matches';
 import Teams from './pages/teams/teams';
 import Match from './pages/match/match';
+import TeamPage from './pages/team/team';
 
 export default function App() {
 	return (
@@ -39,6 +40,7 @@ export default function App() {
 					</Route>
 					<Route path='/teams' >
 						<Route index element={<Teams />} />
+						<Route path=':teamId' element={<TeamPage />} />
 					</Route>
 					<Route path='/players' element={<NotAvailable />} />
 					<Route path='/profile' element={<Profile />} />
