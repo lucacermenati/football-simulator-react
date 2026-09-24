@@ -8,6 +8,8 @@ import { useAuth } from '../../auth/useAuth';
 import { useSearchParams } from 'react-router';
 import clsx from 'clsx';
 import ImageBox from '../../components/image-box/image-box';
+import { useDebounce } from 'use-debounce';
+import { useEffect, useState } from 'react';
 
 export default function Teams() {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -18,6 +20,8 @@ export default function Teams() {
     const page = pageParam ? parseInt(pageParam): undefined;
 
     const search = searchParams.get('search');
+    const [searchInput, setSearchInput] = useState(search);
+    const [debouncedSearch] = useDebounce(searchInput, 500);
 
     const { data: paginatedTeams} = useQuery<PaginatedData<Team>>({
         queryKey: ['teams', page, search],
@@ -25,12 +29,10 @@ export default function Teams() {
         queryFn: () => {
             const baseApiUrl = 'teams';
             const params = new URLSearchParams();
-            
-            params.set('per_page', '20');
 
             if (page) params.set('page', page.toString());
 
-            if (search) params.set('search', search);
+            if (debouncedSearch) params.set('search', debouncedSearch);
             
             const queryString = params.toString();
 
@@ -44,9 +46,31 @@ export default function Teams() {
         enabled: isAuthenticated,
     })
 
+    useEffect(() => {
+        setSearchParams((params) => {
+            const newParams = new URLSearchParams(params);
+
+            if (debouncedSearch) {
+                newParams.set('search', debouncedSearch);
+            } else {
+                newParams.delete('search');
+            }
+
+            newParams.delete('page');
+
+            return newParams;
+        });
+    }, [debouncedSearch, setSearchParams]);
+
     return <div className={style.page}>
         <div className={style.actionBox}>
-            <TextInput id="search" placeholder='Search team' className={style.searchbar}/>
+            <TextInput 
+                id="search" 
+                placeholder='Search team' 
+                className={style.searchbar} 
+                value={searchInput}
+                onChange={(event) => setSearchInput(event.target.value)}
+            />
             <ShieldPlus className={style.actionIcon} size={28}/>
         </div>
         <div className={clsx(style.tableCard, style.teamsTable)}>
