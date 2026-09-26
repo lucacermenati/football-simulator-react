@@ -1,0 +1,182 @@
+.competitionHome {
+	padding-left: 2rem;
+	padding-right: 2rem;
+}
+
+.header {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	padding-right: 5rem;
+	margin-bottom: 3rem;
+}
+
+.leftHeader {
+	display: flex;
+	flex-direction: row;
+}
+
+.boxLogoSize {
+	width: 8rem;
+	height: 8rem;
+	background-color: var(--primary-white);
+	border-radius: var(--border-radius);
+	cursor: pointer;
+}
+
+.logoContainer {
+	position: relative;
+	cursor: pointer;
+
+	&:hover {
+		.boxLogoSize {
+			opacity: 0.5;
+		}
+
+		.logoActions {
+			opacity: 1;
+			pointer-events: auto;
+		}
+	}
+}
+
+.logoActions {
+	position: absolute;
+	inset: 0;
+
+	opacity: 0;
+	pointer-events: none;
+
+	transition: opacity 150ms ease;
+}
+
+.logoActionTop,
+.logoActionBottom {
+	position: absolute;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	width: 2rem;
+	height: 2rem;
+	padding: 0;
+
+	border: none;
+	border-radius: 50%;
+
+	background-color: var(--primary-black);
+	color: var(--primary-white);
+
+	font: inherit;
+
+	cursor: pointer;
+
+	svg {
+		width: 1rem;
+		height: 1rem;
+	}
+
+	&:hover {
+		background-color: var(--hover-gray);
+	}
+
+	&:disabled {
+		background-color: var(--disabled-gray);
+		cursor: not-allowed;
+
+		svg {
+			color: var(--primary-white);
+		}
+	}
+}
+
+.logoActionTop {
+	top: 0.5rem;
+	right: 2rem;
+}
+
+.logoActionBottom {
+	top: 2rem;
+	right: 0.5rem;
+
+	&:hover {
+		svg {
+			color: var(--error-color);
+		}
+	}
+
+	&:disabled {
+		background-color: var(--disabled-gray);
+		cursor: not-allowed;
+
+		svg {
+			color: var(--primary-white);
+		}
+	}
+}
+
+.menuContainer {
+	padding-top: 0.75rem;
+	// padding-bottom: 0.75rem;
+	padding-left: 2rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.menu {
+	display: flex;
+	gap: 1.25rem;
+}
+
+.menuItem {
+	cursor: pointer;
+	color: var(--text-gray);
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	text-decoration: none;
+	padding-bottom: 0.5rem;
+
+	&:hover {
+		color: var(--hover-gray);
+	}
+}
+
+.activeMenuItem {
+	color: var(--active-gray);
+	border-bottom: 1px solid var(--active-gray);
+	font-weight: 600;
+}
+
+.competitionName {
+	color: var(--text-gray);
+	font-size: 1.75rem;
+	font-weight: 600;
+}
+
+.rightHeader {
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+	display: flex;
+	gap: 1rem;
+}
+
+.actionIcon {
+	cursor: pointer;
+	color: var(--text-gray);
+
+	&:hover {
+		color: var(--hover-gray);
+	}
+}
+
+.destructiveActionIcon {
+	cursor: pointer;
+	color: var(--text-gray);
+
+	&:hover {
+		color: var(--error-color);
+	}
+}
