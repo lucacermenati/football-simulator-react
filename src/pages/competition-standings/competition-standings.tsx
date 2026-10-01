@@ -8,10 +8,12 @@ import clsx from 'clsx';
 import ImageBox from '../../components/image-box/image-box';
 import Loader from '../../components/loader/loader';
 import ErrorText from '../../components/form/error-text/error-text';
+import { useNavigate } from 'react-router';
 
 export default function CompetitionStandings() {
 	const { competition } = useCompetition();
 	const { isAuthenticated } = useAuth();
+	const navigate = useNavigate();
 
 	const {
 		data: teams,
@@ -56,12 +58,16 @@ export default function CompetitionStandings() {
 						alt={team.name}
 						className={style.imageBoxSize}
 					/>
-					<span>{team.name}</span>
+					<span 
+						onClick={() => navigate(`/teams/${team.id}`)} 
+						className={style.teamName}>
+							{team.name}
+					</span>
 				</div>
 				<div>{team.matches}</div>
 				<div>{team.win}</div>
 				<div>{team.draw}</div>
-				<div>{team.loss}</div>
+				<div>{team.loss}</div> 
 				<div>{team.goals}</div>
 				<div>{team.goals_against}</div>
 				<div>{team.goal_difference}</div>

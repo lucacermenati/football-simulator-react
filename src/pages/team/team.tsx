@@ -5,6 +5,7 @@ import style from "./team.module.scss";
 import { apiRequest } from "../../api/apiClient";
 import { useAuth } from "../../auth/useAuth";
 import { useNavigate } from "react-router";
+import { ArrowRight } from "lucide-react";
 
 export default function TeamPage() {
     const { team } = useTeam();
@@ -52,7 +53,11 @@ export default function TeamPage() {
                     onClick={() => navigate(`/competitions/${competition.id}/standings`)} 
                     className={style.competitionItem}
                 >
-                    {`${competition.position}${suffix(competition.position)} ${competition.name}`}
+                    <span>{`${competition.position}${suffix(competition.position)} ${competition.name}`}</span>
+                    <ArrowRight  
+                        className={style.arrowIcon}
+                        onClick={() => navigate(`/competitions/${competition.id}/standings`)}
+                    />
                 </div>
             ))}
         </div>}

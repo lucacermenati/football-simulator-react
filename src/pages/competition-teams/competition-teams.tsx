@@ -18,10 +18,12 @@ import ErrorText from '../../components/form/error-text/error-text';
 import BulkAddCompetitionTeams from './components/bulk-add-competition-teams/bulk-add-competition-teams';
 import { useState } from 'react';
 import RemoveCompetitionTeam from './components/remove-competition-team/remove-competition-team';
+import { useNavigate } from 'react-router';
 
 export default function CompetitionTeams() {
 	const { competition } = useCompetition();
 	const { isAuthenticated } = useAuth();
+	const navigate = useNavigate();
 
 	const [isBulkAddModalOpen, setIsBulkAddModalOpen] = useState(false);
 	const [isRemoveTeamModalOpen, setIsRemoveTeamModalOpen] = useState(false);
@@ -84,7 +86,10 @@ export default function CompetitionTeams() {
 						{team.name}
 					</div>
 					<div className={style.teamActionsColumn}>
-						<Eye className={style.icon} />
+						<Eye 
+							className={style.icon} 
+							onClick={() => navigate(`/teams/${team.id}`)}
+						/>
 						<MinusCircle
 							className={clsx(style.icon, style.destroyIcon)}
 							onClick={() => {

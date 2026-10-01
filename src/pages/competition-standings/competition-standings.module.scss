@@ -63,6 +63,14 @@
 	padding-bottom: 0.75rem;
 }
 
+.teamName {
+	cursor: pointer;
+
+	&:hover {
+		text-decoration: underline;
+	}
+}
+
 .imageBoxSize {
 	width: 2rem;
 	height: 2rem;
