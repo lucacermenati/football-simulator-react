@@ -22,6 +22,15 @@ export type UpdateCompetitionRequest = {
 	description?: string;
 };
 
+export type UpdateTeamRequest = {
+	name: string;
+	history?: string;
+	first_color?: string;
+	second_color?: string;
+	year_of_foundation?: number;
+	stadium?: string;
+};
+
 export type UpdateLogoRequest = {
 	logo: FileList;
 };

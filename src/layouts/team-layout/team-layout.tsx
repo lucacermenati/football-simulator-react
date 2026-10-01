@@ -10,8 +10,7 @@ import { useState } from 'react';
 import ImageBox from '../../components/image-box/image-box';
 import Loader from '../../components/loader/loader';
 import ErrorText from '../../components/form/error-text/error-text';
-import TeamDelete from './components/team-delete/team-delete';
-import TeamEdit from './components/team-edit/team-edit';
+
 import TeamLogoUpload from './components/team-logo-upload/team-logo-upload';
 
 export default function TeamLayout() {
@@ -130,7 +129,7 @@ export default function TeamLayout() {
 			<main className={styles.content}>
 				<Outlet context={{ team }} />
 			</main>
-			{isEditOpen && (
+			{/* {isEditOpen && (
 				<TeamEdit
 					team={team}
 					onCancel={() => setIsEditOpen(false)}
@@ -147,7 +146,7 @@ export default function TeamLayout() {
 					team={team}
 					onCancel={() => setIsUploadOpen(false)}
 				/>
-			)}
+			)} */}
 		</section>
 	);
 }
