@@ -66,6 +66,13 @@ export type Competition = {
 	logo: string;
 };
 
+export type CompetitionPosition = {
+	id: string;
+	name: string;
+	logo: string;
+	position: number;
+};
+
 export type ReadyCompetition = {
 	id: string;
 	name: string;
