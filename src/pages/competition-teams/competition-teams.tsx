@@ -9,7 +9,6 @@ import {
 	Eye,
 	MinusCircle,
 	PlusCircle,
-	Settings,
 	ShieldPlus,
 } from 'lucide-react';
 import clsx from 'clsx';

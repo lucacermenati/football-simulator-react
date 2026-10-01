@@ -26,13 +26,13 @@ export default function AuthenticatedLayout() {
 						<Trophy />
 					</MenuItem>
 					<MenuItem
-						isActive={location.pathname === '/teams'}
+						isActive={location.pathname.startsWith('/teams')}
 						onClick={() => navigate('/teams')}
 					>
 						<ShieldHalf />
 					</MenuItem>
 					<MenuItem
-						isActive={location.pathname === '/players'}
+						isActive={location.pathname.startsWith('/players')}
 						onClick={() => navigate('/players')}
 					>
 						<Users />
