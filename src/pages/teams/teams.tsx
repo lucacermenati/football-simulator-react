@@ -11,6 +11,8 @@ import ImageBox from '../../components/image-box/image-box';
 import { useDebounce } from 'use-debounce';
 import { useEffect, useState } from 'react';
 import TeamEdit from './components/team-edit/team-edit';
+import TeamCreate from './components/team-create/team-create';
+import Modal from '../../components/modal/modal';
 
 export default function Teams() {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -28,11 +30,24 @@ export default function Teams() {
 
     const [selectedTeam, setSelectedTeam] = useState<Team | null>(null);
     const [isEditTeamModalOpen, setIsEditTeamModalOpen] = useState(false);
+    const [isCreateTeamModalOpen, setIsCreateTeamModalOpen] = useState(false);
+    const [isDeleteTeamModalOpen, setIsDeleteTeamModalOpen] = useState(false);
+    const [isAddTeamModalOpen, setIsAddTeamModalOpen] = useState(false);
 
     const openEditTeamModal = (team: Team) => {
         setSelectedTeam(team);
         setIsEditTeamModalOpen(true);
     };
+
+    const openDeleteTeamModal = (team: Team) => {
+        setSelectedTeam(team);
+        setIsDeleteTeamModalOpen(true);
+    };
+
+    const openAddTeamModal = (team: Team) => {
+        setSelectedTeam(team);
+        setIsAddTeamModalOpen(true);
+    }
 
     const { data: paginatedTeams} = useQuery<PaginatedData<Team>>({
         queryKey: ['teams', page, search],
@@ -82,7 +97,11 @@ export default function Teams() {
                 value={searchInput}
                 onChange={(event) => setSearchInput(event.target.value)}
             />
-            <ShieldPlus className={style.actionIcon} size={28}/>
+            <ShieldPlus 
+                onClick={() => setIsCreateTeamModalOpen(true)}
+                className={style.actionIcon} 
+                size={28}
+            />
         </div>
         <div className={clsx(style.tableCard, style.teamsTable)}>
             {paginatedTeams?.data && paginatedTeams?.data.map((team) => 
@@ -104,13 +123,26 @@ export default function Teams() {
                             className={style.icon} 
                             onClick={() => openEditTeamModal(team)} 
                         />
-                        <PlusCircle className={style.icon} onClick={() => console.log("OPEN ADD TEAM")} />
-                        <Trash className={style.destructiveIcon} onClick={() => console.log("OPEN DELETE TEAM CONFIRMATION")} />
+                        <PlusCircle 
+                            className={style.icon} 
+                            onClick={() => console.log("OPEN ADD TEAM")} />
+                        <Trash 
+                            className={style.destructiveIcon} 
+                            onClick={() => openDeleteTeamModal(team)} 
+                        />
                     </div>
                 </div>
             )}
         </div>
         <div className={style.paginationContainer}></div>
+        {isCreateTeamModalOpen &&
+            <TeamCreate 
+                onCancel={() => {
+                    setSelectedTeam(null); 
+                    setIsCreateTeamModalOpen(false);
+                }}
+            />
+        }
         {isEditTeamModalOpen && selectedTeam &&
             <TeamEdit team={selectedTeam} 
                 onCancel={() => {
@@ -118,6 +150,32 @@ export default function Teams() {
                     setIsEditTeamModalOpen(false);
                 }}
             />
+        }
+        {isDeleteTeamModalOpen && selectedTeam &&
+            <Modal
+                title={`Delete Team: ${selectedTeam.name}`}
+                description="Are you sure you want to delete this team?"
+                onCancel={() => {
+                    setSelectedTeam(null);
+                    setIsDeleteTeamModalOpen(false);
+                }}
+                onSubmit={async () => {console.log("DELETE TEAM")}}
+            >
+                Test
+            </Modal>
+        }
+        {isAddTeamModalOpen && selectedTeam &&
+            <Modal
+                title={`Add Team to a competition`}
+                description="Search bewtween the competitions and select one to add the team to."
+                onCancel={() => {
+                    setSelectedTeam(null);
+                    setIsAddTeamModalOpen(false);
+                }}
+                onSubmit={async () => {console.log("ADD TEAM")}}
+            >
+                Test
+            </Modal>
         }
     </div>
 }

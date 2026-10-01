@@ -32,6 +32,17 @@ export type UpdateTeamRequest = {
 	stadium?: string;
 };
 
+export type CreateTeamRequest = {
+	name: string;
+	rating?: number;
+	history?: string;
+	first_color?: string;
+	second_color?: string;
+	year_of_foundation?: number;
+	stadium?: string;
+	logo?: FileList | null;
+};
+
 export type UpdateLogoRequest = {
 	logo: FileList;
 };

@@ -1,13 +1,13 @@
 import { useForm } from "react-hook-form";
-import { Form, TextArea, TextInput } from "../../../../components/form";
+import { FileUpload, Form, TextArea, TextInput } from "../../../../components/form";
 import Modal from "../../../../components/modal/modal";
-import type { Team, UpdateTeamRequest } from "../../../../types/api";
+import type { Team, CreateTeamRequest } from "../../../../types/api";
 import { fieldErrorToMessage } from "../../../../utils/fieldErrorToMessage";
-import style from './team-edit.module.scss';
+import style from './team-create.module.scss';
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiRequest, type ApiError } from "../../../../api/apiClient";
 
-export default function TeamEdit({team, onCancel}: {team: Team, onCancel: () => void}) {
+export default function TeamCreate({onCancel}: {onCancel: () => void}) {
     const queryClient = useQueryClient();
 
     const {
@@ -15,26 +15,27 @@ export default function TeamEdit({team, onCancel}: {team: Team, onCancel: () => 
         handleSubmit,
         setError,
         formState: { errors, isSubmitting },
-    } = useForm<UpdateTeamRequest>({
+    } = useForm<CreateTeamRequest>({
         defaultValues: {
-            name: team.name,
-            rating: team.rating,
-            history: team.history || '',
-            first_color: team.first_color || '',
-            second_color: team.second_color || '',
-            year_of_foundation: team.year_of_foundation || undefined,
-            stadium: team.stadium || '',
+            name: '',
+            rating: 45,
+            history: '',
+            first_color: '',
+            second_color: '',
+            year_of_foundation: undefined,
+            stadium: '',
+            logo: null,
         },
     });
 
-    const { mutateAsync: updateTeamAsync } = useMutation<
+    const { mutateAsync: createTeamAsync } = useMutation<
         Team,
         ApiError,
-        {teamId: string; data: UpdateTeamRequest}
+        FormData
     >({
-        mutationFn: ({teamId, data}) =>
-            apiRequest<Team>(`teams/${teamId}`, {
-                method: 'PUT',
+        mutationFn: (data) =>
+            apiRequest<Team>(`teams`, {
+                method: 'POST',
                 body: data,
             }),
 
@@ -59,7 +60,7 @@ export default function TeamEdit({team, onCancel}: {team: Team, onCancel: () => 
             }
 
             Object.entries(validationErrors).forEach(([field, messages]) => {
-                setError(field as keyof UpdateTeamRequest, {
+                setError(field as keyof CreateTeamRequest, {
                     type: 'server',
                     message: messages[0],
                     types: {
@@ -70,17 +71,41 @@ export default function TeamEdit({team, onCancel}: {team: Team, onCancel: () => 
         },
     });
 
+    const createTeam = async (data: CreateTeamRequest) => {
+        const formData = new FormData();
+        
+        formData.append('name', data.name);
+
+        if (data.rating !== undefined) formData.append('rating', data.rating.toString());
+        if (data.history) formData.append('history', data.history);
+        if (data.first_color) formData.append('first_color', data.first_color);
+        if (data.second_color) formData.append('second_color', data.second_color);
+        if (data.year_of_foundation !== undefined) formData.append('year_of_foundation', data.year_of_foundation.toString());
+        if (data.stadium) formData.append('stadium', data.stadium);
+        if (data.logo && data.logo.length > 0) {
+            formData.append('logo', data.logo[0]);
+        }
+
+        await createTeamAsync(formData);
+    }
+
     return (
         <Modal
-            title={`Edit Team: ${team.name}`}
-            description="Fill in all mandatory fields to edit the team."
+            title={`Create Team`}
+            description="Fill in all mandatory fields to create a new team."
             onCancel={onCancel}
-            onSubmit={handleSubmit(async (data) => {
-                await updateTeamAsync({teamId: team.id, data});
-            })}
+            onSubmit={handleSubmit(createTeam)}
             isSubmitting={isSubmitting}
         >
             <Form disabled={isSubmitting}>
+                <FileUpload
+                    id='logo'
+                    label='Logo'
+                    error={fieldErrorToMessage(errors.logo)}
+                    disabled={isSubmitting}
+                    accept='image/png,image/jpeg,image/webp'
+                    {...register('logo')}
+                />
                 <div className={style.doubleInputBox}>
                     <TextInput
                         id='name'
