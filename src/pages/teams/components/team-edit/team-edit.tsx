@@ -4,8 +4,12 @@ import Modal from "../../../../components/modal/modal";
 import type { Team, UpdateTeamRequest } from "../../../../types/api";
 import { fieldErrorToMessage } from "../../../../utils/fieldErrorToMessage";
 import style from './team-edit.module.scss';
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { apiRequest, type ApiError } from "../../../../api/apiClient";
 
 export default function TeamEdit({team, onCancel}: {team: Team, onCancel: () => void}) {
+    const queryClient = useQueryClient();
+
     const {
         register,
         handleSubmit,
@@ -14,6 +18,7 @@ export default function TeamEdit({team, onCancel}: {team: Team, onCancel: () => 
     } = useForm<UpdateTeamRequest>({
         defaultValues: {
             name: team.name,
+            rating: team.rating,
             history: team.history || '',
             first_color: team.first_color || '',
             second_color: team.second_color || '',
@@ -22,24 +27,78 @@ export default function TeamEdit({team, onCancel}: {team: Team, onCancel: () => 
         },
     });
 
+    const { mutateAsync: updateTeamAsync } = useMutation<
+        Team,
+        ApiError,
+        {teamId: string; data: UpdateTeamRequest}
+    >({
+        mutationFn: ({teamId, data}) =>
+            apiRequest<Team>(`teams/${teamId}`, {
+                method: 'PUT',
+                body: data,
+            }),
+
+        onSuccess: async () => {
+            await queryClient.invalidateQueries({
+                queryKey: ['teams'],
+            });
+
+            onCancel();
+        },
+
+        onError: (error) => {
+            const validationErrors = error.data?.errors;
+
+            if (!validationErrors) {
+                setError('root.server', {
+                    type: 'server',
+                    message: error.message,
+                });
+
+                return;
+            }
+
+            Object.entries(validationErrors).forEach(([field, messages]) => {
+                setError(field as keyof UpdateTeamRequest, {
+                    type: 'server',
+                    message: messages[0],
+                    types: {
+                        server: messages,
+                    },
+                });
+            });
+        },
+    });
+
     return (
         <Modal
             title={`Edit Team: ${team.name}`}
             description="Fill in all mandatory fields to edit the team."
             onCancel={onCancel}
-            onSubmit={handleSubmit((data) => {
-                console.log("SUBMIT", data);
+            onSubmit={handleSubmit(async (data) => {
+                await updateTeamAsync({teamId: team.id, data});
             })}
             isSubmitting={isSubmitting}
         >
             <Form>
-                <TextInput
-                    id='name'
-                    label='Name'
-                    placeholder='Competition'
-                    error={fieldErrorToMessage(errors.name)}
-                    {...register('name')}
-                />
+                <div className={style.doubleInputBox}>
+                    <TextInput
+                        id='name'
+                        label='Name'
+                        placeholder='Competition'
+                        error={fieldErrorToMessage(errors.name)}
+                        {...register('name')}
+                    />
+                    <TextInput
+                        type="number"
+                        min={45}
+                        max={99}
+                        id='rating'
+                        label='Rating'
+                        error={fieldErrorToMessage(errors.rating)}
+                        {...register('rating')}
+                    />
+                </div>
                 <TextArea
                     id='history'
                     label='History'
@@ -47,7 +106,7 @@ export default function TeamEdit({team, onCancel}: {team: Team, onCancel: () => 
                     error={fieldErrorToMessage(errors.history)}
                     {...register('history')}
                 />
-                <div className={style.colorInputBox}>
+                <div className={style.doubleInputBox}>
                     <TextInput
                         type='color'
                         id='first_color'

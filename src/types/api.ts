@@ -24,6 +24,7 @@ export type UpdateCompetitionRequest = {
 
 export type UpdateTeamRequest = {
 	name: string;
+	rating?: number;
 	history?: string;
 	first_color?: string;
 	second_color?: string;
