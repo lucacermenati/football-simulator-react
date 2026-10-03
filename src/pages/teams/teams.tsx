@@ -13,6 +13,7 @@ import { useEffect, useState } from 'react';
 import TeamEdit from './components/team-edit/team-edit';
 import TeamCreate from './components/team-create/team-create';
 import Modal from '../../components/modal/modal';
+import TeamDelete from './components/team-delete/team-delete';
 
 export default function Teams() {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -152,17 +153,12 @@ export default function Teams() {
             />
         }
         {isDeleteTeamModalOpen && selectedTeam &&
-            <Modal
-                title={`Delete Team: ${selectedTeam.name}`}
-                description="Are you sure you want to delete this team?"
+            <TeamDelete team={selectedTeam}
                 onCancel={() => {
                     setSelectedTeam(null);
                     setIsDeleteTeamModalOpen(false);
                 }}
-                onSubmit={async () => {console.log("DELETE TEAM")}}
-            >
-                Test
-            </Modal>
+            />
         }
         {isAddTeamModalOpen && selectedTeam &&
             <Modal

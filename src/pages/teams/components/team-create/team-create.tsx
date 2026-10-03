@@ -110,7 +110,7 @@ export default function TeamCreate({onCancel}: {onCancel: () => void}) {
                     <TextInput
                         id='name'
                         label='Name'
-                        placeholder='Competition'
+                        placeholder='Team'
                         error={fieldErrorToMessage(errors.name)}
                         {...register('name')}
                     />
