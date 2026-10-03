@@ -14,6 +14,7 @@ import TeamEdit from './components/team-edit/team-edit';
 import TeamCreate from './components/team-create/team-create';
 import Modal from '../../components/modal/modal';
 import TeamDelete from './components/team-delete/team-delete';
+import AddTeam from './components/team-add/team-add';
 
 export default function Teams() {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -126,7 +127,7 @@ export default function Teams() {
                         />
                         <PlusCircle 
                             className={style.icon} 
-                            onClick={() => console.log("OPEN ADD TEAM")} />
+                            onClick={() => openAddTeamModal(team)} />
                         <Trash 
                             className={style.destructiveIcon} 
                             onClick={() => openDeleteTeamModal(team)} 
@@ -161,17 +162,12 @@ export default function Teams() {
             />
         }
         {isAddTeamModalOpen && selectedTeam &&
-            <Modal
-                title={`Add Team to a competition`}
-                description="Search bewtween the competitions and select one to add the team to."
+            <AddTeam team={selectedTeam}
                 onCancel={() => {
                     setSelectedTeam(null);
                     setIsAddTeamModalOpen(false);
                 }}
-                onSubmit={async () => {console.log("ADD TEAM")}}
-            >
-                Test
-            </Modal>
+            />
         }
     </div>
 }

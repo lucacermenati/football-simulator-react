@@ -12,6 +12,8 @@ import Loader from '../../components/loader/loader';
 import ErrorText from '../../components/form/error-text/error-text';
 
 import TeamLogoUpload from './components/team-logo-upload/team-logo-upload';
+import TeamEdit from '../../pages/teams/components/team-edit/team-edit';
+import TeamDelete from '../../pages/teams/components/team-delete/team-delete';
 
 export default function TeamLayout() {
 	const { teamId } = useParams();
@@ -19,8 +21,8 @@ export default function TeamLayout() {
 
 	const queryClient = useQueryClient();
 
-	const [isEditOpen, setIsEditOpen] = useState<boolean>(false);
-	const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false);
+	const [isEditTeamModalOpen, setIsEditTeamModalOpen] = useState<boolean>(false);
+	const [isDeleteTeamModalOpen, setIsDeleteTeamModalOpen] = useState<boolean>(false);
 	const [isUploadOpen, setIsUploadOpen] = useState<boolean>(false);
 
 	const {
@@ -118,35 +120,37 @@ export default function TeamLayout() {
 				<div className={styles.rightHeader}>
 					<Edit
 						className={styles.actionIcon}
-						onClick={() => setIsEditOpen(true)}
+						onClick={() => setIsEditTeamModalOpen(true)}
 					/>
 					<Trash
 						className={styles.destructiveActionIcon}
-						onClick={() => setIsDeleteOpen(true)}
+						onClick={() => setIsDeleteTeamModalOpen(true)}
 					/>
 				</div>
 			</div>
 			<main className={styles.content}>
 				<Outlet context={{ team }} />
 			</main>
-			{/* {isEditOpen && (
-				<TeamEdit
-					team={team}
-					onCancel={() => setIsEditOpen(false)}
+			{isEditTeamModalOpen &&
+				<TeamEdit team={team} 
+					onCancel={() => {
+						setIsEditTeamModalOpen(false);
+					}}
 				/>
-			)}
-			{isDeleteOpen && (
-				<TeamDelete
-					team={team}
-					onCancel={() => setIsDeleteOpen(false)}
+			}
+			{isDeleteTeamModalOpen &&
+				<TeamDelete team={team}
+					onCancel={() => {
+						setIsDeleteTeamModalOpen(false);
+					}}
 				/>
-			)}
+			}
 			{isUploadOpen && (
 				<TeamLogoUpload
 					team={team}
 					onCancel={() => setIsUploadOpen(false)}
 				/>
-			)} */}
+			)}
 		</section>
 	);
 }

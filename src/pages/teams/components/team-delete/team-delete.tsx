@@ -47,8 +47,7 @@ export default function TeamDelete({team, onCancel}: {team: Team, onCancel: () =
             onSubmit={async () => { await deleteTeamAsync(team.id); }}
         >
             <div className={style.deleteWarning}>
-				<p>The action is not reversible and you will lose all data including</p>
-				<p>matches, players and statistics.</p>
+				<p>The action is not reversible and you will lose all data including matches, players and statistics.</p>
 			</div>
 			{isError && error && <ErrorText>{error}</ErrorText>}
         </Modal>

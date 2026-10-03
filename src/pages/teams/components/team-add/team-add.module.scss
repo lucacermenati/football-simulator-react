@@ -1,0 +1,57 @@
+.selectableTeamsList {
+	display: grid;
+	grid-template-columns: repeat(5, 1fr);
+	gap: 1rem;
+	margin-bottom: 2rem;
+}
+
+.search {
+	margin-bottom: 1rem;
+}
+
+.teamItem {
+	padding: 0.25rem;
+	border-radius: var(--border-radius);
+
+	display: flex;
+	align-items: center;
+	gap: 0.25rem;
+
+	&:hover {
+		cursor: pointer;
+		background-color: var(--hover-white);
+	}
+}
+
+.selectedTeamItem {
+	padding: 0.25rem;
+	border-radius: var(--border-radius);
+
+	display: flex;
+	align-items: center;
+	gap: 0.25rem;
+}
+
+.imageBoxSize {
+	width: 1.5rem;
+	height: 1.5rem;
+}
+
+.unselectIcon {
+	cursor: pointer;
+	color: var(--text-gray);
+
+	&:hover {
+		color: var(--hover-gray);
+	}
+}
+
+.text {
+	text-transform: uppercase;
+	font-weight: 600;
+	font-size: 0.75rem;
+}
+.selectedCompetition {
+    background-color: var(--hover-white);
+    border: 1px solid var(--primary-black);
+}

@@ -4,6 +4,7 @@ import Modal from '../../../../components/modal/modal';
 import type {
 	Competition,
 	NoContentResponse,
+	Team,
 	UpdateLogoRequest,
 } from '../../../../types/api';
 import { FileUpload, Form } from '../../../../components/form';
@@ -12,10 +13,10 @@ import { useForm, type SubmitHandler } from 'react-hook-form';
 import style from './team-logo-upload.module.scss';
 
 export default function TeamLogoUpload({
-	competition,
+	team,
 	onCancel,
 }: {
-	competition: Competition;
+	team: Team;
 	onCancel: () => void;
 }) {
 	const queryClient = useQueryClient();
@@ -37,14 +38,14 @@ export default function TeamLogoUpload({
 		{ id: string; data: FormData }
 	>({
 		mutationFn: ({ id, data }) =>
-			apiRequest<NoContentResponse>(`competitions/${id}/logo`, {
+			apiRequest<NoContentResponse>(`teams/${id}/logo`, {
 				method: 'POST',
 				body: data,
 			}),
 
 		onSuccess: async () => {
 			await queryClient.invalidateQueries({
-				queryKey: ['competitions', competition.id],
+				queryKey: ['teams'],
 			});
 
 			onCancel();
@@ -80,12 +81,12 @@ export default function TeamLogoUpload({
 		const formData = new FormData();
 		formData.append('logo', data.logo[0]);
 
-		await updateLogoAsync({ id: competition.id, data: formData });
+		await updateLogoAsync({ id: team.id, data: formData });
 	};
 
 	return (
 		<Modal
-			title='Edit competition'
+			title='Edit team logo'
 			description='Click on the icon to choose a file.'
 			submitText='Upload'
 			onCancel={() => {
