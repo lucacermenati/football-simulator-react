@@ -12,7 +12,6 @@ import { useDebounce } from 'use-debounce';
 import { useEffect, useState } from 'react';
 import TeamEdit from './components/team-edit/team-edit';
 import TeamCreate from './components/team-create/team-create';
-import Modal from '../../components/modal/modal';
 import TeamDelete from './components/team-delete/team-delete';
 import AddTeam from './components/team-add/team-add';
 

@@ -17,6 +17,7 @@ import Teams from './pages/teams/teams';
 import Match from './pages/match/match';
 import TeamPage from './pages/team/team';
 import TeamLayout from './layouts/team-layout/team-layout';
+import Players from './pages/players/players';
 
 export default function App() {
 	return (
@@ -47,7 +48,7 @@ export default function App() {
 							<Route path='on-the-field' element={<NotAvailable />} />
 						</Route>
 					</Route>
-					<Route path='/players' element={<NotAvailable />} />
+					<Route path='/players' element={<Players />} />
 					<Route path='/profile' element={<Profile />} />
 				</Route>
 			</Route>
