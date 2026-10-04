@@ -19,7 +19,7 @@ export default function PositionBadge({ position, className }: { position: strin
     return (
         <div className={clsx(
             style.positionBadge, 
-            shortName === "GK" && style.goalKeeper,
+            shortName === "GK" && style.goalkeeper,
             shortName === "DF" && style.defender,
             shortName === "MF" && style.midfielder,
             shortName === "FW" && style.forward,

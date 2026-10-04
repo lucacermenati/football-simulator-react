@@ -123,6 +123,7 @@ export type Player = {
 	position_on_field: number;
 	number: number;
 	rating: number;
+	nationality: string;
 	team_id: string;
 	team?: Team;
 };

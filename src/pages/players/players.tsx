@@ -1,15 +1,24 @@
-import { useSearchParams } from "react-router";
+import { useNavigate, useSearchParams } from "react-router";
 import { useAuth } from "../../auth/useAuth";
 import { useQuery } from "@tanstack/react-query";
 import type { PaginatedData, Player } from "../../types/api";
 import { apiRequest } from "../../api/apiClient";
 import { useDebounce } from "use-debounce";
 import { useState } from "react";
+import style from "./players.module.scss";
+import clsx from "clsx";
+import { TextInput } from "../../components/form";
+import { Edit, Eye, PlusCircle, Trash, UserRoundPlus, WandSparkles } from "lucide-react";
+import PositionBadge from "../../components/position-badge/position-badge";
+import NationalityBadge from "../../components/nationality-badge/nationality-badge";
+import ImageBox from "../../components/image-box/image-box";
 
 export default function Players() {
     const { isAuthenticated } = useAuth();
 
     const [queryParams, setQueryParams] = useSearchParams();
+
+    const navigate = useNavigate();
 
     const page = queryParams.get("page");
     const position = queryParams.get("position");
@@ -57,9 +66,72 @@ export default function Players() {
     });
 
     return (
-        <div>
-            <h1>Players</h1>
-            <pre>{JSON.stringify(paginatedPlayers, null, 2)}</pre>
+        <div className={style.page}>
+            <div className={style.actionBox}>
+                <div className={style.filtersBox}>
+                    <TextInput
+                        id="search"
+                        placeholder='Search players' 
+                        className={style.searchbar} 
+                        value={searchInput}
+                        onChange={(event) => setSearchInput(event.target.value)}
+                    />
+                </div>
+                <div className={style.createBox}>
+                    <UserRoundPlus 
+                        onClick={() => console.log("Add player")}
+                        className={style.actionIcon} 
+                        size={28}
+                    />
+                    <WandSparkles 
+                        onClick={() => console.log("Generate player")}
+                        className={style.actionIcon} 
+                        size={28}
+                    />
+                </div>
+            </div>
+            <div className={clsx(style.tableCard, style.playersTable)}>
+                {paginatedPlayers?.data && paginatedPlayers?.data.map((player) => 
+                    <div className={style.playerRow} key={player.id}>
+                        <div className={style.playerColumn}>
+                            <NationalityBadge nationality={player.nationality} className={style.badge} />
+                            <PositionBadge position={player.position} className={style.badge} /> 
+                            <div 
+                                className={style.playerName} 
+                                onClick={() => navigate(`/players/${player.id}`)}>
+                                    {player.full_name}
+                            </div>
+                        </div>
+                        <div className={style.actionColumn}>
+                            { player.team === null 
+                                ? <PlusCircle 
+                                    className={style.icon} 
+                                    onClick={() => console.log("Add player to team")} 
+                                /> 
+                                : <ImageBox 
+                                    className={style.imageBoxSize}
+                                    src={player.team.logo} 
+                                    alt={player.team.name} 
+                                />
+                            }
+                        </div>
+                        <div className={style.actionColumn}>
+                            <Eye 
+                                className={style.icon} 
+                                onClick={() => navigate(`/players/${player.id}`)} 
+                            />
+                            <Edit
+                                className={style.icon} 
+                                onClick={() => console.log("Edit player")} 
+                            />
+                            <Trash
+                                className={style.destructiveIcon} 
+                                onClick={() => console.log("Delete player")} 
+                            />
+                        </div>
+                    </div>
+                )}
+            </div>
         </div>
     );
 }

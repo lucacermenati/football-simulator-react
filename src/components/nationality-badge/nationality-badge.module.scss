@@ -1,0 +1,18 @@
+.nationalityBadge {
+    display: flex;
+    align-items: center;
+    border-radius: var(--border-radius-small);
+    border: 1px solid var(--border-gray);
+}
+
+.flag {
+	display: block;
+	// width: 100%;
+    // height: 100%;
+
+	svg {
+		display: block;
+		width: 100%;
+		height: auto;
+	}
+}

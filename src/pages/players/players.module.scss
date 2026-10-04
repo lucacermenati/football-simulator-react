@@ -1,0 +1,138 @@
+.page {
+	width: 100%;
+	height: 100%;
+	min-width: 0;
+	min-height: 0;
+
+	overflow: hidden;
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+    padding-left: 2rem;
+	padding-right: 2rem;
+
+	display: flex;
+	flex-direction: column;
+	gap: 2rem;
+}
+
+.actionBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 1rem;
+}
+
+.createBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 1rem;
+    gap : 1.5rem;
+}
+
+.filtersBox {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    padding-right: 1rem;
+}
+
+.searchbar {
+    width: 15rem;
+}
+
+.actionIcon {
+	cursor: pointer;
+	color: var(--text-gray);
+
+	&:hover {
+		color: var(--hover-gray);
+	}
+}
+
+.tableCard {
+    padding: 1rem;
+	box-sizing: border-box;
+
+	border: 1px solid var(--primary-black);
+	border-radius: var(--border-radius);
+	background: var(--primary-white);
+
+	overflow: hidden;
+}
+
+.playersTable {
+	display: grid;
+	align-items: center;
+	grid-template-columns: 1fr auto auto;
+	color: var(--text-gray);
+}
+
+.playerColumn {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+	padding-left: 1rem;
+	padding-top: 0.75rem;
+	padding-bottom: 0.75rem;
+}
+
+.actionColumn {
+	display: flex;
+	align-items: center;
+	justify-content: start;
+	gap: 1rem;
+}
+
+.playerRow {
+	display: grid;
+	grid-template-columns: subgrid;
+	grid-column: span 3;
+	align-items: center;
+	justify-content: center;
+	gap: 2rem;
+	border-bottom: 1px solid var(--border-gray);
+
+	&:last-child {
+		border-bottom: 0px;
+	}
+}
+
+.imageBoxSize {
+	width: 2rem;
+	height: 2rem;
+}
+
+.icon {
+	color: var(--text-gray);
+	cursor: pointer;
+
+	&:hover {
+		color: var(--hover-gray);
+	}
+}
+
+.destructiveIcon {
+	cursor: pointer;
+	color: var(--text-gray);
+
+	&:hover {
+		color: var(--error-color);
+	}
+}
+
+.playerName {
+	cursor: pointer;
+
+	&:hover {
+		color: var(--hover-gray);
+		text-decoration: underline;
+	}
+}
+
+.badge {
+    width: 2rem;
+    height: 1.5rem;
+    font-size: 0.75rem;
+    justify-content: center;
+}
