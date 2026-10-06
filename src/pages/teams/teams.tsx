@@ -24,7 +24,7 @@ export default function Teams() {
     const page = pageParam ? parseInt(pageParam): undefined;
 
     const search = searchParams.get('search');
-    const [searchInput, setSearchInput] = useState(search);
+    const [searchInput, setSearchInput] = useState<string>(search ?? "");
     const [debouncedSearch] = useDebounce(searchInput, 500);
 
     const navigate = useNavigate();

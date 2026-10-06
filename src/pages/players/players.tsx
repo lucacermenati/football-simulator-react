@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import type { PaginatedData, Player } from "../../types/api";
 import { apiRequest } from "../../api/apiClient";
 import { useDebounce } from "use-debounce";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import style from "./players.module.scss";
 import clsx from "clsx";
 import { TextInput } from "../../components/form";
@@ -12,6 +12,7 @@ import { Edit, Eye, PlusCircle, Trash, UserRoundPlus, WandSparkles } from "lucid
 import PositionBadge from "../../components/position-badge/position-badge";
 import NationalityBadge from "../../components/nationality-badge/nationality-badge";
 import ImageBox from "../../components/image-box/image-box";
+import FreeAgentSwitch from "../../components/free-agent-switch/free-agent-switch";
 
 export default function Players() {
     const { isAuthenticated } = useAuth();
@@ -26,7 +27,7 @@ export default function Players() {
     const nationality = queryParams.get("nationality");
 
     const search = queryParams.get('search');
-    const [searchInput, setSearchInput] = useState(search);
+    const [searchInput, setSearchInput] = useState<string>(search ?? "");
     const [debouncedSearch] = useDebounce(searchInput, 500);
 
     const {
@@ -65,6 +66,28 @@ export default function Players() {
         enabled: isAuthenticated,
     });
 
+    useEffect(() => {
+        setQueryParams((params) => {
+            const newParams = new URLSearchParams(params);
+
+            if (debouncedSearch) {
+                newParams.set('search', debouncedSearch);
+            } else {
+                newParams.delete('search');
+            }
+
+            newParams.delete('page');
+
+            return newParams;
+        });
+    }, [
+        debouncedSearch,
+        free,
+        position,
+        nationality,
+        setQueryParams
+    ]);
+
     return (
         <div className={style.page}>
             <div className={style.actionBox}>
@@ -76,6 +99,21 @@ export default function Players() {
                         value={searchInput}
                         onChange={(event) => setSearchInput(event.target.value)}
                     />
+                    <FreeAgentSwitch value={free} onToggle={() => {
+                            setQueryParams((params) => {
+                            const newParams = new URLSearchParams(params);
+
+                            if (free) {
+                                newParams.delete('free');
+                            } else {
+                                newParams.set('free', "1");
+                            }
+
+                            newParams.delete('page');
+
+                            return newParams;
+                        });
+                    }}/>
                 </div>
                 <div className={style.createBox}>
                     <UserRoundPlus 
