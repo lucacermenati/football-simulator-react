@@ -16,6 +16,7 @@ import FreeAgentSwitch from "../../components/free-agent-switch/free-agent-switc
 import PositionSelector from "../../components/position-selector/position-selector";
 import PlayerDelete from "./components/player-delete/player-delete";
 import PlayerCreate from "./components/player-create/player-create";
+import PlayerEdit from "./components/player-edit/player-edit";
 
 export default function Players() {
     const { isAuthenticated } = useAuth();
@@ -35,7 +36,13 @@ export default function Players() {
 
     const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null);
     const [isCreatePlayerModalOpen, setIsCreatePlayerModalOpen] = useState(false);
+    const [isEditPlayerModalOpen, setIsEditPlayerModalOpen] = useState(false);
     const [isDeletePlayerModalOpen, setIsDeletePlayerModalOpen] = useState(false);
+
+    const openEditPlayerModal = (player: Player) => {
+        setSelectedPlayer(player);
+        setIsEditPlayerModalOpen(true);
+    };
 
     const openDeletePlayerModal = (player: Player) => {
         setSelectedPlayer(player);
@@ -188,7 +195,7 @@ export default function Players() {
                             />
                             <Edit
                                 className={style.icon} 
-                                onClick={() => console.log("Edit player")} 
+                                onClick={() => openEditPlayerModal(player)} 
                             />
                             <Trash
                                 className={style.destructiveIcon} 
@@ -203,6 +210,14 @@ export default function Players() {
                     onCancel={() => {
                         setSelectedPlayer(null);
                         setIsCreatePlayerModalOpen(false);
+                    }}
+                />
+            }
+            {isEditPlayerModalOpen && selectedPlayer &&
+                <PlayerEdit player={selectedPlayer}
+                    onCancel={() => {
+                        setSelectedPlayer(null);
+                        setIsEditPlayerModalOpen(false);
                     }}
                 />
             }

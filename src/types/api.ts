@@ -52,6 +52,15 @@ export type CreatePlayerRequest = {
 	number?: number | null;
 };
 
+export type UpdatePlayerRequest = {
+	first_name: string;
+	last_name: string;
+	birth_date: string;
+	position: string;
+	nationality: string;
+	number: number;
+};
+
 export type UpdateLogoRequest = {
 	logo: FileList;
 };
