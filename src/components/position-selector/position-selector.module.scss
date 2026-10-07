@@ -1,0 +1,14 @@
+.selector {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 1rem;
+}
+
+.positionBadge {
+    cursor: pointer;
+}
+
+.highlightedBadge {
+    border: 2px, solid, currentColor
+}

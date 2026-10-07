@@ -13,6 +13,7 @@ import PositionBadge from "../../components/position-badge/position-badge";
 import NationalityBadge from "../../components/nationality-badge/nationality-badge";
 import ImageBox from "../../components/image-box/image-box";
 import FreeAgentSwitch from "../../components/free-agent-switch/free-agent-switch";
+import PositionSelector from "../../components/position-selector/position-selector";
 
 export default function Players() {
     const { isAuthenticated } = useAuth();
@@ -99,7 +100,7 @@ export default function Players() {
                         value={searchInput}
                         onChange={(event) => setSearchInput(event.target.value)}
                     />
-                    <FreeAgentSwitch value={free} onToggle={() => {
+                    <FreeAgentSwitch value={free === "1"} onToggle={() => {
                             setQueryParams((params) => {
                             const newParams = new URLSearchParams(params);
 
@@ -114,6 +115,22 @@ export default function Players() {
                             return newParams;
                         });
                     }}/>
+                    <PositionSelector value={position} onSelect={(selectedPosition) => {
+                            setQueryParams((params) => {
+                                const newParams = new URLSearchParams(params);
+
+                                if (position === selectedPosition) {
+                                    newParams.delete('position');
+                                } else {
+                                    newParams.set('position', selectedPosition);
+                                }
+
+                                newParams.delete('page');
+
+                                return newParams;
+                            })
+                        }
+                    }/>
                 </div>
                 <div className={style.createBox}>
                     <UserRoundPlus 
