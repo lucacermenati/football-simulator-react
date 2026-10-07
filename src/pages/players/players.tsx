@@ -15,6 +15,7 @@ import ImageBox from "../../components/image-box/image-box";
 import FreeAgentSwitch from "../../components/free-agent-switch/free-agent-switch";
 import PositionSelector from "../../components/position-selector/position-selector";
 import PlayerDelete from "./components/player-delete/player-delete";
+import PlayerCreate from "./components/player-create/player-create";
 
 export default function Players() {
     const { isAuthenticated } = useAuth();
@@ -33,6 +34,7 @@ export default function Players() {
     const [debouncedSearch] = useDebounce(searchInput, 500);
 
     const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null);
+    const [isCreatePlayerModalOpen, setIsCreatePlayerModalOpen] = useState(false);
     const [isDeletePlayerModalOpen, setIsDeletePlayerModalOpen] = useState(false);
 
     const openDeletePlayerModal = (player: Player) => {
@@ -143,7 +145,7 @@ export default function Players() {
                 </div>
                 <div className={style.createBox}>
                     <UserRoundPlus 
-                        onClick={() => console.log("Add player")}
+                        onClick={() => setIsCreatePlayerModalOpen(true)}
                         className={style.actionIcon} 
                         size={28}
                     />
@@ -196,6 +198,14 @@ export default function Players() {
                     </div>
                 )}
             </div>
+            {isCreatePlayerModalOpen &&
+                <PlayerCreate
+                    onCancel={() => {
+                        setSelectedPlayer(null);
+                        setIsCreatePlayerModalOpen(false);
+                    }}
+                />
+            }
             {isDeletePlayerModalOpen && selectedPlayer &&
                 <PlayerDelete player={selectedPlayer}
                     onCancel={() => {

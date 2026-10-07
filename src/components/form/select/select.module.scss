@@ -1,0 +1,23 @@
+.select {
+	min-height: 2rem;
+
+	border: 1px solid var(--primary-black);
+	border-radius: var(--border-radius);
+
+	padding: 0.5rem;
+
+	background-color: transparent;
+
+	&:focus {
+		outline: none;
+		border-color: var(--active-gray);
+	}
+
+	&.error {
+		border-color: var(--error-color);
+	}
+
+	&.error:focus {
+		border-color: var(--error-color);
+	}
+}

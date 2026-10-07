@@ -43,6 +43,15 @@ export type CreateTeamRequest = {
 	logo?: FileList | null;
 };
 
+export type CreatePlayerRequest = {
+	first_name?: string | null;
+	last_name?: string | null;
+	birth_date?: string | null;
+	position?: string | null;
+	nationality?: string | null;
+	number?: number | null;
+};
+
 export type UpdateLogoRequest = {
 	logo: FileList;
 };
@@ -126,6 +135,11 @@ export type Player = {
 	nationality: string;
 	team_id: string;
 	team?: Team;
+};
+
+export type Nationality = {
+	code: string;
+	name: string;
 };
 
 export type Match = {
