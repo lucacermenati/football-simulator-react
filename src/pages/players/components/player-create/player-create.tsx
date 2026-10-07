@@ -82,14 +82,13 @@ export default function PlayerCreate({onCancel}: {onCancel: () => void}) {
     });
 
     const createPlayer = async (data: CreatePlayerRequest) => {
-        await createPlayerAsync({
-            first_name: data.first_name || null,
-            last_name: data.last_name || null,
-            birth_date: data.birth_date || null,
-            position: data.position || null,
-            nationality: data.nationality || null,
-            number: data.number ?? null,
-        });
+        const payload = Object.fromEntries(
+            Object.entries(data).filter(
+                ([, value]) => value !== null && value !== undefined && value !== '' && value !== 0
+            )
+        ) as CreatePlayerRequest;
+
+        await createPlayerAsync(payload);
     }
 
     return (
