@@ -95,7 +95,7 @@ export default function PlayerCreate({onCancel}: {onCancel: () => void}) {
     return (
         <Modal
             title={`Create Player`}
-            description="Fill in all mandatory fields to create a new player."
+            description="Leave empty those field you want to be randomly generated."
             onCancel={onCancel}
             onSubmit={handleSubmit(createPlayer)}
             isSubmitting={isSubmitting}
