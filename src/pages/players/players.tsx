@@ -14,6 +14,7 @@ import NationalityBadge from "../../components/nationality-badge/nationality-bad
 import ImageBox from "../../components/image-box/image-box";
 import FreeAgentSwitch from "../../components/free-agent-switch/free-agent-switch";
 import PositionSelector from "../../components/position-selector/position-selector";
+import PlayerDelete from "./components/player-delete/player-delete";
 
 export default function Players() {
     const { isAuthenticated } = useAuth();
@@ -30,6 +31,14 @@ export default function Players() {
     const search = queryParams.get('search');
     const [searchInput, setSearchInput] = useState<string>(search ?? "");
     const [debouncedSearch] = useDebounce(searchInput, 500);
+
+    const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null);
+    const [isDeletePlayerModalOpen, setIsDeletePlayerModalOpen] = useState(false);
+
+    const openDeletePlayerModal = (player: Player) => {
+        setSelectedPlayer(player);
+        setIsDeletePlayerModalOpen(true);
+    };
 
     const {
         data: paginatedPlayers,
@@ -181,12 +190,20 @@ export default function Players() {
                             />
                             <Trash
                                 className={style.destructiveIcon} 
-                                onClick={() => console.log("Delete player")} 
+                                onClick={() => openDeletePlayerModal(player)} 
                             />
                         </div>
                     </div>
                 )}
             </div>
+            {isDeletePlayerModalOpen && selectedPlayer &&
+                <PlayerDelete player={selectedPlayer}
+                    onCancel={() => {
+                        setSelectedPlayer(null);
+                        setIsDeletePlayerModalOpen(false);
+                    }}
+                />
+            }
         </div>
     );
 }
