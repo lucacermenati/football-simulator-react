@@ -40,7 +40,7 @@ export default function NationalitySelector({
             <div 
                 key={nationality.code}  
                 onClick={() => onSelect(nationality.code)} 
-                className={clsx(nationality.code === value && style.selectedNationality)}
+                className={clsx(style.nationalityOption, nationality.code === value && style.selectedNationality)}
             >
                 <NationalityBadge 
                     nationality={nationality.code}
@@ -48,7 +48,11 @@ export default function NationalitySelector({
             </div>
         )}
         <div>
-            <RectangleEllipsis size={24} onClick={() => setIsNationalityModalOpen(true)}/>
+            <RectangleEllipsis 
+                size={24} 
+                className={style.moreIcon} 
+                onClick={() => setIsNationalityModalOpen(true)}
+            />
         </div>
         { isNationalityModalOpen && 
             <Modal
@@ -58,7 +62,11 @@ export default function NationalitySelector({
             >
                 <div className={style.nationalityGrid}>
                     {nationalities?.map((nationality) => 
-                        <div key={nationality.code} onClick={() => setSelectedNationality(nationality.code)} >
+                        <div
+                            key={nationality.code}
+                            onClick={() => setSelectedNationality(nationality.code)}
+                            className={clsx(style.nationalityOption, nationality.code === selectedNationality && style.selectedNationality)}
+                        >
                             <NationalityBadge 
                                 nationality={nationality.code}
                             />

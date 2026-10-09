@@ -33,13 +33,18 @@
 .filtersBox {
     display: flex;
     justify-content: start;
-    align-items: center;
+    align-items: stretch;
+    height: 2.5rem;
     padding-right: 1rem;
 	gap: 2rem;
 }
 
 .searchbar {
     width: 15rem;
+
+    input {
+        flex: 1;
+    }
 }
 
 .actionIcon {

@@ -1,21 +1,41 @@
 .selector {
     display: flex;
-    padding: 0.5rem;
     padding-left: 0.75rem;
     padding-right: 0.75rem;
-    border: 1px, solid, var(--border-gray);
+    border: 1px solid var(--border-gray);
     border-radius: var(--border-radius);
     align-items: center;
     justify-content: start;
     gap: 1rem;
 }
 
-.nationalityGrid {
-    display: grid;
-    grid-template-columns: auto auto auto auto auto;
-    gap: 2rem;
+.nationalityOption {
+    width: 2.25rem;
+    flex-shrink: 0;
+    cursor: pointer;
+    border: 2px solid transparent;
+
+    &:hover {
+        border-color: var(--hover-yellow);
+    }
+
+    &.selectedNationality {
+        border-color: var(--active-yellow);
+    }
 }
 
-.selectedNationality {
-    border: 2px, solid, var(--border-gray)
+.moreIcon {
+    display: block;
+    cursor: pointer;
+    color: var(--text-gray);
+
+    &:hover {
+        color: var(--hover-gray);
+    }
+}
+
+.nationalityGrid {
+    display: grid;
+    grid-template-columns: repeat(8, auto);
+    gap: 2rem;
 }

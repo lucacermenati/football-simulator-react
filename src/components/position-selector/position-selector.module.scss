@@ -1,19 +1,23 @@
 .selector {
     display: flex;
-    padding: 0.5rem;
     padding-left: 0.75rem;
     padding-right: 0.75rem;
-    border: 1px, solid, var(--border-gray);
+    border: 1px solid var(--border-gray);
     border-radius: var(--border-radius);
     align-items: center;
     justify-content: start;
     gap: 1rem;
 }
 
-.positionBadge {
+.selector .positionBadge {
     cursor: pointer;
-}
+    height: 1.75rem;
+    padding-top: 0;
+    padding-bottom: 0;
+    border: 2px solid transparent;
 
-.highlightedBadge {
-    border: 2px, solid, currentColor
+    &:hover,
+    &.highlightedBadge {
+        border-color: currentColor;
+    }
 }
