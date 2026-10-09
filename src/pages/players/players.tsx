@@ -17,6 +17,7 @@ import PositionSelector from "../../components/position-selector/position-select
 import PlayerDelete from "./components/player-delete/player-delete";
 import PlayerCreate from "./components/player-create/player-create";
 import PlayerEdit from "./components/player-edit/player-edit";
+import NationalitySelector from "../../components/nationality-selector/nationality-selector";
 
 export default function Players() {
     const { isAuthenticated } = useAuth();
@@ -149,6 +150,7 @@ export default function Players() {
                             })
                         }
                     }/>
+                    <NationalitySelector value={nationality} />
                 </div>
                 <div className={style.createBox}>
                     <UserRoundPlus 

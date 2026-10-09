@@ -151,6 +151,11 @@ export type Nationality = {
 	name: string;
 };
 
+export type CountNationality = {
+	code: string;
+	count: number;
+}
+
 export type Match = {
 	id: string;
 	date: string;

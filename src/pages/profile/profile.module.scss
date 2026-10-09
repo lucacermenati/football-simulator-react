@@ -43,6 +43,9 @@
 }
 
 .upcomingMatchesContainer {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
 	margin-top: 3rem;
 	font-weight: 600;
 }
