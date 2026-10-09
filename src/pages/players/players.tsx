@@ -150,7 +150,13 @@ export default function Players() {
                             })
                         }
                     }/>
-                    <NationalitySelector value={nationality} />
+                    <NationalitySelector 
+                        value={nationality} 
+                        search={debouncedSearch} 
+                        position={position} 
+                        free={free} 
+                        onSelect={(selectedNationality) => console.log('I am selecting ' . selectedNationality)}
+                    />
                 </div>
                 <div className={style.createBox}>
                     <UserRoundPlus 

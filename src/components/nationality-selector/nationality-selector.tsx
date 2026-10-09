@@ -6,7 +6,19 @@ import { useAuth } from "../../auth/useAuth";
 import NationalityBadge from "../nationality-badge/nationality-badge";
 import { Ellipsis, RectangleEllipsis } from "lucide-react";
 
-export default function NationalitySelector({ value } : { value: string } ) {
+export default function NationalitySelector({ 
+    value,
+    search,
+    position,
+    free,
+    onSelect
+} : { 
+    value: string | null,
+    search: string | null,
+    position: string | null,
+    free: string | null,
+    onSelect: (selectedNationality: string) => void
+} ) {
     const {isAuthenticated} = useAuth();
 
     const {data: nationalities} = useQuery<CountNationality[]>({
