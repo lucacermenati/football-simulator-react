@@ -28,8 +28,24 @@ export default function NationalitySelector({
     const [selectedNationality, setSelectedNationality] = useState<string>("");
 
     const {data: nationalities} = useQuery<CountNationality[]>({
-        queryKey: ['players', 'nationalities'],
-        queryFn: () => apiRequest<CountNationality[]>('players/nationalities'),
+        queryKey: ['players', 'nationalities', search, position, free],
+        queryFn: () => {
+            const baseApiUrl = "players/nationalities";
+            const params = new URLSearchParams();
+    
+            if (search) params.set("search", search);
+            if (position) params.set("position", position);
+            if (free) params.set("free", free);
+            if (value) params.set("nationality", value);
+
+            const queryString = params.toString();
+
+            const url = queryString
+                ? `${baseApiUrl}?${queryString}`
+                : baseApiUrl;
+
+            return apiRequest<CountNationality[]>(url);
+        },
         enabled: !!isAuthenticated
     })
 

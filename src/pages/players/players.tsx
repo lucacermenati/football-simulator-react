@@ -17,6 +17,7 @@ import PositionSelector from "../../components/position-selector/position-select
 import PlayerDelete from "./components/player-delete/player-delete";
 import PlayerCreate from "./components/player-create/player-create";
 import PlayerEdit from "./components/player-edit/player-edit";
+import PlayerGenerate from "./components/player-generate/player-generate";
 import NationalitySelector from "../../components/nationality-selector/nationality-selector";
 
 export default function Players() {
@@ -37,6 +38,7 @@ export default function Players() {
 
     const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null);
     const [isCreatePlayerModalOpen, setIsCreatePlayerModalOpen] = useState(false);
+    const [isGeneratePlayersModalOpen, setIsGeneratePlayersModalOpen] = useState(false);
     const [isEditPlayerModalOpen, setIsEditPlayerModalOpen] = useState(false);
     const [isDeletePlayerModalOpen, setIsDeletePlayerModalOpen] = useState(false);
 
@@ -179,7 +181,7 @@ export default function Players() {
                         size={28}
                     />
                     <WandSparkles 
-                        onClick={() => console.log("Generate player")}
+                        onClick={() => setIsGeneratePlayersModalOpen(true)}
                         className={style.actionIcon} 
                         size={28}
                     />
@@ -233,6 +235,11 @@ export default function Players() {
                         setSelectedPlayer(null);
                         setIsCreatePlayerModalOpen(false);
                     }}
+                />
+            }
+            {isGeneratePlayersModalOpen &&
+                <PlayerGenerate
+                    onCancel={() => setIsGeneratePlayersModalOpen(false)}
                 />
             }
             {isEditPlayerModalOpen && selectedPlayer &&

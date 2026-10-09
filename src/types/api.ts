@@ -52,6 +52,10 @@ export type CreatePlayerRequest = {
 	number?: number | null;
 };
 
+export type GeneratePlayersRequest = {
+	n: number;
+};
+
 export type UpdatePlayerRequest = {
 	first_name: string;
 	last_name: string;
