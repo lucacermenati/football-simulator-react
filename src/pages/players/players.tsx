@@ -155,7 +155,21 @@ export default function Players() {
                         search={debouncedSearch} 
                         position={position} 
                         free={free} 
-                        onSelect={(selectedNationality) => console.log('I am selecting ' . selectedNationality)}
+                        onSelect={(selectedNationality) => {
+                            setQueryParams((params) => {
+                                const newParams = new URLSearchParams(params);
+
+                                if (nationality === selectedNationality) {
+                                    newParams.delete('nationality');
+                                } else {
+                                    newParams.set('nationality', selectedNationality);
+                                }
+
+                                newParams.delete('page');
+
+                                return newParams;
+                            })
+                        }}
                     />
                 </div>
                 <div className={style.createBox}>

@@ -5,6 +5,9 @@ import { apiRequest } from "../../api/apiClient";
 import { useAuth } from "../../auth/useAuth";
 import NationalityBadge from "../nationality-badge/nationality-badge";
 import { Ellipsis, RectangleEllipsis } from "lucide-react";
+import Modal from "../modal/modal";
+import { useState } from "react";
+import clsx from "clsx";
 
 export default function NationalitySelector({ 
     value,
@@ -21,6 +24,9 @@ export default function NationalitySelector({
 } ) {
     const {isAuthenticated} = useAuth();
 
+    const [isNationalityModalOpen, setIsNationalityModalOpen] = useState<boolean>(false);
+    const [selectedNationality, setSelectedNationality] = useState<string>("");
+
     const {data: nationalities} = useQuery<CountNationality[]>({
         queryKey: ['players', 'nationalities'],
         queryFn: () => apiRequest<CountNationality[]>('players/nationalities'),
@@ -31,10 +37,35 @@ export default function NationalitySelector({
 
     return <div className={style.selector}>
         {topNationalities?.map((nationality) => 
-            <NationalityBadge key={nationality.code} nationality={nationality.code}/>
+            <div 
+                key={nationality.code}  
+                onClick={() => onSelect(nationality.code)} 
+                className={clsx(nationality.code === value && style.selectedNationality)}
+            >
+                <NationalityBadge 
+                    nationality={nationality.code}
+                />
+            </div>
         )}
         <div>
-            <RectangleEllipsis size={24} />
+            <RectangleEllipsis size={24} onClick={() => setIsNationalityModalOpen(true)}/>
         </div>
+        { isNationalityModalOpen && 
+            <Modal
+                title="Select a nationality"
+                onCancel={() => setIsNationalityModalOpen(false)}
+                onSubmit={() => {onSelect(selectedNationality); setIsNationalityModalOpen(false);}}
+            >
+                <div className={style.nationalityGrid}>
+                    {nationalities?.map((nationality) => 
+                        <div key={nationality.code} onClick={() => setSelectedNationality(nationality.code)} >
+                            <NationalityBadge 
+                                nationality={nationality.code}
+                            />
+                        </div>
+                    )}
+                </div>
+            </Modal>
+        }
     </div>
 }

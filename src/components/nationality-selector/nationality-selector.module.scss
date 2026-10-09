@@ -9,3 +9,13 @@
     justify-content: start;
     gap: 1rem;
 }
+
+.nationalityGrid {
+    display: grid;
+    grid-template-columns: auto auto auto auto auto;
+    gap: 2rem;
+}
+
+.selectedNationality {
+    border: 2px, solid, var(--border-gray)
+}
