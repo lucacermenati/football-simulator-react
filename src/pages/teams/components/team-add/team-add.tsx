@@ -11,7 +11,7 @@ import type {
 import { useAuth } from '../../../../auth/useAuth';
 import { useState } from 'react';
 import style from './team-add.module.scss';
-import ImageBox from '../../../../components/image-box/image-box';
+import CompetitionLogo from '../../../../components/competition-logo/competition-logo';
 import { TextInput } from '../../../../components/form';
 import Loader from '../../../../components/loader/loader';
 import ErrorText from '../../../../components/form/error-text/error-text';
@@ -108,15 +108,7 @@ export default function AddTeam({
 								})}
 								onClick={() => setSelectedCompetition(competition)}
 							>
-								{competition.logo ? (
-									<ImageBox
-										src={competition.logo}
-										alt={competition.name}
-										className={style.imageBoxSize}
-									/>
-								) : (
-									competition.name
-								)}
+								<CompetitionLogo competition={competition} size="sm" />
 								<div>{competition.name}</div>
 							</div>
 						))}

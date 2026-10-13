@@ -9,7 +9,7 @@ import { Edit, Trash, UploadCloud } from 'lucide-react';
 import { useState } from 'react';
 import CompetitionDelete from './components/competition-delete/competition-delete';
 import CompetitionEdit from './components/competition-edit/competition-edit';
-import ImageBox from '../../components/image-box/image-box';
+import CompetitionLogo from '../../components/competition-logo/competition-logo';
 import Loader from '../../components/loader/loader';
 import ErrorText from '../../components/form/error-text/error-text';
 import CompetitionLogoUpload from './components/competition-logo-upload/competition-logo-upload';
@@ -63,9 +63,9 @@ export default function CompetitionLayout() {
 			<div className={styles.header}>
 				<div className={styles.leftHeader}>
 					<div className={styles.logoContainer}>
-						<ImageBox
-							src={competition.logo}
-							alt={competition.name}
+						<CompetitionLogo
+							competition={competition}
+							size="xl"
 							className={styles.boxLogoSize}
 						/>
 						<div className={styles.logoActions}>

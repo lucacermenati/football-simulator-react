@@ -6,7 +6,7 @@ import styles from './profile.module.scss';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { ApiError, apiRequest } from '../../api/apiClient';
 import { type NoContentResponse, type PaginatedData, type ReadyCompetition, type UpdateProfileRequest } from '../../types/api';
-import ImageBox from '../../components/image-box/image-box';
+import CompetitionLogo from '../../components/competition-logo/competition-logo';
 import { useNavigate } from 'react-router';
 import Modal from '../../components/modal/modal';
 import { useState } from 'react';
@@ -132,11 +132,7 @@ export default function Profile() {
 				) : (<div>
 						{readyCompetitionsPaginated?.data.map((competition) => (
 							<div key={competition.id} className={styles.readyToPlayItem}>
-								<ImageBox
-									src={competition.logo}
-									alt={competition.name}
-									className={styles.boxLogoSize}
-								/>
+								<CompetitionLogo competition={competition} size="lg" />
 								<div>{competition.name}</div>
 								<div>{new Date(competition.next_match_date).toLocaleDateString()}</div>
 								<ArrowRight className={styles.icon} onClick={() => (navigate(`/competitions/${competition.id}/matches`))}/>

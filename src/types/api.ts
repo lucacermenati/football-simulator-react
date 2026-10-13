@@ -106,20 +106,20 @@ export type Competition = {
 	id: string;
 	name: string;
 	description: string;
-	logo: string;
+	logo: string | null;
 };
 
 export type CompetitionPosition = {
 	id: string;
 	name: string;
-	logo: string;
+	logo: string | null;
 	position: number;
 };
 
 export type ReadyCompetition = {
 	id: string;
 	name: string;
-	logo: string;
+	logo: string | null;
 	next_match_date: string;
 };
 
