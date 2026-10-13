@@ -6,9 +6,12 @@ import { apiRequest } from '../../api/apiClient';
 import type { PlayerStatistic, Statistics } from '../../types/api';
 import ImageBox from '../../components/image-box/image-box';
 import PositionBadge from '../../components/position-badge/position-badge';
+import { useNavigate } from 'react-router';
 export default function CompetitionStatistics() {
     const { competition } = useCompetition();
     const { isAuthenticated } = useAuth();
+
+    const navigate = useNavigate();
 
     const { data: statistics, isError, isPending } = useQuery({
         queryKey: ['competitions', competition.id, 'statistics'],
@@ -28,7 +31,12 @@ export default function CompetitionStatistics() {
                     <div key={player.id} className={style.statisticRow}>
                         <div className={style.playerNameColumn}>
                             <PositionBadge position={player.position} className={style.positionBadgeSize} />
-                            <div>{player.full_name}</div>
+                            <div
+                                className={style.playerName}
+                                onClick={() => navigate(`/players/${player.id}`)}
+                            >
+                                {player.full_name}
+                            </div>
                         </div>
                         <div className={style.teamNameColumn}>
                             <ImageBox className={style.imageBoxSize} src={player.team.logo} alt={player.team.name} />

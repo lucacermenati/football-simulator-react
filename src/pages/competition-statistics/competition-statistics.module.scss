@@ -67,3 +67,12 @@
     height: 1.5rem;
     font-size: 0.75rem;
 }
+
+.playerName {
+	cursor: pointer;
+
+	&:hover {
+		color: var(--hover-gray);
+		text-decoration: underline;
+	}
+}

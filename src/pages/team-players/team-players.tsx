@@ -1,28 +1,84 @@
-import { useParams } from 'react-router';
-import style from './team-players.module.scss';
-import { useAuth } from '../../auth/useAuth';
-import { useQuery } from '@tanstack/react-query';
+import { useNavigate, useParams } from "react-router";
+import { useAuth } from "../../auth/useAuth";
+import { useQuery } from "@tanstack/react-query";
+import type { Player } from "../../types/api";
+import { apiRequest } from "../../api/apiClient";
+import style from "./team-players.module.scss";
+import clsx from "clsx";
+import { Eye, MinusCircle } from "lucide-react";
+import PositionBadge from "../../components/position-badge/position-badge";
+import NationalityBadge from "../../components/nationality-badge/nationality-badge";
+
 export default function TeamPlayers() {
     const { teamId } = useParams();
     const { isAuthenticated } = useAuth();
 
-    const {data: players, isPending, isError, error} = useQuery({
-        
-    })
+    const navigate = useNavigate();
 
-    return <section className={style.card}>
-        <div className={style.playerTable}>
-            <div>Player</div>
-            <div>Nationality</div>
-            <div>Age</div>
-            <div></div>
+    const {
+        data: players,
+    } = useQuery({
+        queryKey: ["teams", teamId, "players"],
+        queryFn: () => apiRequest<Player[]>(`teams/${teamId}/players`),
+        enabled: isAuthenticated && !!teamId,
+    });
 
-            <div className={style.playerRow}>
-                <div className={style.playerColumn}>
+    const age = (birthDate: string) => {
+        const birth = new Date(birthDate);
+        const today = new Date();
+
+        let years = today.getFullYear() - birth.getFullYear();
+
+        const hasBirthdayPassed =
+            today.getMonth() > birth.getMonth() ||
+            (today.getMonth() === birth.getMonth() && today.getDate() >= birth.getDate());
+
+        if (!hasBirthdayPassed) {
+            years--;
+        }
+
+        return years;
+    };
+
+    return (
+        <div className={style.page}>
+            <div className={clsx(style.tableCard, style.playersTable)}>
+                <div className={style.playersHeaderRow}>
+                    <div>Name</div>
+                    <div>Age</div>
+                    <div>Nationality</div>
                     <div></div>
                 </div>
+                {players && players.map((player) => 
+                    <div className={style.playerRow} key={player.id}>
+                        <div className={style.playerColumn}>
+                            <div className={style.playerNumber}>{player.number}</div>
+                            <PositionBadge position={player.position} className={style.badge} /> 
+                            <div 
+                                className={style.playerName} 
+                                onClick={() => navigate(`/players/${player.id}`)}>
+                                    {player.full_name}
+                            </div>
+                        </div>
+                        <div className={style.ageColumn}>
+                            {age(player.birth_date)}
+                        </div>
+                        <div className={style.nationalityColumn}>
+                            <NationalityBadge nationality={player.nationality} className={style.badge} />
+                        </div>
+                        <div className={style.actionColumn}>
+                            <Eye 
+                                className={style.icon} 
+                                onClick={() => navigate(`/players/${player.id}`)} 
+                            />
+                            <MinusCircle
+                                className={style.destructiveIcon} 
+                                onClick={() => console.log("Remove player from team")} 
+                            />
+                        </div>
+                    </div>
+                )}
             </div>
-
         </div>
-    </section>;
+    );
 }

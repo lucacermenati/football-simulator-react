@@ -148,6 +148,7 @@ export type Player = {
 	nationality: string;
 	team_id: string;
 	team?: Team;
+	matches?: Match[];
 };
 
 export type Nationality = {

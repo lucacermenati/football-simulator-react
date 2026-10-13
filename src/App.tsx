@@ -19,6 +19,7 @@ import TeamPage from './pages/team/team';
 import TeamLayout from './layouts/team-layout/team-layout';
 import Players from './pages/players/players';
 import TeamPlayers from './pages/team-players/team-players';
+import PlayerPage from './pages/player/player';
 
 export default function App() {
 	return (
@@ -49,7 +50,10 @@ export default function App() {
 							<Route path='on-the-field' element={<NotAvailable />} />
 						</Route>
 					</Route>
-					<Route path='/players' element={<Players />} />
+					<Route path='/players'>
+						<Route index element={<Players />} />
+						<Route path=':playerId' element={<PlayerPage />} />
+					</Route>
 					<Route path='/profile' element={<Profile />} />
 				</Route>
 			</Route>

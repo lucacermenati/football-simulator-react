@@ -101,7 +101,10 @@ export default function Match() {
                                                     {isHomeEvent && (
                                                         <>
                                                             <Volleyball />
-                                                            <span>
+                                                            <span
+                                                                className={style.playerName}
+                                                                onClick={() => navigate(`/players/${player.id}`)}
+                                                            >
                                                                 {player.first_name}{" "}
                                                                 {player.last_name}
                                                             </span>
@@ -116,7 +119,10 @@ export default function Match() {
                                                 <div className={clsx(style.event, style.awayEvent)}>
                                                     {!isHomeEvent && (
                                                         <>
-                                                            <span>
+                                                            <span
+                                                                className={style.playerName}
+                                                                onClick={() => navigate(`/players/${player.id}`)}
+                                                            >
                                                                 {player.first_name}{" "}
                                                                 {player.last_name}
                                                             </span>

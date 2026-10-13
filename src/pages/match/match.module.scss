@@ -115,3 +115,11 @@
 	align-items: center;
 	gap: 1rem;
 }
+.playerName {
+	cursor: pointer;
+
+	&:hover {
+		color: var(--hover-gray);
+		text-decoration: underline;
+	}
+}
