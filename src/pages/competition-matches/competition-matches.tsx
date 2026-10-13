@@ -187,7 +187,7 @@ export default function CompetitionMatches() {
 				</div>
 			</div>
 			<div className={style.matchesGrid}>
-				{paginatedMatches?.data && paginatedMatches?.data.length && paginatedMatches?.data.map((match) => (
+				{paginatedMatches?.data && paginatedMatches.data.length > 0 && paginatedMatches.data.map((match) => (
 					<MatchCard key={match.id} match={match} />
 				))}
 				{(paginatedMatches?.data && paginatedMatches?.data.length === 0) && (

@@ -6,6 +6,7 @@ import { apiRequest } from "../../api/apiClient";
 import { useAuth } from "../../auth/useAuth";
 import { useNavigate } from "react-router";
 import { ArrowRight } from "lucide-react";
+import Card from "../../components/card/card";
 
 export default function TeamPage() {
     const { team } = useTeam();
@@ -32,8 +33,8 @@ export default function TeamPage() {
     };
 
     return <section className={style.cardContainer}>
-        <div className={style.card}>{team.history}</div>
-        <div className={style.card}>
+        <Card>{team.history}</Card>
+        <Card>
             <div className={style.infoGrid}>
                 <div className={style.title}>Official colors</div>
                 <div className={style.colorsBox}>
@@ -45,8 +46,8 @@ export default function TeamPage() {
                 <div className={style.title}>Stadium</div>
                 <div>{team.stadium}</div>
             </div>
-        </div>
-        {competitions && competitions.length > 0 && <div className={style.card}>
+        </Card>
+        {competitions && competitions.length > 0 && <Card>
             {competitions.map(competition => (
                 <div 
                     key={competition.id} 
@@ -60,6 +61,6 @@ export default function TeamPage() {
                     />
                 </div>
             ))}
-        </div>}
+        </Card>}
     </section>;
 }

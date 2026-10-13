@@ -7,6 +7,7 @@ import { Button, Form, TextInput } from '../../components/form';
 import ErrorText from '../../components/form/error-text/error-text';
 import Loader from '../../components/loader/loader';
 import { Volleyball } from 'lucide-react';
+import Card from '../../components/card/card';
 
 export default function Register() {
 	const {
@@ -36,7 +37,7 @@ export default function Register() {
 	return (
 		<main className={styles.page}>
 			<Volleyball className={styles.ballIcon} />
-			<section className={styles.card}>
+			<Card className={styles.card}>
 				<div className={styles.header}>Register</div>
 				<Form
 					onSubmit={handleSubmit(handleRegistration)}
@@ -105,7 +106,7 @@ export default function Register() {
 						Register
 					</Button>
 				</Form>
-			</section>
+			</Card>
 			<div className={styles.registerLink}>
 				<a href='/login'>I already have an account.</a>
 			</div>

@@ -44,13 +44,8 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	box-sizing: border-box;
 
 	background: var(--primary-black);
-	border: 1px solid var(--primary-black);
-	border-radius: var(--border-radius);
-
-	overflow: hidden;
 
 	cursor: pointer;
 

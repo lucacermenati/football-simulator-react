@@ -18,6 +18,7 @@ import BulkAddCompetitionTeams from './components/bulk-add-competition-teams/bul
 import { useState } from 'react';
 import RemoveCompetitionTeam from './components/remove-competition-team/remove-competition-team';
 import { useNavigate } from 'react-router';
+import Card from '../../components/card/card';
 
 export default function CompetitionTeams() {
 	const { competition } = useCompetition();
@@ -110,14 +111,14 @@ export default function CompetitionTeams() {
 					onClick={() => setIsBulkAddModalOpen(true)}
 				/>
 			</div>
-			<div className={style.content}>
+			<Card>
 				<div className={style.teamsTable}>
 					<div className={style.teamsHeaderRow}>
 						<div>Team</div>
 					</div>
 					{content()}
 				</div>
-			</div>
+			</Card>
 			{isBulkAddModalOpen && (
 				<BulkAddCompetitionTeams setIsModalOpen={setIsBulkAddModalOpen} />
 			)}

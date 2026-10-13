@@ -6,6 +6,7 @@ import type { Player } from "../../types/api";
 import Loader from "../../components/loader/loader";
 import ErrorText from "../../components/form/error-text/error-text";
 import style from "./player.module.scss";
+import Card from "../../components/card/card";
 
 export default function PlayerPage() {
     const { playerId } = useParams();
@@ -36,9 +37,9 @@ export default function PlayerPage() {
 
     return (
         <section className={style.page}>
-            <div className={style.card}>
+            <Card className={style.card}>
                 <pre className={style.json}>{JSON.stringify(player, null, 2)}</pre>
-            </div>
+            </Card>
         </section>
     );
 }

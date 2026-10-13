@@ -1,14 +1,3 @@
-.content {
-	padding: 1rem;
-	box-sizing: border-box;
-
-	border: 1px solid var(--primary-black);
-	border-radius: var(--border-radius);
-	background: var(--primary-white);
-
-	overflow: hidden;
-}
-
 .statisticTable {
     display: grid;
     grid-template-columns: 1fr 1fr auto;

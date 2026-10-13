@@ -7,15 +7,6 @@
 	min-width: 0;
 	min-height: 0;
 
-	padding: 1rem;
-	box-sizing: border-box;
-
-	border: 1px solid var(--primary-black);
-	border-radius: var(--border-radius);
-	background: var(--primary-white);
-
-	overflow: hidden;
-
 	cursor: pointer;
 
 	&:hover {

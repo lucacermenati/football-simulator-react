@@ -4,10 +4,10 @@ import { useQuery } from "@tanstack/react-query";
 import type { Player } from "../../types/api";
 import { apiRequest } from "../../api/apiClient";
 import style from "./team-players.module.scss";
-import clsx from "clsx";
 import { Eye, MinusCircle } from "lucide-react";
 import PositionBadge from "../../components/position-badge/position-badge";
 import NationalityBadge from "../../components/nationality-badge/nationality-badge";
+import Card from "../../components/card/card";
 
 export default function TeamPlayers() {
     const { teamId } = useParams();
@@ -42,7 +42,7 @@ export default function TeamPlayers() {
 
     return (
         <div className={style.page}>
-            <div className={clsx(style.tableCard, style.playersTable)}>
+            <Card className={style.playersTable}>
                 <div className={style.playersHeaderRow}>
                     <div>Name</div>
                     <div>Age</div>
@@ -78,7 +78,7 @@ export default function TeamPlayers() {
                         </div>
                     </div>
                 )}
-            </div>
+            </Card>
         </div>
     );
 }

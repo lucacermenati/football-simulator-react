@@ -7,6 +7,7 @@ import { Button, Form, TextInput } from '../../components/form';
 import ErrorText from '../../components/form/error-text/error-text';
 import Loader from '../../components/loader/loader';
 import { Volleyball } from 'lucide-react';
+import Card from '../../components/card/card';
 
 export default function Login() {
 	const { isAuthenticated, handleLogin, isLoginPending, isLoginFailed } =
@@ -30,7 +31,7 @@ export default function Login() {
 	return (
 		<main className={styles.page}>
 			<Volleyball className={styles.ballIcon} />
-			<section className={styles.card}>
+			<Card className={styles.card}>
 				<div className={styles.header}>Login</div>
 				<Form onSubmit={handleSubmit(handleLogin)} className={styles.form}>
 					<TextInput
@@ -71,7 +72,7 @@ export default function Login() {
 						Login
 					</Button>
 				</Form>
-			</section>
+			</Card>
 			<div className={styles.registerLink}>
 				<a href='/register'>Create an account</a>
 			</div>

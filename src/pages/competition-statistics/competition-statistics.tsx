@@ -7,6 +7,7 @@ import type { PlayerStatistic, Statistics } from '../../types/api';
 import ImageBox from '../../components/image-box/image-box';
 import PositionBadge from '../../components/position-badge/position-badge';
 import { useNavigate } from 'react-router';
+import Card from '../../components/card/card';
 export default function CompetitionStatistics() {
     const { competition } = useCompetition();
     const { isAuthenticated } = useAuth();
@@ -20,7 +21,7 @@ export default function CompetitionStatistics() {
     });
 
     return (
-        <section className={style.content}>
+        <Card>
             <div className={style.statisticTable}>
                 <div className={style.statisticHeaderRow}>
                     <div>Player</div>
@@ -46,6 +47,6 @@ export default function CompetitionStatistics() {
                     </div>
                 ))}
         </div>
-    </section>
+    </Card>
   );
 }

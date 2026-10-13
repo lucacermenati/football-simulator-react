@@ -6,7 +6,6 @@ import type { PaginatedData, Team } from '../../types/api';
 import { apiRequest } from '../../api/apiClient';
 import { useAuth } from '../../auth/useAuth';
 import { useNavigate, useSearchParams } from 'react-router';
-import clsx from 'clsx';
 import ImageBox from '../../components/image-box/image-box';
 import { useDebounce } from 'use-debounce';
 import { useEffect, useState } from 'react';
@@ -14,6 +13,7 @@ import TeamEdit from './components/team-edit/team-edit';
 import TeamCreate from './components/team-create/team-create';
 import TeamDelete from './components/team-delete/team-delete';
 import AddTeam from './components/team-add/team-add';
+import Card from '../../components/card/card';
 
 export default function Teams() {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -104,7 +104,7 @@ export default function Teams() {
                 size={28}
             />
         </div>
-        <div className={clsx(style.tableCard, style.teamsTable)}>
+        <Card className={style.teamsTable}>
             {paginatedTeams?.data && paginatedTeams?.data.map((team) => 
                 <div className={style.teamRow} key={team.id}>
                     <div className={style.teamColumn}>
@@ -134,7 +134,7 @@ export default function Teams() {
                     </div>
                 </div>
             )}
-        </div>
+        </Card>
         <div className={style.paginationContainer}></div>
         {isCreateTeamModalOpen &&
             <TeamCreate 

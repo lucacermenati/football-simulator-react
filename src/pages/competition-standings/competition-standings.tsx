@@ -9,6 +9,7 @@ import ImageBox from '../../components/image-box/image-box';
 import Loader from '../../components/loader/loader';
 import ErrorText from '../../components/form/error-text/error-text';
 import { useNavigate } from 'react-router';
+import Card from '../../components/card/card';
 
 export default function CompetitionStandings() {
 	const { competition } = useCompetition();
@@ -77,7 +78,7 @@ export default function CompetitionStandings() {
 	};
 
 	return (
-		<section className={style.content}>
+		<Card>
 			<div className={style.standings}>
 				<div className={style.headerRow}>
 					<div>Team</div>
@@ -92,6 +93,6 @@ export default function CompetitionStandings() {
 				</div>
 				{content()}
 			</div>
-		</section>
+		</Card>
 	);
 }

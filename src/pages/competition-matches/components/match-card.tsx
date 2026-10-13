@@ -6,6 +6,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { apiRequest, type ApiError } from '../../../api/apiClient';
 import { useCompetition } from '../../../hooks/useCompetition';
 import { useNavigate } from 'react-router';
+import Card from '../../../components/card/card';
 
 export default function MatchCard({ match }: { match: Match }) {
 	const date = new Date(match.date);
@@ -37,7 +38,7 @@ export default function MatchCard({ match }: { match: Match }) {
 	});
 
 	return (
-		<div className={style.matchCard}>
+		<Card className={style.matchCard}>
 			<div className={style.teamsAndResultBox} onClick={() => navigate(`${match.id}`)}>
 				<div className={style.teamBox}>
 					<ImageBox
@@ -67,6 +68,6 @@ export default function MatchCard({ match }: { match: Match }) {
 						: <div className={style.lockBox}><Lock className={style.lockIcon} /><span className={style.lockText}>{date.toLocaleDateString()}</span></div>
 		)}
 			</div>
-		</div>
+		</Card>
 	);
 }

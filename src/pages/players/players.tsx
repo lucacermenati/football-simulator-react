@@ -6,7 +6,6 @@ import { apiRequest } from "../../api/apiClient";
 import { useDebounce } from "use-debounce";
 import { useEffect, useState } from "react";
 import style from "./players.module.scss";
-import clsx from "clsx";
 import { TextInput } from "../../components/form";
 import { Edit, Eye, PlusCircle, Trash, UserRoundPlus, WandSparkles } from "lucide-react";
 import PositionBadge from "../../components/position-badge/position-badge";
@@ -19,6 +18,7 @@ import PlayerCreate from "./components/player-create/player-create";
 import PlayerEdit from "./components/player-edit/player-edit";
 import PlayerGenerate from "./components/player-generate/player-generate";
 import NationalitySelector from "../../components/nationality-selector/nationality-selector";
+import Card from "../../components/card/card";
 
 export default function Players() {
     const { isAuthenticated } = useAuth();
@@ -187,7 +187,7 @@ export default function Players() {
                     />
                 </div>
             </div>
-            <div className={clsx(style.tableCard, style.playersTable)}>
+            <Card className={style.playersTable}>
                 {paginatedPlayers?.data && paginatedPlayers?.data.map((player) => 
                     <div className={style.playerRow} key={player.id}>
                         <div className={style.playerColumn}>
@@ -228,7 +228,7 @@ export default function Players() {
                         </div>
                     </div>
                 )}
-            </div>
+            </Card>
             {isCreatePlayerModalOpen &&
                 <PlayerCreate
                     onCancel={() => {

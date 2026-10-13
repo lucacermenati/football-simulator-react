@@ -10,6 +10,7 @@ import { ArrowLeft, Lock, Play, Volleyball } from "lucide-react";
 import clsx from "clsx";
 import ImageBox from "../../components/image-box/image-box";
 import { Fragment } from "react/jsx-runtime";
+import Card from "../../components/card/card";
 
 export default function Match() {
     const { competitionId, matchId } = useParams();
@@ -57,7 +58,7 @@ export default function Match() {
                 <ArrowLeft className={style.icon} onClick={() => navigate(`/competitions/${competitionId}/matches?day=${match.day}`)} />
                 <span>Back to match day {match.day}</span>
             </div>}
-            <div className={style.content}>
+            <Card className={style.content}>
                 {isPending ? <Loader /> : (
                     isError ? <ErrorText>{error?.message ?? 'Something went wrong. Try again later.'}</ErrorText>
                         : <div>
@@ -146,6 +147,6 @@ export default function Match() {
                             </div>
                         </div>
                 )}
-            </div>
+            </Card>
     </section>
 }

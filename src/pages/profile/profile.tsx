@@ -13,6 +13,7 @@ import { useState } from 'react';
 import { Form, TextInput } from '../../components/form';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { fieldErrorToMessage } from '../../utils/fieldErrorToMessage';
+import Card from '../../components/card/card';
 
 export default function Profile() {
 	const { user, isUserPending, isUserFailed } = useAuth()
@@ -148,7 +149,7 @@ export default function Profile() {
 	) : null;
 
 	return (
-		<section className={styles.card}>
+		<Card>
 			<div>{content}</div>
 			{isEditModalOpen && 
 			<Modal 
@@ -175,6 +176,6 @@ export default function Profile() {
 					/>
 				</Form>
 			</Modal>}
-		</section>
+		</Card>
 	);
 }

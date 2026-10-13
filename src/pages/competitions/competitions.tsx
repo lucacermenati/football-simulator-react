@@ -10,6 +10,7 @@ import CompetitionCard from './components/competition-card/competition-card';
 import Pagination from '../../components/pagination/pagination';
 import CreateCompetition from './components/create-competition/create-competition';
 import { useNavigate } from 'react-router';
+import Card from '../../components/card/card';
 
 export default function Competitions() {
 	const { isAuthenticated } = useAuth();
@@ -60,12 +61,12 @@ export default function Competitions() {
 							onClick={() => navigate(`/competitions/${c.id}`)}
 						/>
 					))}
-					<div
+					<Card
 						onClick={() => setIsModalOpen(true)}
-						className={clsx(styles.competitionCard, styles.addCompetition)}
+						className={styles.addCompetition}
 					>
 						<CirclePlus className={styles.plus} />
-					</div>
+					</Card>
 				</div>
 				<ChevronRight
 					className={clsx(
