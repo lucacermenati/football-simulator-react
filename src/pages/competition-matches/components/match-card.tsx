@@ -1,7 +1,7 @@
 import { Eye, Lock, Play } from 'lucide-react';
 import type { Match, NoContentResponse } from '../../../types/api';
 import style from './match-card.module.scss';
-import ImageBox from '../../../components/image-box/image-box';
+import TeamLogo from '../../../components/team-logo/team-logo';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { apiRequest, type ApiError } from '../../../api/apiClient';
 import { useCompetition } from '../../../hooks/useCompetition';
@@ -41,20 +41,12 @@ export default function MatchCard({ match }: { match: Match }) {
 		<Card className={style.matchCard}>
 			<div className={style.teamsAndResultBox} onClick={() => navigate(`${match.id}`)}>
 				<div className={style.teamBox}>
-					<ImageBox
-						src={match.home_team.logo}
-						alt={match.home_team.name}
-						className={style.imageBox}
-					/>
+					<TeamLogo team={match.home_team} />
 					<div className={style.teamName}>{match.home_team.name}</div>
 				</div>
 				<div className={style.resultBox}>{match.goal_home}</div>
 				<div className={style.teamBox}>
-					<ImageBox
-						src={match.away_team.logo}
-						alt={match.away_team.name}
-						className={style.imageBox}
-					/>
+					<TeamLogo team={match.away_team} />
 					<div className={style.teamName}>{match.away_team.name}</div>
 				</div>
 				<div className={style.resultBox}>{match.goal_away}</div>

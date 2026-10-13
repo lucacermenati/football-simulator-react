@@ -4,7 +4,7 @@ import style from './competition-teams.module.scss';
 import { apiRequest } from '../../api/apiClient';
 import type { Team } from '../../types/api';
 import { useAuth } from '../../auth/useAuth';
-import ImageBox from '../../components/image-box/image-box';
+import TeamLogo from '../../components/team-logo/team-logo';
 import {
 	Eye,
 	MinusCircle,
@@ -78,11 +78,7 @@ export default function CompetitionTeams() {
 			return (
 				<div key={team.id} className={style.teamsRow}>
 					<div className={style.teamNameColumn}>
-						<ImageBox
-							src={team.logo}
-							alt={team.name}
-							className={style.imageBoxSize}
-						/>
+						<TeamLogo team={team} size="sm" />
 						{team.name}
 					</div>
 					<div className={style.teamActionsColumn}>

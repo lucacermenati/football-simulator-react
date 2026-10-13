@@ -8,7 +8,7 @@ import Loader from "../../components/loader/loader";
 import ErrorText from "../../components/form/error-text/error-text";
 import { ArrowLeft, Lock, Play, Volleyball } from "lucide-react";
 import clsx from "clsx";
-import ImageBox from "../../components/image-box/image-box";
+import TeamLogo from "../../components/team-logo/team-logo";
 import { Fragment } from "react/jsx-runtime";
 import Card from "../../components/card/card";
 
@@ -64,11 +64,7 @@ export default function Match() {
                         : <div>
                             <div className={style.matchHeader}>
                                 <div className={clsx(style.teamNameBox, style.homeBox)}>
-                                    <ImageBox
-                                        src={match.home_team.logo}
-                                        alt={match.home_team.name}
-                                        className={style.imageBoxSize}
-                                    />
+                                    <TeamLogo team={match.home_team} size="lg" />
                                     <div>{match.home_team.name}</div>
                                 </div>
                                 <div className={style.scoreBox}>
@@ -78,11 +74,7 @@ export default function Match() {
                                 </div>
                                 <div className={clsx(style.teamNameBox, style.awayBox)}>
                                     <div>{match.away_team.name}</div>
-                                    <ImageBox
-                                        src={match.away_team.logo}
-                                        alt={match.away_team.name}
-                                        className={style.imageBoxSize}
-                                    />
+                                    <TeamLogo team={match.away_team} size="lg" />
                                 </div>
                             </div>
                             <div className={style.matchInfo}>

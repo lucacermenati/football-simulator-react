@@ -127,7 +127,7 @@ export type Team = {
 	id: string;
 	name: string;
 	history: string;
-	logo: string;
+	logo: string | null;
 	first_color: string;
 	second_color: string;
 	year_of_foundation: number;

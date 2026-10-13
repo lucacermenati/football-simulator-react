@@ -4,7 +4,7 @@ import { useCompetition } from '../../hooks/useCompetition';
 import { useAuth } from '../../auth/useAuth';
 import { apiRequest } from '../../api/apiClient';
 import type { PlayerStatistic, Statistics } from '../../types/api';
-import ImageBox from '../../components/image-box/image-box';
+import TeamLogo from '../../components/team-logo/team-logo';
 import PositionBadge from '../../components/position-badge/position-badge';
 import { useNavigate } from 'react-router';
 import Card from '../../components/card/card';
@@ -40,7 +40,7 @@ export default function CompetitionStatistics() {
                             </div>
                         </div>
                         <div className={style.teamNameColumn}>
-                            <ImageBox className={style.imageBoxSize} src={player.team.logo} alt={player.team.name} />
+                            <TeamLogo team={player.team} size="sm" />
                             <div>{player.team.name}</div>
                         </div>
                         <div className={style.goalColumn}>{player.goals}</div>

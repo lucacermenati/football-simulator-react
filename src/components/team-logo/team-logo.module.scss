@@ -1,0 +1,37 @@
+$sizes: (
+	sm: 1.5rem,
+	md: 2rem,
+	lg: 4rem,
+	xl: 8rem,
+);
+
+.teamLogo {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+}
+
+@each $name, $value in $sizes {
+	.#{$name} {
+		width: $value;
+		height: $value;
+	}
+}
+
+.image {
+	width: 100%;
+	height: 100%;
+}
+
+.colors {
+	width: 100%;
+	height: 100%;
+	border-radius: var(--border-radius-full);
+	border: 1px solid var(--border-gray);
+	background: linear-gradient(
+		to right,
+		var(--first-color) 50%,
+		var(--second-color) 50%
+	);
+}

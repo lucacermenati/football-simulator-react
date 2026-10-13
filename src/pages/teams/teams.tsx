@@ -6,7 +6,7 @@ import type { PaginatedData, Team } from '../../types/api';
 import { apiRequest } from '../../api/apiClient';
 import { useAuth } from '../../auth/useAuth';
 import { useNavigate, useSearchParams } from 'react-router';
-import ImageBox from '../../components/image-box/image-box';
+import TeamLogo from '../../components/team-logo/team-logo';
 import { useDebounce } from 'use-debounce';
 import { useEffect, useState } from 'react';
 import TeamEdit from './components/team-edit/team-edit';
@@ -108,7 +108,7 @@ export default function Teams() {
             {paginatedTeams?.data && paginatedTeams?.data.map((team) => 
                 <div className={style.teamRow} key={team.id}>
                     <div className={style.teamColumn}>
-                        <ImageBox className={style.imageBoxSize} src={team.logo} alt={team.name} />
+                        <TeamLogo team={team} />
                         <div 
                             className={style.teamName} 
                             onClick={() => navigate(`/teams/${team.id}`)}>

@@ -5,7 +5,7 @@ import { apiRequest } from '../../api/apiClient';
 import type { Standings } from '../../types/api';
 import { useAuth } from '../../auth/useAuth';
 import clsx from 'clsx';
-import ImageBox from '../../components/image-box/image-box';
+import TeamLogo from '../../components/team-logo/team-logo';
 import Loader from '../../components/loader/loader';
 import ErrorText from '../../components/form/error-text/error-text';
 import { useNavigate } from 'react-router';
@@ -54,11 +54,7 @@ export default function CompetitionStandings() {
 					)}
 				>
 					<div>{position + 1}</div>
-					<ImageBox
-						src={team.logo}
-						alt={team.name}
-						className={style.imageBoxSize}
-					/>
+					<TeamLogo team={team} />
 					<span 
 						onClick={() => navigate(`/teams/${team.id}`)} 
 						className={style.teamName}>

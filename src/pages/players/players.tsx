@@ -10,7 +10,7 @@ import { TextInput } from "../../components/form";
 import { Edit, Eye, PlusCircle, Trash, UserRoundPlus, WandSparkles } from "lucide-react";
 import PositionBadge from "../../components/position-badge/position-badge";
 import NationalityBadge from "../../components/nationality-badge/nationality-badge";
-import ImageBox from "../../components/image-box/image-box";
+import TeamLogo from "../../components/team-logo/team-logo";
 import FreeAgentSwitch from "../../components/free-agent-switch/free-agent-switch";
 import PositionSelector from "../../components/position-selector/position-selector";
 import PlayerDelete from "./components/player-delete/player-delete";
@@ -205,11 +205,7 @@ export default function Players() {
                                     className={style.icon} 
                                     onClick={() => console.log("Add player to team")} 
                                 /> 
-                                : <ImageBox 
-                                    className={style.imageBoxSize}
-                                    src={player.team.logo} 
-                                    alt={player.team.name} 
-                                />
+                                : <TeamLogo team={player.team} />
                             }
                         </div>
                         <div className={style.actionColumn}>

@@ -11,7 +11,7 @@ import type {
 import { useAuth } from '../../../../auth/useAuth';
 import { useState } from 'react';
 import style from './bulk-add-competition-teams.module.scss';
-import ImageBox from '../../../../components/image-box/image-box';
+import TeamLogo from '../../../../components/team-logo/team-logo';
 import { TextInput } from '../../../../components/form';
 import { X } from 'lucide-react';
 import Loader from '../../../../components/loader/loader';
@@ -108,15 +108,7 @@ export default function BulkAddCompetitionTeams({
 								className={style.teamItem}
 								onClick={() => setSelectedTeams([...selectedTeams, team])}
 							>
-								{team.logo ? (
-									<ImageBox
-										src={team.logo}
-										alt={team.name}
-										className={style.imageBoxSize}
-									/>
-								) : (
-									team.name
-								)}
+								<TeamLogo team={team} size="sm" />
 								<div>{team.name}</div>
 							</div>
 						))}
@@ -126,15 +118,7 @@ export default function BulkAddCompetitionTeams({
 					{selectedTeams &&
 						selectedTeams.map((team) => (
 							<div key={team.id} className={style.selectedTeamItem}>
-								{team.logo ? (
-									<ImageBox
-										src={team.logo}
-										alt={team.name}
-										className={style.imageBoxSize}
-									/>
-								) : (
-									team.name
-								)}
+								<TeamLogo team={team} size="sm" />
 								<div>{team.name}</div>
 								<X
 									className={style.unselectIcon}
