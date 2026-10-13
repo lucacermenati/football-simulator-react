@@ -191,7 +191,7 @@ export default function CompetitionMatches() {
 					<MatchCard key={match.id} match={match} />
 				))}
 				{(paginatedMatches?.data && paginatedMatches?.data.length === 0) && (
-					<div>
+					<div className={style.emptyState}>
 						<p className={style.infoText}>There are no matches available at the moment. Generate your matches if the competition is complete or go to the teams management page.</p>
 						<div className={style.buttonsContainer}>
 							<Button type="button" variant="primary" onClick={() => {navigate(`/competitions/${competition.id}/teams`)}} isDisabled={isSubmitting} isPending={isSubmitting}>Manage teams</Button>
