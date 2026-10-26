@@ -23,7 +23,7 @@ export default function Teams() {
 
     const { isAuthenticated } = useAuth();
 
-    const pageParam = searchParams.get('day');
+    const pageParam = searchParams.get('page');
     const page = pageParam ? parseInt(pageParam): undefined;
 
     const search = searchParams.get('search');

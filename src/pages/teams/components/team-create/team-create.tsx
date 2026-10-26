@@ -18,7 +18,7 @@ export default function TeamCreate({onCancel}: {onCancel: () => void}) {
     } = useForm<CreateTeamRequest>({
         defaultValues: {
             name: '',
-            rating: 45,
+            rating: 50,
             history: '',
             first_color: '',
             second_color: '',
@@ -103,7 +103,7 @@ export default function TeamCreate({onCancel}: {onCancel: () => void}) {
                     label='Logo'
                     error={fieldErrorToMessage(errors.logo)}
                     disabled={isSubmitting}
-                    accept='image/png,image/jpeg,image/webp'
+                    accept='image/png,image/jpeg,image/gif,image/svg+xml'
                     {...register('logo')}
                 />
                 <div className={style.doubleInputBox}>
@@ -116,8 +116,8 @@ export default function TeamCreate({onCancel}: {onCancel: () => void}) {
                     />
                     <TextInput
                         type="number"
-                        min={45}
-                        max={99}
+                        min={30}
+                        max={100}
                         id='rating'
                         label='Rating'
                         error={fieldErrorToMessage(errors.rating)}
@@ -138,7 +138,7 @@ export default function TeamCreate({onCancel}: {onCancel: () => void}) {
                         label='First Color'
                         placeholder='First Color'
                         error={fieldErrorToMessage(errors.first_color)}
-                        {...register('first_color')}
+                        {...register('first_color', { required: 'The first color is required.' })}
                     />
                     <TextInput
                         type='color'
@@ -146,11 +146,13 @@ export default function TeamCreate({onCancel}: {onCancel: () => void}) {
                         label='Second Color'
                         placeholder='Second Color'
                         error={fieldErrorToMessage(errors.second_color)}
-                        {...register('second_color')}
+                        {...register('second_color', { required: 'The second color is required.' })}
                     />
                 </div>
                 <TextInput
                     type="number"
+                    min={1800}
+                    max={new Date().getFullYear()}
                     id='year_of_foundation'
                     label='Year of Foundation'
                     placeholder='Year of Foundation'

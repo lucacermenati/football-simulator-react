@@ -16,7 +16,7 @@ export default function PlayerGenerate({onCancel}: {onCancel: () => void}) {
         formState: { errors, isSubmitting },
     } = useForm<GeneratePlayersRequest>({
         defaultValues: {
-            n: 1,
+            size: 1,
         },
     });
 
@@ -81,11 +81,11 @@ export default function PlayerGenerate({onCancel}: {onCancel: () => void}) {
                     min={1}
                     max={100}
                     step={1}
-                    id='n'
+                    id='size'
                     label='Number of players'
                     placeholder='Number of players'
-                    error={fieldErrorToMessage(errors.n)}
-                    {...register('n', {
+                    error={fieldErrorToMessage(errors.size)}
+                    {...register('size', {
                         valueAsNumber: true,
                         required: 'The number of players is required.',
                         validate: (value) => Number.isInteger(value) || 'The number of players must be a whole number.',

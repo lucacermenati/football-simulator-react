@@ -36,8 +36,8 @@ export type CreateTeamRequest = {
 	name: string;
 	rating?: number;
 	history?: string;
-	first_color?: string;
-	second_color?: string;
+	first_color: string;
+	second_color: string;
 	year_of_foundation?: number;
 	stadium?: string;
 	logo?: FileList | null;
@@ -53,7 +53,7 @@ export type CreatePlayerRequest = {
 };
 
 export type GeneratePlayersRequest = {
-	n: number;
+	size: number;
 };
 
 export type UpdatePlayerRequest = {
@@ -105,8 +105,10 @@ export type User = {
 export type Competition = {
 	id: string;
 	name: string;
-	description: string;
+	description: string | null;
 	logo: string | null;
+	teams?: Team[];
+	matches?: Match[];
 };
 
 export type CompetitionPosition = {
@@ -126,13 +128,15 @@ export type ReadyCompetition = {
 export type Team = {
 	id: string;
 	name: string;
-	history: string;
+	history: string | null;
 	logo: string | null;
 	first_color: string;
 	second_color: string;
-	year_of_foundation: number;
-	stadium: string;
+	year_of_foundation: number | null;
+	stadium: string | null;
 	rating: number;
+	players?: Player[];
+	competitions?: Competition[];
 };
 
 export type Player = {
@@ -143,11 +147,11 @@ export type Player = {
 	birth_date: string;
 	position: string;
 	position_on_field: number;
-	number: number;
+	number: number | null;
 	rating: number;
 	nationality: string;
-	team_id: string;
-	team?: Team;
+	team_id: string | null;
+	team?: Team | null;
 	matches?: Match[];
 };
 
@@ -163,15 +167,16 @@ export type CountNationality = {
 
 export type Match = {
 	id: string;
+	competition_id: string;
 	date: string;
 	day: number;
 	goal_home: number;
 	goal_away: number;
 	played: boolean;
-	competition: null | Competition;
-	home_team: null | Team;
-	away_team: null | Team;
-	scorers: null | MatchEvent[];
+	competition?: Competition;
+	home_team: Team;
+	away_team: Team;
+	scorers: MatchEvent[];
 };
 
 export type MatchEvent = {
@@ -207,7 +212,7 @@ export type PlayerStatistic = {
 	position: string;
 	number: number;
 	goals: number;
-	team?: Team;
+	team: Team;
 };
 
 export type Link = {

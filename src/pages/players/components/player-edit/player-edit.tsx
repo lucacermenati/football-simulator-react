@@ -41,7 +41,7 @@ export default function PlayerEdit({player, onCancel}: {player: Player, onCancel
             birth_date: formatDateForInput(player.birth_date),
             position: player.position,
             nationality: player.nationality,
-            number: player.number,
+            number: player.number ?? undefined,
         },
     });
 

@@ -33,7 +33,7 @@ export default function CompetitionEdit({
 	const { mutateAsync: updateCompetitionAsync } = useMutation<
 		Competition,
 		ApiError,
-		{ id: string; data: FormData }
+		{ id: string; data: UpdateCompetitionRequest }
 	>({
 		mutationFn: ({ id, data }) =>
 			apiRequest<Competition>(`competitions/${id}`, {
@@ -76,11 +76,7 @@ export default function CompetitionEdit({
 	const updateCompetition: SubmitHandler<UpdateCompetitionRequest> = async (
 		data,
 	) => {
-		const formData = new FormData();
-		formData.append('name', data.name);
-		formData.append('description', data.description);
-
-		await updateCompetitionAsync({ id: competition.id, data: formData });
+		await updateCompetitionAsync({ id: competition.id, data });
 	};
 
 	return (

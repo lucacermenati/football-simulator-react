@@ -215,13 +215,13 @@ export default function Players() {
                             </div>
                         </div>
                         <div className={style.actionColumn}>
-                            { player.team === null 
-                                ? <ClickableIcon
+                            { player.team
+                                ? <TeamLogo team={player.team} />
+                                : <ClickableIcon
                                     icon={PlusCircle}
                                     label="Add to team"
                                     onClick={() => console.log("Add player to team")}
                                 />
-                                : <TeamLogo team={player.team} />
                             }
                         </div>
                         <div className={style.actionColumn}>

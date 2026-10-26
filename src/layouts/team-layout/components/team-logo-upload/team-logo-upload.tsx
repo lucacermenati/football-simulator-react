@@ -100,7 +100,7 @@ export default function TeamLogoUpload({
 					id='logo'
 					error={fieldErrorToMessage(errors.logo)}
 					disabled={isSubmitting}
-					accept='image/png,image/jpeg,image/webp'
+					accept='image/png,image/jpeg,image/gif,image/svg+xml'
 					{...register('logo')}
 				/>
 			</Form>
