@@ -9,6 +9,7 @@ import { ArrowRight } from "lucide-react";
 import Card from "../../components/card/card";
 import Loader from "../../components/loader/loader";
 import ClickableIcon from "../../components/clickable-icon/clickable-icon";
+import ErrorText from "../../components/form/error-text/error-text";
 
 export default function TeamPage() {
     const { team } = useTeam();
@@ -50,8 +51,13 @@ export default function TeamPage() {
             </div>
         </Card>
         {isPending && (
-            <Card className={style.loadingCard}>
+            <Card className={style.statusCard}>
                 <Loader />
+            </Card>
+        )}
+        {isError && (
+            <Card className={style.statusCard}>
+                <ErrorText>{error?.message}</ErrorText>
             </Card>
         )}
         {competitions && competitions.length > 0 && <Card>

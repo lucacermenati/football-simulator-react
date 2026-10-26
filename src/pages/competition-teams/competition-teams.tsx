@@ -55,7 +55,7 @@ export default function CompetitionTeams() {
 			return (
 				<div>
 					<ErrorText>
-						{error?.message ?? 'Something went wrong. Please try again.'}
+						{error?.message}
 					</ErrorText>
 				</div>
 			);

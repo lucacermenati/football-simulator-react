@@ -16,6 +16,7 @@ import AddTeam from './components/team-add/team-add';
 import Card from '../../components/card/card';
 import Loader from '../../components/loader/loader';
 import ClickableIcon from '../../components/clickable-icon/clickable-icon';
+import ErrorText from '../../components/form/error-text/error-text';
 
 export default function Teams() {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -52,7 +53,7 @@ export default function Teams() {
         setIsAddTeamModalOpen(true);
     }
 
-    const { data: paginatedTeams, isPending } = useQuery<PaginatedData<Team>>({
+    const { data: paginatedTeams, isPending, isError, error } = useQuery<PaginatedData<Team>>({
         queryKey: ['teams', page, search],
 
         queryFn: () => {
@@ -109,8 +110,13 @@ export default function Teams() {
         </div>
         <Card className={style.teamsTable}>
             {isPending && (
-                <div className={style.loadingRow}>
+                <div className={style.statusRow}>
                     <Loader />
+                </div>
+            )}
+            {isError && (
+                <div className={style.statusRow}>
+                    <ErrorText>{error?.message}</ErrorText>
                 </div>
             )}
             {paginatedTeams?.data && paginatedTeams?.data.map((team) => 

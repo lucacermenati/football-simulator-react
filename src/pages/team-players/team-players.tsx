@@ -10,6 +10,7 @@ import NationalityBadge from "../../components/nationality-badge/nationality-bad
 import Card from "../../components/card/card";
 import Loader from "../../components/loader/loader";
 import ClickableIcon from "../../components/clickable-icon/clickable-icon";
+import ErrorText from "../../components/form/error-text/error-text";
 
 export default function TeamPlayers() {
     const { teamId } = useParams();
@@ -20,6 +21,8 @@ export default function TeamPlayers() {
     const {
         data: players,
         isPending,
+        isError,
+        error,
     } = useQuery({
         queryKey: ["teams", teamId, "players"],
         queryFn: () => apiRequest<Player[]>(`teams/${teamId}/players`),
@@ -53,8 +56,13 @@ export default function TeamPlayers() {
                     <div></div>
                 </div>
                 {isPending && (
-                    <div className={style.loadingRow}>
+                    <div className={style.statusRow}>
                         <Loader />
+                    </div>
+                )}
+                {isError && (
+                    <div className={style.statusRow}>
+                        <ErrorText>{error?.message}</ErrorText>
                     </div>
                 )}
                 {players && players.map((player) => 

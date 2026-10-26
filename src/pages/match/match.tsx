@@ -61,7 +61,7 @@ export default function Match() {
             </div>}
             <Card className={style.content}>
                 {isPending ? <Loader /> : (
-                    isError ? <ErrorText>{error?.message ?? 'Something went wrong. Try again later.'}</ErrorText>
+                    isError ? <ErrorText>{error?.message}</ErrorText>
                         : <div>
                             <div className={style.matchHeader}>
                                 <div className={clsx(style.teamNameBox, style.homeBox)}>

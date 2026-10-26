@@ -9,6 +9,7 @@ import PositionBadge from '../../components/position-badge/position-badge';
 import { useNavigate } from 'react-router';
 import Card from '../../components/card/card';
 import Loader from '../../components/loader/loader';
+import ErrorText from '../../components/form/error-text/error-text';
 
 export default function CompetitionStatistics() {
     const { competition } = useCompetition();
@@ -16,7 +17,7 @@ export default function CompetitionStatistics() {
 
     const navigate = useNavigate();
 
-    const { data: statistics, isError, isPending } = useQuery({
+    const { data: statistics, isError, error, isPending } = useQuery({
         queryKey: ['competitions', competition.id, 'statistics'],
         queryFn: () => apiRequest<Statistics>(`competitions/${competition.id}/statistics`),
         enabled: isAuthenticated && !!competition.id
@@ -31,8 +32,13 @@ export default function CompetitionStatistics() {
                     <div className={style.goalColumn}>Goals</div>
                 </div>
                 {isPending && (
-                    <div className={style.loadingRow}>
+                    <div className={style.statusRow}>
                         <Loader />
+                    </div>
+                )}
+                {isError && (
+                    <div className={style.statusRow}>
+                        <ErrorText>{error?.message}</ErrorText>
                     </div>
                 )}
                 {statistics?.map((player: PlayerStatistic) => (

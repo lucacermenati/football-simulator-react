@@ -21,6 +21,7 @@ import NationalitySelector from "../../components/nationality-selector/nationali
 import Card from "../../components/card/card";
 import Loader from "../../components/loader/loader";
 import ClickableIcon from "../../components/clickable-icon/clickable-icon";
+import ErrorText from "../../components/form/error-text/error-text";
 
 export default function Players() {
     const { isAuthenticated } = useAuth();
@@ -193,8 +194,13 @@ export default function Players() {
             </div>
             <Card className={style.playersTable}>
                 {isPending && (
-                    <div className={style.loadingRow}>
+                    <div className={style.statusRow}>
                         <Loader />
+                    </div>
+                )}
+                {isError && (
+                    <div className={style.statusRow}>
+                        <ErrorText>{error?.message}</ErrorText>
                     </div>
                 )}
                 {paginatedPlayers?.data && paginatedPlayers?.data.map((player) => 

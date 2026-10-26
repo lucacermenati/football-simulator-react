@@ -30,7 +30,7 @@ export default function PlayerPage() {
     if (isError) {
         return (
             <ErrorText>
-                {error?.message || 'Something went wrong. Please try again.'}
+                {error?.message}
             </ErrorText>
         );
     }

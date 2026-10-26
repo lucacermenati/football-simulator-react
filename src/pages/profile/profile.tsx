@@ -126,7 +126,7 @@ export default function Profile() {
 					<Loader />
 				) : isReadyCompetitionsFailed ? (
 					<ErrorText>
-						{readyCompetitionsError?.message ?? 'Something went wrong. Please try again.'}
+						{readyCompetitionsError?.message}
 					</ErrorText>
 				) : readyCompetitionsPaginated?.data.length === 0 ? (
 					<ErrorText>No upcoming matches found.</ErrorText>

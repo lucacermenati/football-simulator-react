@@ -10,6 +10,7 @@ import { useState } from "react";
 import clsx from "clsx";
 import Loader from "../loader/loader";
 import ClickableIcon from "../clickable-icon/clickable-icon";
+import ErrorText from "../form/error-text/error-text";
 
 export default function NationalitySelector({ 
     value,
@@ -29,7 +30,7 @@ export default function NationalitySelector({
     const [isNationalityModalOpen, setIsNationalityModalOpen] = useState<boolean>(false);
     const [selectedNationality, setSelectedNationality] = useState<string>("");
 
-    const {data: nationalities, isPending} = useQuery<CountNationality[]>({
+    const {data: nationalities, isPending, isError, error} = useQuery<CountNationality[]>({
         queryKey: ['players', 'nationalities', search, position, free],
         queryFn: () => {
             const baseApiUrl = "players/nationalities";
@@ -55,6 +56,7 @@ export default function NationalitySelector({
 
     return <div className={style.selector}>
         {isPending && <Loader size="sm" />}
+        {isError && <ErrorText>{error?.message}</ErrorText>}
         {topNationalities?.map((nationality) => 
             <div 
                 key={nationality.code}  
@@ -80,6 +82,7 @@ export default function NationalitySelector({
                 onSubmit={() => {onSelect(selectedNationality); setIsNationalityModalOpen(false);}}
             >
                 {isPending && <Loader />}
+                {isError && <ErrorText>{error?.message}</ErrorText>}
                 <div className={style.nationalityGrid}>
                     {nationalities?.map((nationality) => 
                         <div

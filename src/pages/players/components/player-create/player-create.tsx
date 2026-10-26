@@ -6,6 +6,7 @@ import { fieldErrorToMessage } from "../../../../utils/fieldErrorToMessage";
 import style from './player-create.module.scss';
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiRequest, type ApiError } from "../../../../api/apiClient";
+import { DEFAULT_ERROR_MESSAGE } from "../../../../components/form/error-text/error-text";
 
 const positions = [
     "Goalkeeper",
@@ -17,7 +18,12 @@ const positions = [
 export default function PlayerCreate({onCancel}: {onCancel: () => void}) {
     const queryClient = useQueryClient();
 
-    const { data: nationalities, isPending: isNationalitiesPending } = useQuery({
+    const {
+        data: nationalities,
+        isPending: isNationalitiesPending,
+        isError: isNationalitiesError,
+        error: nationalitiesError,
+    } = useQuery({
         queryKey: ['nationalities'],
         queryFn: () => apiRequest<Nationality[]>('nationalities'),
     });
@@ -138,8 +144,12 @@ export default function PlayerCreate({onCancel}: {onCancel: () => void}) {
                     <Select
                         id='nationality'
                         label='Nationality'
-                        error={fieldErrorToMessage(errors.nationality)}
-                        disabled={isNationalitiesPending}
+                        error={
+                            isNationalitiesError
+                                ? nationalitiesError?.message || DEFAULT_ERROR_MESSAGE
+                                : fieldErrorToMessage(errors.nationality)
+                        }
+                        disabled={isNationalitiesPending || isNationalitiesError}
                         {...register('nationality')}
                     >
                         <option value=''>

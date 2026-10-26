@@ -222,7 +222,7 @@ export default function CompetitionMatches() {
 					</div>
 				)}
 				{isPending && <Loader />}
-				{isError && <ErrorText>{error?.message ?? 'Something went wrong. Please try again.'}</ErrorText>}
+				{isError && <ErrorText>{error?.message}</ErrorText>}
 			</div>
 			{isGenerateModalOpen && <Modal
 				title='Generate matches'

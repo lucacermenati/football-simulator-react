@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router';
 import Card from '../../components/card/card';
 import Loader from '../../components/loader/loader';
 import ClickableIcon from '../../components/clickable-icon/clickable-icon';
+import ErrorText from '../../components/form/error-text/error-text';
 
 export default function Competitions() {
 	const { isAuthenticated } = useAuth();
@@ -54,8 +55,13 @@ export default function Competitions() {
 				/>
 				<div className={styles.competitionContainer}>
 					{paginatedCompetitions.isPending && (
-						<div className={styles.loadingBox}>
+						<div className={styles.statusBox}>
 							<Loader />
+						</div>
+					)}
+					{paginatedCompetitions.isError && (
+						<div className={styles.statusBox}>
+							<ErrorText>{paginatedCompetitions.error?.message}</ErrorText>
 						</div>
 					)}
 					{competitions?.map((c) => (

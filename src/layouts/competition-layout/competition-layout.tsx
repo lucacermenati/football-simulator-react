@@ -54,7 +54,7 @@ export default function CompetitionLayout() {
 	if (isError) {
 		return (
 			<ErrorText>
-				{error?.message || 'Something went wrong. Please try again.'}
+				{error?.message}
 			</ErrorText>
 		);
 	}
