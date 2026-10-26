@@ -13,6 +13,7 @@ import CompetitionLogo from '../../components/competition-logo/competition-logo'
 import Loader from '../../components/loader/loader';
 import ErrorText from '../../components/form/error-text/error-text';
 import CompetitionLogoUpload from './components/competition-logo-upload/competition-logo-upload';
+import ClickableIcon from '../../components/clickable-icon/clickable-icon';
 
 export default function CompetitionLayout() {
 	const { competitionId } = useParams();
@@ -69,20 +70,26 @@ export default function CompetitionLayout() {
 							className={styles.boxLogoSize}
 						/>
 						<div className={styles.logoActions}>
-							<button
+							<ClickableIcon
+								icon={UploadCloud}
+								label='Upload logo'
+								variant='filled'
+								size='sm'
 								className={styles.logoActionTop}
-								disabled={isRemovingLogo || isUploadOpen}
+								isDisabled={isRemovingLogo || isUploadOpen}
 								onClick={() => setIsUploadOpen(true)}
-							>
-								<UploadCloud />
-							</button>
-							<button
+							/>
+							<ClickableIcon
+								icon={Trash}
+								label='Remove logo'
+								variant='filled'
+								size='sm'
+								isDestructive
 								className={styles.logoActionBottom}
-								disabled={isRemovingLogo || isUploadOpen || !competition.logo}
+								isPending={isRemovingLogo}
+								isDisabled={isUploadOpen || !competition.logo}
 								onClick={() => removeLogoMutation()}
-							>
-								<Trash />
-							</button>
+							/>
 						</div>
 					</div>
 					<div className={styles.menuContainer}>
@@ -133,12 +140,15 @@ export default function CompetitionLayout() {
 					</div>
 				</div>
 				<div className={styles.rightHeader}>
-					<Edit
-						className={styles.actionIcon}
+					<ClickableIcon
+						icon={Edit}
+						label='Edit competition'
 						onClick={() => setIsEditOpen(true)}
 					/>
-					<Trash
-						className={styles.destructiveActionIcon}
+					<ClickableIcon
+						icon={Trash}
+						label='Delete competition'
+						isDestructive
 						onClick={() => setIsDeleteOpen(true)}
 					/>
 				</div>

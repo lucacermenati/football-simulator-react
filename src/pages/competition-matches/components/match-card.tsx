@@ -7,6 +7,7 @@ import { apiRequest, type ApiError } from '../../../api/apiClient';
 import { useCompetition } from '../../../hooks/useCompetition';
 import { useNavigate } from 'react-router';
 import Card from '../../../components/card/card';
+import ClickableIcon from '../../../components/clickable-icon/clickable-icon';
 
 export default function MatchCard({ match }: { match: Match }) {
 	const date = new Date(match.date);
@@ -16,7 +17,7 @@ export default function MatchCard({ match }: { match: Match }) {
 	const queryClient = useQueryClient();
 	const navigate = useNavigate();
 
-	const { mutateAsync: playMatchAsync } = useMutation<
+	const { mutateAsync: playMatchAsync, isPending: isPlaying } = useMutation<
 		NoContentResponse,
 		ApiError,
 		string
@@ -54,9 +55,9 @@ export default function MatchCard({ match }: { match: Match }) {
 			<div className={style.verticalSeparator} />
 			<div className={style.actionBox}>
 				{match.played 
-					? <Eye className={style.icon} onClick={() => navigate(`${match.id}`)} /> 
+					? <ClickableIcon icon={Eye} label='View match' onClick={() => navigate(`${match.id}`)} />
 					: (date <= today 
-						? <Play className={style.icon} onClick={() => playMatchAsync(match.id)}/> 
+						? <ClickableIcon icon={Play} label='Play match' isPending={isPlaying} onClick={() => playMatchAsync(match.id)} />
 						: <div className={style.lockBox}><Lock className={style.lockIcon} /><span className={style.lockText}>{date.toLocaleDateString()}</span></div>
 		)}
 			</div>

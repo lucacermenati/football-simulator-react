@@ -18,7 +18,7 @@ const positions = [
 export default function PlayerEdit({player, onCancel}: {player: Player, onCancel: () => void}) {
     const queryClient = useQueryClient();
 
-    const { data: nationalities } = useQuery({
+    const { data: nationalities, isPending: isNationalitiesPending } = useQuery({
         queryKey: ['nationalities'],
         queryFn: () => apiRequest<Nationality[]>('nationalities'),
     });
@@ -132,9 +132,12 @@ export default function PlayerEdit({player, onCancel}: {player: Player, onCancel
                         id='nationality'
                         label='Nationality'
                         error={fieldErrorToMessage(errors.nationality)}
+                        disabled={isNationalitiesPending}
                         {...register('nationality')}
                     >
-                        <option value=''>Select nationality</option>
+                        <option value=''>
+                            {isNationalitiesPending ? 'Loading nationalities...' : 'Select nationality'}
+                        </option>
                         {nationalities?.map(({ code, name }) =>
                             <option key={code} value={code}>{name}</option>
                         )}

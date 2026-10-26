@@ -7,6 +7,8 @@ import { useAuth } from "../../auth/useAuth";
 import { useNavigate } from "react-router";
 import { ArrowRight } from "lucide-react";
 import Card from "../../components/card/card";
+import Loader from "../../components/loader/loader";
+import ClickableIcon from "../../components/clickable-icon/clickable-icon";
 
 export default function TeamPage() {
     const { team } = useTeam();
@@ -47,6 +49,11 @@ export default function TeamPage() {
                 <div>{team.stadium}</div>
             </div>
         </Card>
+        {isPending && (
+            <Card className={style.loadingCard}>
+                <Loader />
+            </Card>
+        )}
         {competitions && competitions.length > 0 && <Card>
             {competitions.map(competition => (
                 <div 
@@ -55,8 +62,9 @@ export default function TeamPage() {
                     className={style.competitionItem}
                 >
                     <span>{`${competition.position}${suffix(competition.position)} ${competition.name}`}</span>
-                    <ArrowRight  
-                        className={style.arrowIcon}
+                    <ClickableIcon
+                        icon={ArrowRight}
+                        label="Go to standings"
                         onClick={() => navigate(`/competitions/${competition.id}/standings`)}
                     />
                 </div>

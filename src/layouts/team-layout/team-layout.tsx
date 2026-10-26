@@ -14,6 +14,7 @@ import ErrorText from '../../components/form/error-text/error-text';
 import TeamLogoUpload from './components/team-logo-upload/team-logo-upload';
 import TeamEdit from '../../pages/teams/components/team-edit/team-edit';
 import TeamDelete from '../../pages/teams/components/team-delete/team-delete';
+import ClickableIcon from '../../components/clickable-icon/clickable-icon';
 
 export default function TeamLayout() {
 	const { teamId } = useParams();
@@ -70,20 +71,26 @@ export default function TeamLayout() {
 							className={styles.boxLogoSize}
 						/>
 						<div className={styles.logoActions}>
-							<button
+							<ClickableIcon
+								icon={UploadCloud}
+								label='Upload logo'
+								variant='filled'
+								size='sm'
 								className={styles.logoActionTop}
-								disabled={isRemovingLogo || isUploadOpen}
+								isDisabled={isRemovingLogo || isUploadOpen}
 								onClick={() => setIsUploadOpen(true)}
-							>
-								<UploadCloud />
-							</button>
-							<button
+							/>
+							<ClickableIcon
+								icon={Trash}
+								label='Remove logo'
+								variant='filled'
+								size='sm'
+								isDestructive
 								className={styles.logoActionBottom}
-								disabled={isRemovingLogo || isUploadOpen || !team.logo}
+								isPending={isRemovingLogo}
+								isDisabled={isUploadOpen || !team.logo}
 								onClick={() => removeLogoMutation()}
-							>
-								<Trash />
-							</button>
+							/>
 						</div>
 					</div>
 					<div className={styles.menuContainer}>
@@ -118,12 +125,15 @@ export default function TeamLayout() {
 					</div>
 				</div>
 				<div className={styles.rightHeader}>
-					<Edit
-						className={styles.actionIcon}
+					<ClickableIcon
+						icon={Edit}
+						label='Edit team'
 						onClick={() => setIsEditTeamModalOpen(true)}
 					/>
-					<Trash
-						className={styles.destructiveActionIcon}
+					<ClickableIcon
+						icon={Trash}
+						label='Delete team'
+						isDestructive
 						onClick={() => setIsDeleteTeamModalOpen(true)}
 					/>
 				</div>

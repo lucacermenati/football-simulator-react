@@ -22,6 +22,14 @@
 	overflow: hidden;
 }
 
+.loadingBox {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	grid-column: 1 / -1;
+	grid-row: 1 / 3;
+}
+
 .competitionContainer {
 	display: grid;
 	grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -56,43 +64,10 @@
 	}
 }
 
-.icon {
-	width: 10rem;
-	height: 2rem;
-	color: var(--primary-black);
-	cursor: pointer;
-}
-
 .plus {
 	width: 10rem;
 	height: 2rem;
 	color: var(--primary-white);
-}
-
-.chevron {
-	flex-shrink: 0;
-	background-color: var(--primary-black);
-	color: var(--primary-white);
-
-	border-radius: var(--border-radius-full);
-
-	width: 3rem;
-	height: 3rem;
-
-	cursor: pointer;
-
-	&:hover {
-		color: var(--hover-yellow);
-	}
-}
-
-.chevronDisabled {
-	cursor: auto;
-	background-color: var(--disabled-white);
-
-	&:hover {
-		color: var(--primary-white);
-	}
 }
 
 .paginationContainer {

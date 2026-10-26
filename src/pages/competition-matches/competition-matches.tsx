@@ -14,7 +14,7 @@ import { useEffect, useState } from 'react';
 import Modal from '../../components/modal/modal';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { fieldErrorToMessage } from '../../utils/fieldErrorToMessage';
-import clsx from 'clsx';
+import ClickableIcon from '../../components/clickable-icon/clickable-icon';
 
 export default function CompetitionMatches() {
 	const [isGenerateModalOpen, setIsGenerateModalOpen] = useState(false);
@@ -142,7 +142,7 @@ export default function CompetitionMatches() {
 		await generateMatchesAsync(data);
 	};
 
-	const { mutateAsync: playDayMatchesAsync } = useMutation<NoContentResponse, ApiError, number>({
+	const { mutateAsync: playDayMatchesAsync, isPending: isPlayingDay } = useMutation<NoContentResponse, ApiError, number>({
 		mutationFn: (day) =>
 			apiRequest<NoContentResponse>(`competitions/${competition.id}/matches/play?day=${day}`, {
 				method: 'POST',
@@ -157,7 +157,7 @@ export default function CompetitionMatches() {
 		}
 	});
 
-	const { mutateAsync: playAllMatchesAsync } = useMutation<NoContentResponse, ApiError>({
+	const { mutateAsync: playAllMatchesAsync, isPending: isPlayingAll } = useMutation<NoContentResponse, ApiError>({
 		mutationFn: () =>
 			apiRequest<NoContentResponse>(`competitions/${competition.id}/matches/play`, {
 				method: 'POST',
@@ -176,14 +176,36 @@ export default function CompetitionMatches() {
 		<section>
 			<div className={style.topBar}>
 				<div className={style.matchDayNavigationContainer}>
-					<ChevronLeft className={clsx(style.icon, { [style.iconDisabled]: currentMatchDay <= 1 })} onClick={previousMatchDay}/>
+					<ClickableIcon
+						icon={ChevronLeft}
+						label='Previous match day'
+						isDisabled={currentMatchDay <= 1}
+						onClick={previousMatchDay}
+					/>
 					<span className={style.matchDayText}>Match Day {currentMatchDay}</span>
-					<ChevronRight className={clsx(style.icon, { [style.iconDisabled]: currentMatchDay >= paginatedMatches?.meta.last_page })} onClick={nextMatchDay}/>
+					<ClickableIcon
+						icon={ChevronRight}
+						label='Next match day'
+						isDisabled={currentMatchDay >= (paginatedMatches?.meta.last_page ?? 1)}
+						onClick={nextMatchDay}
+					/>
 
 				</div>
 				<div className={style.actionContainer}>
-					<SkipForward className={style.icon} onClick={() => playDayMatchesAsync(currentMatchDay)}/>
-					<FastForward className={style.icon} onClick={() => playAllMatchesAsync()}/>
+					<ClickableIcon
+						icon={SkipForward}
+						label='Play match day'
+						isPending={isPlayingDay}
+						isDisabled={isPlayingAll}
+						onClick={() => playDayMatchesAsync(currentMatchDay)}
+					/>
+					<ClickableIcon
+						icon={FastForward}
+						label='Play all matches'
+						isPending={isPlayingAll}
+						isDisabled={isPlayingDay}
+						onClick={() => playAllMatchesAsync()}
+					/>
 				</div>
 			</div>
 			<div className={style.matchesGrid}>

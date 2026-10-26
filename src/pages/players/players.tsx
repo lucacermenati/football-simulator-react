@@ -19,6 +19,8 @@ import PlayerEdit from "./components/player-edit/player-edit";
 import PlayerGenerate from "./components/player-generate/player-generate";
 import NationalitySelector from "../../components/nationality-selector/nationality-selector";
 import Card from "../../components/card/card";
+import Loader from "../../components/loader/loader";
+import ClickableIcon from "../../components/clickable-icon/clickable-icon";
 
 export default function Players() {
     const { isAuthenticated } = useAuth();
@@ -175,19 +177,26 @@ export default function Players() {
                     />
                 </div>
                 <div className={style.createBox}>
-                    <UserRoundPlus 
+                    <ClickableIcon
+                        icon={UserRoundPlus}
+                        label="Create player"
+                        size="lg"
                         onClick={() => setIsCreatePlayerModalOpen(true)}
-                        className={style.actionIcon} 
-                        size={28}
                     />
-                    <WandSparkles 
+                    <ClickableIcon
+                        icon={WandSparkles}
+                        label="Generate players"
+                        size="lg"
                         onClick={() => setIsGeneratePlayersModalOpen(true)}
-                        className={style.actionIcon} 
-                        size={28}
                     />
                 </div>
             </div>
             <Card className={style.playersTable}>
+                {isPending && (
+                    <div className={style.loadingRow}>
+                        <Loader />
+                    </div>
+                )}
                 {paginatedPlayers?.data && paginatedPlayers?.data.map((player) => 
                     <div className={style.playerRow} key={player.id}>
                         <div className={style.playerColumn}>
@@ -201,25 +210,30 @@ export default function Players() {
                         </div>
                         <div className={style.actionColumn}>
                             { player.team === null 
-                                ? <PlusCircle 
-                                    className={style.icon} 
-                                    onClick={() => console.log("Add player to team")} 
-                                /> 
+                                ? <ClickableIcon
+                                    icon={PlusCircle}
+                                    label="Add to team"
+                                    onClick={() => console.log("Add player to team")}
+                                />
                                 : <TeamLogo team={player.team} />
                             }
                         </div>
                         <div className={style.actionColumn}>
-                            <Eye 
-                                className={style.icon} 
-                                onClick={() => navigate(`/players/${player.id}`)} 
+                            <ClickableIcon
+                                icon={Eye}
+                                label="View player"
+                                onClick={() => navigate(`/players/${player.id}`)}
                             />
-                            <Edit
-                                className={style.icon} 
-                                onClick={() => openEditPlayerModal(player)} 
+                            <ClickableIcon
+                                icon={Edit}
+                                label="Edit player"
+                                onClick={() => openEditPlayerModal(player)}
                             />
-                            <Trash
-                                className={style.destructiveIcon} 
-                                onClick={() => openDeletePlayerModal(player)} 
+                            <ClickableIcon
+                                icon={Trash}
+                                label="Delete player"
+                                isDestructive
+                                onClick={() => openDeletePlayerModal(player)}
                             />
                         </div>
                     </div>

@@ -14,6 +14,8 @@ import TeamCreate from './components/team-create/team-create';
 import TeamDelete from './components/team-delete/team-delete';
 import AddTeam from './components/team-add/team-add';
 import Card from '../../components/card/card';
+import Loader from '../../components/loader/loader';
+import ClickableIcon from '../../components/clickable-icon/clickable-icon';
 
 export default function Teams() {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -50,7 +52,7 @@ export default function Teams() {
         setIsAddTeamModalOpen(true);
     }
 
-    const { data: paginatedTeams} = useQuery<PaginatedData<Team>>({
+    const { data: paginatedTeams, isPending } = useQuery<PaginatedData<Team>>({
         queryKey: ['teams', page, search],
 
         queryFn: () => {
@@ -98,13 +100,19 @@ export default function Teams() {
                 value={searchInput}
                 onChange={(event) => setSearchInput(event.target.value)}
             />
-            <ShieldPlus 
+            <ClickableIcon
+                icon={ShieldPlus}
+                label="Create team"
+                size="lg"
                 onClick={() => setIsCreateTeamModalOpen(true)}
-                className={style.actionIcon} 
-                size={28}
             />
         </div>
         <Card className={style.teamsTable}>
+            {isPending && (
+                <div className={style.loadingRow}>
+                    <Loader />
+                </div>
+            )}
             {paginatedTeams?.data && paginatedTeams?.data.map((team) => 
                 <div className={style.teamRow} key={team.id}>
                     <div className={style.teamColumn}>
@@ -116,20 +124,26 @@ export default function Teams() {
                         </div>
                     </div>
                     <div className={style.actionColumn}>
-                        <Eye 
-                            className={style.icon} 
-                            onClick={() => navigate(`/teams/${team.id}`)} 
+                        <ClickableIcon
+                            icon={Eye}
+                            label="View team"
+                            onClick={() => navigate(`/teams/${team.id}`)}
                         />
-                        <Edit 
-                            className={style.icon} 
-                            onClick={() => openEditTeamModal(team)} 
+                        <ClickableIcon
+                            icon={Edit}
+                            label="Edit team"
+                            onClick={() => openEditTeamModal(team)}
                         />
-                        <PlusCircle 
-                            className={style.icon} 
-                            onClick={() => openAddTeamModal(team)} />
-                        <Trash 
-                            className={style.destructiveIcon} 
-                            onClick={() => openDeleteTeamModal(team)} 
+                        <ClickableIcon
+                            icon={PlusCircle}
+                            label="Add team to competition"
+                            onClick={() => openAddTeamModal(team)}
+                        />
+                        <ClickableIcon
+                            icon={Trash}
+                            label="Delete team"
+                            isDestructive
+                            onClick={() => openDeleteTeamModal(team)}
                         />
                     </div>
                 </div>

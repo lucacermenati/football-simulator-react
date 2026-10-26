@@ -24,16 +24,6 @@
     }
 }
 
-.moreIcon {
-    display: block;
-    cursor: pointer;
-    color: var(--text-gray);
-
-    &:hover {
-        color: var(--hover-gray);
-    }
-}
-
 .nationalityGrid {
     display: grid;
     grid-template-columns: repeat(8, auto);

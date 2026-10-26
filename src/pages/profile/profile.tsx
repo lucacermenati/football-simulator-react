@@ -14,6 +14,7 @@ import { Form, TextInput } from '../../components/form';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { fieldErrorToMessage } from '../../utils/fieldErrorToMessage';
 import Card from '../../components/card/card';
+import ClickableIcon from '../../components/clickable-icon/clickable-icon';
 
 export default function Profile() {
 	const { user, isUserPending, isUserFailed } = useAuth()
@@ -111,7 +112,7 @@ export default function Profile() {
 		<div className={styles.profileInfo}>
 			<div className={styles.header}>
 				<div className={styles.salutation}>Welcome back, {user?.name}</div>
-				<Edit className={styles.icon} onClick={() => openModal()}/>
+				<ClickableIcon icon={Edit} label='Edit profile' onClick={() => openModal()} />
 			</div>
 			<p>
 				<strong>Name:</strong> {user.name}
@@ -135,7 +136,7 @@ export default function Profile() {
 								<CompetitionLogo competition={competition} size="lg" />
 								<div>{competition.name}</div>
 								<div>{new Date(competition.next_match_date).toLocaleDateString()}</div>
-								<ArrowRight className={styles.icon} onClick={() => (navigate(`/competitions/${competition.id}/matches`))}/>
+								<ClickableIcon icon={ArrowRight} label='Go to matches' onClick={() => navigate(`/competitions/${competition.id}/matches`)} />
 							</div>
 						))}
 					</div>

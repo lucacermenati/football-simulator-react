@@ -16,6 +16,7 @@ import { TextInput } from '../../../../components/form';
 import { X } from 'lucide-react';
 import Loader from '../../../../components/loader/loader';
 import ErrorText from '../../../../components/form/error-text/error-text';
+import ClickableIcon from '../../../../components/clickable-icon/clickable-icon';
 
 export default function BulkAddCompetitionTeams({
 	setIsModalOpen,
@@ -52,7 +53,7 @@ export default function BulkAddCompetitionTeams({
 
 	const selectableTeams = paginatedAvailableTeams?.data;
 
-	const { mutateAsync: addSelectedTeams } = useMutation<
+	const { mutateAsync: addSelectedTeams, isPending: isAdding } = useMutation<
 		NoContentResponse,
 		ApiError,
 		ManageCompetitionTeamsRequest
@@ -82,7 +83,10 @@ export default function BulkAddCompetitionTeams({
 			description={`Search for teams and add them to ${competition?.name}`}
 			submitText='Add selected'
 			onCancel={() => setIsModalOpen(false)}
+			isSubmitting={isAdding}
 			onSubmit={() => {
+				if (isAdding) return;
+
 				addSelectedTeams({
 					teams: selectedTeams.map((team) => team.id),
 				});
@@ -120,8 +124,10 @@ export default function BulkAddCompetitionTeams({
 							<div key={team.id} className={style.selectedTeamItem}>
 								<TeamLogo team={team} size="sm" />
 								<div>{team.name}</div>
-								<X
-									className={style.unselectIcon}
+								<ClickableIcon
+									icon={X}
+									label='Unselect team'
+									size='sm'
 									onClick={() =>
 										setSelectedTeams(
 											selectedTeams.filter((t) => t.id !== team.id),

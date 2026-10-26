@@ -39,7 +39,6 @@
 	color: var(--primary-black);
 }
 
-
 .verticalSeparator {
 	height: 2rem;
 	border-left: 1px solid var(--text-gray);
@@ -62,13 +61,4 @@
 .lockText {
 	font-size: 1rem;
 	color: var(--primary-black);
-}
-
-.icon {
-	color: var(--text-gray);
-	cursor: pointer;
-
-	&:hover {
-		color: var(--hover-gray);
-	}
 }

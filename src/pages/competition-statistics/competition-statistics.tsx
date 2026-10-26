@@ -8,6 +8,8 @@ import TeamLogo from '../../components/team-logo/team-logo';
 import PositionBadge from '../../components/position-badge/position-badge';
 import { useNavigate } from 'react-router';
 import Card from '../../components/card/card';
+import Loader from '../../components/loader/loader';
+
 export default function CompetitionStatistics() {
     const { competition } = useCompetition();
     const { isAuthenticated } = useAuth();
@@ -28,6 +30,11 @@ export default function CompetitionStatistics() {
                     <div>Team</div>
                     <div className={style.goalColumn}>Goals</div>
                 </div>
+                {isPending && (
+                    <div className={style.loadingRow}>
+                        <Loader />
+                    </div>
+                )}
                 {statistics?.map((player: PlayerStatistic) => (
                     <div key={player.id} className={style.statisticRow}>
                         <div className={style.playerNameColumn}>

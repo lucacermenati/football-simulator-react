@@ -8,6 +8,8 @@ import { Ellipsis, RectangleEllipsis } from "lucide-react";
 import Modal from "../modal/modal";
 import { useState } from "react";
 import clsx from "clsx";
+import Loader from "../loader/loader";
+import ClickableIcon from "../clickable-icon/clickable-icon";
 
 export default function NationalitySelector({ 
     value,
@@ -27,7 +29,7 @@ export default function NationalitySelector({
     const [isNationalityModalOpen, setIsNationalityModalOpen] = useState<boolean>(false);
     const [selectedNationality, setSelectedNationality] = useState<string>("");
 
-    const {data: nationalities} = useQuery<CountNationality[]>({
+    const {data: nationalities, isPending} = useQuery<CountNationality[]>({
         queryKey: ['players', 'nationalities', search, position, free],
         queryFn: () => {
             const baseApiUrl = "players/nationalities";
@@ -52,6 +54,7 @@ export default function NationalitySelector({
     const topNationalities = nationalities?.slice(0, 3) ?? [];
 
     return <div className={style.selector}>
+        {isPending && <Loader size="sm" />}
         {topNationalities?.map((nationality) => 
             <div 
                 key={nationality.code}  
@@ -64,9 +67,9 @@ export default function NationalitySelector({
             </div>
         )}
         <div>
-            <RectangleEllipsis 
-                size={24} 
-                className={style.moreIcon} 
+            <ClickableIcon
+                icon={RectangleEllipsis}
+                label="More nationalities"
                 onClick={() => setIsNationalityModalOpen(true)}
             />
         </div>
@@ -76,6 +79,7 @@ export default function NationalitySelector({
                 onCancel={() => setIsNationalityModalOpen(false)}
                 onSubmit={() => {onSelect(selectedNationality); setIsNationalityModalOpen(false);}}
             >
+                {isPending && <Loader />}
                 <div className={style.nationalityGrid}>
                     {nationalities?.map((nationality) => 
                         <div

@@ -5,12 +5,13 @@ import type { Competition, PaginatedData } from '../../types/api';
 import styles from './competitions.module.scss';
 import { useState } from 'react';
 import { ChevronLeft, ChevronRight, CirclePlus } from 'lucide-react';
-import clsx from 'clsx';
 import CompetitionCard from './components/competition-card/competition-card';
 import Pagination from '../../components/pagination/pagination';
 import CreateCompetition from './components/create-competition/create-competition';
 import { useNavigate } from 'react-router';
 import Card from '../../components/card/card';
+import Loader from '../../components/loader/loader';
+import ClickableIcon from '../../components/clickable-icon/clickable-icon';
 
 export default function Competitions() {
 	const { isAuthenticated } = useAuth();
@@ -44,16 +45,19 @@ export default function Competitions() {
 	return (
 		<div className={styles.page}>
 			<div className={styles.content}>
-				<ChevronLeft
-					className={clsx(
-						styles.chevron,
-						paginatedCompetitions.isPending || links.prev === null
-							? styles.chevronDisabled
-							: '',
-					)}
+				<ClickableIcon
+					icon={ChevronLeft}
+					label='Previous page'
+					variant='filled'
+					isDisabled={paginatedCompetitions.isPending || !links?.prev}
 					onClick={() => setPage(Math.max(page - 1, 1))}
 				/>
 				<div className={styles.competitionContainer}>
+					{paginatedCompetitions.isPending && (
+						<div className={styles.loadingBox}>
+							<Loader />
+						</div>
+					)}
 					{competitions?.map((c) => (
 						<CompetitionCard
 							key={c.id}
@@ -68,13 +72,11 @@ export default function Competitions() {
 						<CirclePlus className={styles.plus} />
 					</Card>
 				</div>
-				<ChevronRight
-					className={clsx(
-						styles.chevron,
-						paginatedCompetitions.isPending || links.next === null
-							? styles.chevronDisabled
-							: '',
-					)}
+				<ClickableIcon
+					icon={ChevronRight}
+					label='Next page'
+					variant='filled'
+					isDisabled={paginatedCompetitions.isPending || !links?.next}
 					onClick={() => setPage(Math.min(page + 1, meta?.last_page || 1))}
 				/>
 			</div>

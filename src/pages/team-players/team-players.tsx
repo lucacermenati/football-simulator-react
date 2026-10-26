@@ -8,6 +8,8 @@ import { Eye, MinusCircle } from "lucide-react";
 import PositionBadge from "../../components/position-badge/position-badge";
 import NationalityBadge from "../../components/nationality-badge/nationality-badge";
 import Card from "../../components/card/card";
+import Loader from "../../components/loader/loader";
+import ClickableIcon from "../../components/clickable-icon/clickable-icon";
 
 export default function TeamPlayers() {
     const { teamId } = useParams();
@@ -17,6 +19,7 @@ export default function TeamPlayers() {
 
     const {
         data: players,
+        isPending,
     } = useQuery({
         queryKey: ["teams", teamId, "players"],
         queryFn: () => apiRequest<Player[]>(`teams/${teamId}/players`),
@@ -49,6 +52,11 @@ export default function TeamPlayers() {
                     <div>Nationality</div>
                     <div></div>
                 </div>
+                {isPending && (
+                    <div className={style.loadingRow}>
+                        <Loader />
+                    </div>
+                )}
                 {players && players.map((player) => 
                     <div className={style.playerRow} key={player.id}>
                         <div className={style.playerColumn}>
@@ -67,13 +75,16 @@ export default function TeamPlayers() {
                             <NationalityBadge nationality={player.nationality} className={style.badge} />
                         </div>
                         <div className={style.actionColumn}>
-                            <Eye 
-                                className={style.icon} 
-                                onClick={() => navigate(`/players/${player.id}`)} 
+                            <ClickableIcon
+                                icon={Eye}
+                                label="View player"
+                                onClick={() => navigate(`/players/${player.id}`)}
                             />
-                            <MinusCircle
-                                className={style.destructiveIcon} 
-                                onClick={() => console.log("Remove player from team")} 
+                            <ClickableIcon
+                                icon={MinusCircle}
+                                label="Remove player from team"
+                                isDestructive
+                                onClick={() => console.log("Remove player from team")}
                             />
                         </div>
                     </div>

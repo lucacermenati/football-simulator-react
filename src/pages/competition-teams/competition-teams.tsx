@@ -19,6 +19,7 @@ import { useState } from 'react';
 import RemoveCompetitionTeam from './components/remove-competition-team/remove-competition-team';
 import { useNavigate } from 'react-router';
 import Card from '../../components/card/card';
+import ClickableIcon from '../../components/clickable-icon/clickable-icon';
 
 export default function CompetitionTeams() {
 	const { competition } = useCompetition();
@@ -64,11 +65,11 @@ export default function CompetitionTeams() {
 			return (
 				<div className={clsx(style.genericRow, style.noTeamsFoundBox)}>
 					<p>Click on the plus button to add teams to the competition</p>
-					<PlusCircle
-						className={style.icon}
-						onClick={() => {
-							if (!isBulkAddModalOpen) setIsBulkAddModalOpen(true);
-						}}
+					<ClickableIcon
+						icon={PlusCircle}
+						label='Add teams'
+						isDisabled={isBulkAddModalOpen}
+						onClick={() => setIsBulkAddModalOpen(true)}
 					/>
 				</div>
 			);
@@ -82,12 +83,15 @@ export default function CompetitionTeams() {
 						{team.name}
 					</div>
 					<div className={style.teamActionsColumn}>
-						<Eye 
-							className={style.icon} 
+						<ClickableIcon
+							icon={Eye}
+							label='View team'
 							onClick={() => navigate(`/teams/${team.id}`)}
 						/>
-						<MinusCircle
-							className={clsx(style.icon, style.destroyIcon)}
+						<ClickableIcon
+							icon={MinusCircle}
+							label='Remove team from competition'
+							isDestructive
 							onClick={() => {
 								setSelectedTeamForRemoval(team);
 								setIsRemoveTeamModalOpen(true);
@@ -102,8 +106,9 @@ export default function CompetitionTeams() {
 	return (
 		<section>
 			<div className={style.mainActions}>
-				<ShieldPlus
-					className={style.icon}
+				<ClickableIcon
+					icon={ShieldPlus}
+					label='Add teams'
 					onClick={() => setIsBulkAddModalOpen(true)}
 				/>
 			</div>

@@ -5,23 +5,6 @@
 	gap: 2rem;
 }
 
-.icon {
-	color: var(--text-gray);
-	cursor: pointer;
-
-	&:hover {
-		color: var(--hover-gray);
-	}
-}
-
-.disabledIcon {
-	color: var(--disabled-gray);
-
-	&:hover {
-		color: var(--disabled-gray);
-	}
-}
-
 .salutation {
 	font-size: 1.5rem;
 	font-weight: bold;
@@ -50,13 +33,4 @@
 	padding: 0.5rem 0;
 	border-bottom: 1px solid var(--border-gray);
 	gap: 1rem;
-}
-
-.icon {
-	color: var(--text-gray);
-	cursor: pointer;
-
-	&:hover {
-		color: var(--hover-gray);
-	}
 }

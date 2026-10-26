@@ -51,42 +51,6 @@
 .logoActionTop,
 .logoActionBottom {
 	position: absolute;
-
-	display: flex;
-	align-items: center;
-	justify-content: center;
-
-	width: 2rem;
-	height: 2rem;
-	padding: 0;
-
-	border: none;
-	border-radius: 50%;
-
-	background-color: var(--primary-black);
-	color: var(--primary-white);
-
-	font: inherit;
-
-	cursor: pointer;
-
-	svg {
-		width: 1rem;
-		height: 1rem;
-	}
-
-	&:hover {
-		background-color: var(--hover-gray);
-	}
-
-	&:disabled {
-		background-color: var(--disabled-gray);
-		cursor: not-allowed;
-
-		svg {
-			color: var(--primary-white);
-		}
-	}
 }
 
 .logoActionTop {
@@ -97,21 +61,6 @@
 .logoActionBottom {
 	top: 2rem;
 	right: 0.5rem;
-
-	&:hover {
-		svg {
-			color: var(--error-color);
-		}
-	}
-
-	&:disabled {
-		background-color: var(--disabled-gray);
-		cursor: not-allowed;
-
-		svg {
-			color: var(--primary-white);
-		}
-	}
 }
 
 .menuContainer {
@@ -158,15 +107,6 @@
 	padding-bottom: 1rem;
 	display: flex;
 	gap: 1rem;
-}
-
-.actionIcon {
-	cursor: pointer;
-	color: var(--text-gray);
-
-	&:hover {
-		color: var(--hover-gray);
-	}
 }
 
 .destructiveActionIcon {

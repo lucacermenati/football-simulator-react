@@ -32,15 +32,6 @@
 	gap: 0.25rem;
 }
 
-.unselectIcon {
-	cursor: pointer;
-	color: var(--text-gray);
-
-	&:hover {
-		color: var(--hover-gray);
-	}
-}
-
 .text {
 	text-transform: uppercase;
 	font-weight: 600;

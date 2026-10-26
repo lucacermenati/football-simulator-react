@@ -52,7 +52,7 @@ export default function AddTeam({
 
 	const selectableCompetitions = paginatedAvailableCompetitions?.data;
 
-	const { mutateAsync: addToCompetition } = useMutation<
+	const { mutateAsync: addToCompetition, isPending: isAdding } = useMutation<
 		NoContentResponse,
 		ApiError,
 		{ competitionId: string, data: ManageCompetitionTeamsRequest }
@@ -82,7 +82,10 @@ export default function AddTeam({
 			description={`Search for a competition and add ${team?.name} to it.`}
 			submitText='Add selected'
 			onCancel={onCancel}
+			isSubmitting={isAdding}
 			onSubmit={() => {
+				if (isAdding) return;
+
 				addToCompetition({ competitionId: selectedCompetition?.id, data: { teams: [team.id] } });
 			}}
 		>

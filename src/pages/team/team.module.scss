@@ -31,17 +31,15 @@
 	flex-shrink: 0;
 }
 
+.loadingCard {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .competitionItem {
     display: flex;
     align-items: center;
     gap: 1rem;
     padding: 0.5rem;
-}
-
-.arrowIcon {
-    cursor: pointer;
-
-    &:hover {
-        color: var(--hover-gray);
-    }
 }

@@ -11,6 +11,7 @@ import clsx from "clsx";
 import TeamLogo from "../../components/team-logo/team-logo";
 import { Fragment } from "react/jsx-runtime";
 import Card from "../../components/card/card";
+import ClickableIcon from "../../components/clickable-icon/clickable-icon";
 
 export default function Match() {
     const { competitionId, matchId } = useParams();
@@ -32,7 +33,7 @@ export default function Match() {
 
     const matchDate = new Date(match?.date);
 
-    const { mutateAsync: playMatchAsync } = useMutation<
+    const { mutateAsync: playMatchAsync, isPending: isPlaying } = useMutation<
 		NoContentResponse,
 		ApiError,
 		string
@@ -55,7 +56,7 @@ export default function Match() {
 
     return <section>
             {match && <div className={style.actionBox}>
-                <ArrowLeft className={style.icon} onClick={() => navigate(`/competitions/${competitionId}/matches?day=${match.day}`)} />
+                <ClickableIcon icon={ArrowLeft} label="Back to match day" onClick={() => navigate(`/competitions/${competitionId}/matches?day=${match.day}`)} />
                 <span>Back to match day {match.day}</span>
             </div>}
             <Card className={style.content}>
@@ -128,7 +129,7 @@ export default function Match() {
                                     </div>)
                                     : <div className={style.notPlayed}>
                                         { new Date() >= matchDate 
-                                            ? <Play className={style.icon} onClick={async () => {await playMatchAsync(matchId)}}/>
+                                            ? <ClickableIcon icon={Play} label="Play match" isPending={isPlaying} onClick={async () => {await playMatchAsync(matchId)}} />
                                             : <div className={style.lockBox}>
                                                 <Lock className={style.lockIcon} />
                                                 <span>{matchDate.toLocaleDateString()}</span>

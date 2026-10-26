@@ -7,21 +7,6 @@
 	padding-right: 1rem;
 }
 
-.icon {
-	color: var(--text-gray);
-	cursor: pointer;
-
-	&:hover {
-		color: var(--hover-gray);
-	}
-}
-
-.destroyIcon {
-	&:hover {
-		color: var(--error-color);
-	}
-}
-
 .teamsTable {
 	display: grid;
 	grid-template-columns: auto auto;

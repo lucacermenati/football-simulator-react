@@ -1,0 +1,88 @@
+.clickableIcon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+
+	padding: 0;
+	border: none;
+	background: none;
+	font: inherit;
+	line-height: 0;
+
+	color: var(--text-gray);
+	cursor: pointer;
+
+	transition:
+		color 150ms ease,
+		background-color 150ms ease;
+
+	&:disabled {
+		cursor: not-allowed;
+	}
+
+	&:focus-visible {
+		outline: 2px solid var(--active-yellow);
+		outline-offset: 2px;
+	}
+}
+
+// Sizes only set the icon size. The variants derive their box from it.
+.sm {
+	--icon-size: 1rem;
+}
+
+.md {
+	--icon-size: 1.5rem;
+}
+
+.lg {
+	--icon-size: 1.75rem;
+}
+
+.icon {
+	width: var(--icon-size);
+	height: var(--icon-size);
+}
+
+// Ghost: the bare icon, what most of the app uses.
+.ghost {
+	width: var(--icon-size);
+	height: var(--icon-size);
+
+	&:hover:not(:disabled) {
+		color: var(--hover-gray);
+	}
+
+	&.destructive:hover:not(:disabled) {
+		color: var(--error-color);
+	}
+
+	&:disabled {
+		color: var(--disabled-gray);
+	}
+}
+
+// Filled: icon inside a black circle twice the icon size.
+// sm = 2rem circle (logo actions), md = 3rem circle (competitions chevrons).
+.filled {
+	width: calc(var(--icon-size) * 2);
+	height: calc(var(--icon-size) * 2);
+
+	border-radius: var(--border-radius-full);
+	background-color: var(--primary-black);
+	color: var(--primary-white);
+
+	&:hover:not(:disabled) {
+		background-color: var(--hover-gray);
+	}
+
+	&.destructive:hover:not(:disabled) {
+		color: var(--error-color);
+	}
+
+	&:disabled {
+		background-color: var(--disabled-gray);
+		color: var(--primary-white);
+	}
+}

@@ -19,7 +19,7 @@ export default function RemoveCompetitionTeam({
 
 	const queryClient = useQueryClient();
 
-	const { mutate: removeTeamFromCompetition } = useMutation<
+	const { mutate: removeTeamFromCompetition, isPending: isRemoving } = useMutation<
 		NoContentResponse,
 		ApiError,
 		ManageCompetitionTeamsRequest
@@ -49,7 +49,10 @@ export default function RemoveCompetitionTeam({
 			description={`Are you sure you want to remove ${team.name} from ${competition.name}?`}
 			submitText='Remove'
 			onCancel={() => setIsModalOpen(false)}
+			isSubmitting={isRemoving}
 			onSubmit={() => {
+				if (isRemoving) return;
+
 				removeTeamFromCompetition({
 					teams: [team.id],
 				});
